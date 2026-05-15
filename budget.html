@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef7ec;
+  --bg-warm: #fbe9c9;
+  --paper: #ffffff;
+  --ink: #1a1a2e;
+  --ink-soft: #3a3a52;
+  --ink-mute: #6b6b85;
+  --line: #e8d9b8;
+  --line-soft: #f3e8cd;
+  --accent: #e63946;
+  --accent-soft: #ff6b35;
+  --gold: #f7b801;
+  --green: #2a8073;
+  --purple: #6a3093;
+  --haubertin: #e63946;
+  --mallet: #2a4365;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.app {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+header.page-head {
+  margin-bottom: 2rem;
+}
+.kicker {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+}
+.kicker .num {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+h1 em { font-style: italic; color: var(--accent); }
+.subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-size: 1.15rem;
+}
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
+  background: var(--paper);
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+}
+.nav-back:hover { color: var(--accent); text-decoration: none; }
+
+/* TOP NAV (other pages) */
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.page-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 0.45rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+.page-nav a:hover { color: var(--accent); text-decoration: none; border-color: var(--accent); }
+.page-nav a.active { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+/* Cards & sections */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1.4rem;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Summary tiles */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+.tile {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  padding: 1.2rem 1.3rem;
+}
+.tile .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.4rem;
+}
+.tile .value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.tile .value.small { font-size: 1.3rem; }
+.tile.haubertin { border-top: 4px solid var(--haubertin); }
+.tile.mallet { border-top: 4px solid var(--mallet); }
+.tile.balance { border-top: 4px solid var(--gold); }
+.tile .sub { font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.3rem; }
+
+.balance-message {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  padding: 1.1rem 1.3rem;
+  background: linear-gradient(135deg, rgba(247,184,1,0.15) 0%, rgba(230,57,70,0.1) 100%);
+  border-radius: 12px;
+  border-left: 4px solid var(--gold);
+  margin-top: 0.6rem;
+}
+.balance-message.zero { background: rgba(42,128,115,0.12); border-left-color: var(--green); }
+
+/* Form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 2fr 1.4fr 1fr 0.7fr 1.2fr 1.2fr;
+  gap: 0.6rem;
+  align-items: end;
+}
+@media (max-width: 900px) {
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
+.field { display: flex; flex-direction: column; gap: 0.35rem; }
+.field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.field input, .field select {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+.field input:focus, .field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(230,57,70,0.12);
+}
+button.btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+button.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
+button.btn.secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+button.btn.secondary:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+button.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+button.btn.danger { background: transparent; color: var(--accent); border: 1px solid transparent; padding: 0.3rem 0.5rem; font-size: 0.7rem; }
+button.btn.danger:hover { background: rgba(230,57,70,0.1); transform: none; box-shadow: none; }
+
+/* Filters */
+.filters {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.filters select, .filters input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+/* Table */
+.table-wrap { overflow-x: auto; }
+table.expenses {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  font-size: 0.88rem;
+}
+table.expenses th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+table.expenses td {
+  padding: 0.7rem 0.6rem;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+table.expenses tr:hover td { background: var(--bg-warm); }
+table.expenses .num { font-family: 'JetBrains Mono', monospace; text-align: right; white-space: nowrap; }
+.pill {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.pill.haubertin { background: rgba(230,57,70,0.15); color: var(--haubertin); }
+.pill.mallet { background: rgba(42,67,101,0.15); color: var(--mallet); }
+.pill.both { background: rgba(247,184,1,0.18); color: #a37f00; }
+.pill.cat { background: var(--bg-warm); color: var(--ink-soft); }
+
+.empty-state {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--ink-mute);
+  font-style: italic;
+}
+
+/* Actions */
+.actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+footer.foot {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+.foot .jp {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <a href="index.html" class="nav-back">← Retour au site principal</a>
+
+  <header class="page-head">
+    <div class="kicker"><span class="num">02</span> Comptes & dépenses</div>
+    <h1>Budget <em>partagé</em></h1>
+    <p class="subtitle">予算 — Famille Haubertin & Famille Mallet</p>
+  </header>
+
+  <nav class="page-nav" aria-label="Sections du voyage">
+    <a href="index.html">Site principal</a>
+    <a href="budget.html" class="active">Budget</a>
+    <a href="journal.html">Journal de voyage</a>
+  </nav>
+
+  <!-- SUMMARY -->
+  <section class="card">
+    <div class="section-title">Récapitulatif</div>
+    <div class="summary-grid">
+      <div class="tile">
+        <div class="label">Total dépensé</div>
+        <div class="value" id="totalAll">0 €</div>
+        <div class="sub" id="totalCount">0 lignes</div>
+      </div>
+      <div class="tile haubertin">
+        <div class="label">Payé par Haubertin</div>
+        <div class="value" id="paidHaubertin">0 €</div>
+        <div class="sub">à charge réelle : <span id="oweHaubertin">0 €</span></div>
+      </div>
+      <div class="tile mallet">
+        <div class="label">Payé par Mallet</div>
+        <div class="value" id="paidMallet">0 €</div>
+        <div class="sub">à charge réelle : <span id="oweMallet">0 €</span></div>
+      </div>
+      <div class="tile balance">
+        <div class="label">Solde</div>
+        <div class="value small" id="balanceShort">—</div>
+        <div class="sub" id="balanceSub"></div>
+      </div>
+    </div>
+    <div class="balance-message zero" id="balanceMessage">Aucune dépense enregistrée pour le moment.</div>
+  </section>
+
+  <!-- ADD EXPENSE -->
+  <section class="card">
+    <div class="section-title" id="formTitle">Ajouter une dépense</div>
+    <form id="expenseForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="f-date">Date</label>
+          <input type="date" id="f-date" required>
+        </div>
+        <div class="field">
+          <label for="f-desc">Description</label>
+          <input type="text" id="f-desc" required placeholder="Ex : Restaurant Dōtonbori">
+        </div>
+        <div class="field">
+          <label for="f-cat">Catégorie</label>
+          <select id="f-cat" required>
+            <option>Transport</option>
+            <option>Hébergement</option>
+            <option>Restaurants</option>
+            <option>Activités</option>
+            <option>Shopping</option>
+            <option>Souvenirs</option>
+            <option>Avant-départ</option>
+            <option>Divers</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-amount">Montant</label>
+          <input type="number" id="f-amount" step="0.01" required placeholder="0.00">
+        </div>
+        <div class="field">
+          <label for="f-currency">Devise</label>
+          <select id="f-currency">
+            <option value="EUR">€</option>
+            <option value="JPY">¥</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-paid">Payée par</label>
+          <select id="f-paid" required>
+            <option value="haubertin">Haubertin</option>
+            <option value="mallet">Mallet</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-for">Pour</label>
+          <select id="f-for" required>
+            <option value="both">Les deux familles</option>
+            <option value="haubertin">Haubertin uniquement</option>
+            <option value="mallet">Mallet uniquement</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; gap:0.5rem; margin-top:1rem; align-items:center; flex-wrap:wrap;">
+        <button type="submit" class="btn" id="submitBtn">Ajouter</button>
+        <button type="button" class="btn secondary" id="cancelEdit" style="display:none;">Annuler la modification</button>
+        <span style="font-size:0.78rem; color:var(--ink-mute); margin-left:auto;">
+          Taux de change : 1 € = <input type="number" id="f-rate" step="0.01" value="170" style="width:70px; padding:0.3rem 0.5rem; border:1px solid var(--line); border-radius:6px; font-family:'JetBrains Mono',monospace;"> ¥
+        </span>
+      </div>
+    </form>
+  </section>
+
+  <!-- LIST -->
+  <section class="card">
+    <div class="section-title">Dépenses (<span id="expCount">0</span>)</div>
+
+    <div class="actions-bar">
+      <button class="btn secondary" id="btnExport">⤓ Exporter JSON</button>
+      <button class="btn secondary" id="btnImport">⤒ Importer JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+      <button class="btn ghost" id="btnClear" style="margin-left:auto;">Tout effacer</button>
+    </div>
+
+    <div class="filters">
+      <select id="filterFamily">
+        <option value="">Toutes familles</option>
+        <option value="haubertin">Concerne Haubertin</option>
+        <option value="mallet">Concerne Mallet</option>
+      </select>
+      <select id="filterCat">
+        <option value="">Toutes catégories</option>
+      </select>
+      <select id="filterPaid">
+        <option value="">Payé par tous</option>
+        <option value="haubertin">Payé par Haubertin</option>
+        <option value="mallet">Payé par Mallet</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="Recherche libre...">
+    </div>
+
+    <div class="table-wrap">
+      <table class="expenses">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Catégorie</th>
+            <th>Payée par</th>
+            <th>Pour</th>
+            <th class="num">Montant</th>
+            <th class="num">€ équiv.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="expBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState">Aucune dépense pour le moment. Ajoutez votre première ligne ci-dessus.</div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="jp">予算 — Comptes du voyage</div>
+    Données stockées localement dans votre navigateur. Pensez à exporter régulièrement.
+  </footer>
+
+</div>
+
+<script>
+/* =====================================================
+   BUDGET — Voyage Japon 2026
+   Données en localStorage, export/import JSON
+   ===================================================== */
+
+const STORAGE_KEY = 'japan2026.budget.v1';
+const RATE_KEY = 'japan2026.budget.rate';
+
+// ---- State ----
+let expenses = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let editingId = null;
+let rate = parseFloat(localStorage.getItem(RATE_KEY) || '170');
+
+// ---- Helpers ----
+const $ = (id) => document.getElementById(id);
+const fmt = (n) => (Math.round(n*100)/100).toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+const eur = (n) => fmt(n) + ' €';
+const familyLabel = (k) => k === 'haubertin' ? 'Haubertin' : (k === 'mallet' ? 'Mallet' : 'Les deux');
+const today = () => new Date().toISOString().slice(0, 10);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+function toEuro(amount, currency) {
+  if (currency === 'JPY') return amount / rate;
+  return amount;
+}
+
+// ---- Save ----
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(expenses));
+  localStorage.setItem(RATE_KEY, rate.toString());
+}
+
+// ---- Compute summary ----
+function compute() {
+  let paid = { haubertin: 0, mallet: 0 };
+  let owe  = { haubertin: 0, mallet: 0 };
+  let total = 0;
+
+  for (const e of expenses) {
+    const eur = toEuro(e.amount, e.currency);
+    total += eur;
+    paid[e.paid] += eur;
+
+    if (e.forWhom === 'both') {
+      owe.haubertin += eur / 2;
+      owe.mallet    += eur / 2;
+    } else if (e.forWhom === 'haubertin') {
+      owe.haubertin += eur;
+    } else if (e.forWhom === 'mallet') {
+      owe.mallet += eur;
+    }
+  }
+
+  // net = paid - owed
+  // positive = creditor, negative = debtor
+  const netH = paid.haubertin - owe.haubertin;
+  const netM = paid.mallet    - owe.mallet;
+  return { total, paid, owe, netH, netM };
+}
+
+// ---- Render summary ----
+function renderSummary() {
+  const s = compute();
+  $('totalAll').textContent = eur(s.total);
+  $('totalCount').textContent = `${expenses.length} ligne${expenses.length > 1 ? 's' : ''}`;
+  $('paidHaubertin').textContent = eur(s.paid.haubertin);
+  $('paidMallet').textContent = eur(s.paid.mallet);
+  $('oweHaubertin').textContent = eur(s.owe.haubertin);
+  $('oweMallet').textContent = eur(s.owe.mallet);
+
+  const msg = $('balanceMessage');
+  const balanceShort = $('balanceShort');
+  const balanceSub = $('balanceSub');
+  msg.classList.remove('zero');
+
+  if (expenses.length === 0) {
+    msg.classList.add('zero');
+    msg.textContent = 'Aucune dépense enregistrée pour le moment.';
+    balanceShort.textContent = '—';
+    balanceSub.textContent = '';
+    return;
+  }
+
+  // Find who owes who: if netH > 0, Haubertin is creditor; Mallet owes (netH).
+  // If netH < 0, Mallet is creditor.
+  // The amount owed is the absolute difference between net positions, divided by 2 (since each pays their share)
+  // Simpler: debtor = whoever has paid less than their share; debt = |netH| = |netM|
+  if (Math.abs(s.netH) < 0.01) {
+    msg.classList.add('zero');
+    msg.textContent = '✓ Les comptes sont équilibrés.';
+    balanceShort.textContent = '0 €';
+    balanceSub.textContent = 'comptes à jour';
+  } else if (s.netH > 0) {
+    msg.innerHTML = `<strong>Mallet doit ${eur(s.netH)}</strong> à Haubertin.`;
+    balanceShort.textContent = eur(s.netH);
+    balanceSub.textContent = 'Mallet → Haubertin';
+  } else {
+    msg.innerHTML = `<strong>Haubertin doit ${eur(-s.netH)}</strong> à Mallet.`;
+    balanceShort.textContent = eur(-s.netH);
+    balanceSub.textContent = 'Haubertin → Mallet';
+  }
+}
+
+// ---- Render list ----
+function renderList() {
+  const body = $('expBody');
+  const empty = $('emptyState');
+  const search = $('filterSearch').value.toLowerCase().trim();
+  const ff = $('filterFamily').value;
+  const fc = $('filterCat').value;
+  const fp = $('filterPaid').value;
+
+  // Update categories filter options
+  const cats = Array.from(new Set(expenses.map(e => e.category))).sort();
+  const currentCat = $('filterCat').value;
+  $('filterCat').innerHTML = '<option value="">Toutes catégories</option>' +
+    cats.map(c => `<option value="${escapeHtml(c)}" ${c===currentCat?'selected':''}>${escapeHtml(c)}</option>`).join('');
+
+  let rows = [...expenses].sort((a, b) => b.date.localeCompare(a.date));
+
+  rows = rows.filter(e => {
+    if (search && !(e.description.toLowerCase().includes(search) || e.category.toLowerCase().includes(search))) return false;
+    if (ff && !(e.forWhom === ff || e.forWhom === 'both')) return false;
+    if (fc && e.category !== fc) return false;
+    if (fp && e.paid !== fp) return false;
+    return true;
+  });
+
+  $('expCount').textContent = rows.length;
+  empty.style.display = rows.length === 0 ? 'block' : 'none';
+
+  body.innerHTML = rows.map(e => {
+    const eurEq = toEuro(e.amount, e.currency);
+    const currencySymbol = e.currency === 'JPY' ? '¥' : '€';
+    const forClass = e.forWhom;
+    const paidClass = e.paid;
+    return `
+      <tr data-id="${e.id}">
+        <td>${formatDate(e.date)}</td>
+        <td>${escapeHtml(e.description)}</td>
+        <td><span class="pill cat">${escapeHtml(e.category)}</span></td>
+        <td><span class="pill ${paidClass}">${familyLabel(e.paid)}</span></td>
+        <td><span class="pill ${forClass}">${e.forWhom === 'both' ? 'Les deux' : familyLabel(e.forWhom)}</span></td>
+        <td class="num">${fmt(e.amount)} ${currencySymbol}</td>
+        <td class="num">${eur(eurEq)}</td>
+        <td>
+          <button class="btn danger" data-action="edit" title="Modifier">✎</button>
+          <button class="btn danger" data-action="del" title="Supprimer">×</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: '2-digit' });
+}
+
+// ---- Form ----
+function resetForm() {
+  $('expenseForm').reset();
+  $('f-date').value = today();
+  $('f-currency').value = 'EUR';
+  $('f-paid').value = 'haubertin';
+  $('f-for').value = 'both';
+  $('formTitle').textContent = 'Ajouter une dépense';
+  $('submitBtn').textContent = 'Ajouter';
+  $('cancelEdit').style.display = 'none';
+  editingId = null;
+}
+
+function loadExpenseToForm(e) {
+  $('f-date').value = e.date;
+  $('f-desc').value = e.description;
+  $('f-cat').value = e.category;
+  $('f-amount').value = e.amount;
+  $('f-currency').value = e.currency;
+  $('f-paid').value = e.paid;
+  $('f-for').value = e.forWhom;
+  $('formTitle').textContent = 'Modifier la dépense';
+  $('submitBtn').textContent = 'Enregistrer';
+  $('cancelEdit').style.display = 'inline-block';
+  editingId = e.id;
+  window.scrollTo({ top: $('expenseForm').offsetTop - 80, behavior: 'smooth' });
+}
+
+$('expenseForm').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const expense = {
+    id: editingId || uid(),
+    date: $('f-date').value,
+    description: $('f-desc').value.trim(),
+    category: $('f-cat').value,
+    amount: parseFloat($('f-amount').value),
+    currency: $('f-currency').value,
+    paid: $('f-paid').value,
+    forWhom: $('f-for').value,
+  };
+  if (editingId) {
+    expenses = expenses.map(e => e.id === editingId ? expense : e);
+  } else {
+    expenses.push(expense);
+  }
+  save();
+  resetForm();
+  renderAll();
+});
+
+$('cancelEdit').addEventListener('click', () => resetForm());
+
+// ---- Table actions ----
+$('expBody').addEventListener('click', (ev) => {
+  const btn = ev.target.closest('button[data-action]');
+  if (!btn) return;
+  const tr = btn.closest('tr');
+  const id = tr.dataset.id;
+  const exp = expenses.find(e => e.id === id);
+  if (!exp) return;
+  if (btn.dataset.action === 'edit') {
+    loadExpenseToForm(exp);
+  } else if (btn.dataset.action === 'del') {
+    if (confirm(`Supprimer "${exp.description}" ?`)) {
+      expenses = expenses.filter(e => e.id !== id);
+      save();
+      renderAll();
+    }
+  }
+});
+
+// ---- Filters ----
+['filterFamily','filterCat','filterPaid','filterSearch'].forEach(id => {
+  $(id).addEventListener('input', renderList);
+});
+
+// ---- Exchange rate ----
+$('f-rate').value = rate;
+$('f-rate').addEventListener('change', (ev) => {
+  const v = parseFloat(ev.target.value);
+  if (!isFinite(v) || v <= 0) return;
+  rate = v;
+  save();
+  renderAll();
+});
+
+// ---- Export / Import ----
+$('btnExport').addEventListener('click', () => {
+  const data = { expenses, rate, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `japan2026-budget-${today()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('btnImport').addEventListener('click', () => $('importFile').click());
+
+$('importFile').addEventListener('change', (ev) => {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (!Array.isArray(data.expenses)) throw new Error('Format invalide');
+      if (!confirm(`Importer ${data.expenses.length} ligne${data.expenses.length>1?'s':''} ? Les données actuelles seront remplacées.`)) return;
+      expenses = data.expenses;
+      if (data.rate) rate = parseFloat(data.rate);
+      $('f-rate').value = rate;
+      save();
+      renderAll();
+      alert('Import réussi.');
+    } catch (e) {
+      alert('Erreur d\'import : ' + e.message);
+    }
+  };
+  r.readAsText(file);
+  ev.target.value = '';
+});
+
+$('btnClear').addEventListener('click', () => {
+  if (!expenses.length) return;
+  if (confirm(`Effacer définitivement les ${expenses.length} dépense${expenses.length>1?'s':''} ? Cette action est irréversible (pensez à exporter d'abord).`)) {
+    expenses = [];
+    save();
+    renderAll();
+  }
+});
+
+// ---- Init ----
+function renderAll() {
+  renderSummary();
+  renderList();
+}
+
+resetForm();
+renderAll();
+</script>
+
+</body>
+</html>
