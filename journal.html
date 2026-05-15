@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Journal · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef7ec;
+  --bg-warm: #fbe9c9;
+  --paper: #ffffff;
+  --ink: #1a1a2e;
+  --ink-soft: #3a3a52;
+  --ink-mute: #6b6b85;
+  --line: #e8d9b8;
+  --line-soft: #f3e8cd;
+  --accent: #e63946;
+  --accent-soft: #ff6b35;
+  --gold: #f7b801;
+  --green: #2a8073;
+  --purple: #6a3093;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.app {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
+  background: var(--paper);
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+}
+.nav-back:hover { color: var(--accent); text-decoration: none; }
+
+header.page-head { margin-bottom: 2rem; }
+.kicker {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+}
+.kicker .num {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+h1 em { font-style: italic; color: var(--accent); }
+.subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-size: 1.15rem;
+}
+
+.page-nav {
+  display: flex; flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.page-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 0.45rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+.page-nav a:hover { color: var(--accent); text-decoration: none; border-color: var(--accent); }
+.page-nav a.active { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1.4rem;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+.field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.field input[type="text"],
+.field input[type="date"],
+.field select,
+.field textarea {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+.field textarea { min-height: 120px; resize: vertical; font-family: 'DM Sans',sans-serif; line-height: 1.55; }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(230,57,70,0.12);
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 600px) { .row-2 { grid-template-columns: 1fr; } }
+
+button.btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.7rem 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+button.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
+button.btn.secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+button.btn.secondary:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+button.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+button.btn.danger {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid transparent;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.7rem;
+}
+button.btn.danger:hover { background: rgba(230,57,70,0.1); transform: none; box-shadow: none; }
+
+/* Photo upload */
+.photo-upload {
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.upload-zone {
+  border: 2px dashed var(--line);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink-mute);
+  font-size: 0.9rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.upload-zone:hover { border-color: var(--accent); background: rgba(230,57,70,0.04); }
+.upload-zone.drag { border-color: var(--accent); background: rgba(230,57,70,0.08); color: var(--accent); }
+.upload-zone strong { color: var(--accent); }
+.upload-previews {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 0.5rem;
+}
+.upload-preview {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.upload-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.upload-preview button {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 22px; height: 22px;
+  border: none; border-radius: 50%;
+  background: rgba(26,26,46,0.8);
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem; line-height: 1;
+}
+
+/* Posts */
+.posts { display: flex; flex-direction: column; gap: 1.5rem; }
+.post {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem 1.6rem;
+  position: relative;
+}
+.post-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+.post-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.post-place {
+  display: inline-block;
+  margin-top: 0.3rem;
+  background: var(--bg-warm);
+  padding: 0.18rem 0.55rem;
+  border-radius: 100px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.post-actions {
+  display: flex; gap: 0.3rem;
+  flex-shrink: 0;
+}
+.post-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.6rem;
+}
+.post-text {
+  white-space: pre-wrap;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.post-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.5rem;
+}
+.post-gallery img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.post-gallery img:hover { transform: scale(1.02); }
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--ink-mute);
+  font-style: italic;
+}
+
+.actions-bar {
+  display: flex; flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.filters {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-bottom: 1.4rem;
+}
+.filters select, .filters input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(26,26,46,0.92);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  z-index: 100;
+  cursor: zoom-out;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
+
+.size-warning {
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  margin-top: 0.4rem;
+}
+
+footer.foot {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+.foot .jp {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <a href="index.html" class="nav-back">← Retour au site principal</a>
+
+  <header class="page-head">
+    <div class="kicker"><span class="num">03</span> Carnet de voyage</div>
+    <h1>Journal du <em>voyage</em></h1>
+    <p class="subtitle">日記 — Souvenirs et photographies au fil des jours</p>
+  </header>
+
+  <nav class="page-nav" aria-label="Sections du voyage">
+    <a href="index.html">Site principal</a>
+    <a href="budget.html">Budget</a>
+    <a href="journal.html" class="active">Journal de voyage</a>
+  </nav>
+
+  <!-- FORM -->
+  <section class="card">
+    <div class="section-title" id="formTitle">Nouvelle entrée</div>
+    <form id="postForm">
+      <div class="row-2">
+        <div class="field">
+          <label for="f-date">Date</label>
+          <input type="date" id="f-date" required>
+        </div>
+        <div class="field">
+          <label for="f-place">Lieu / Étape</label>
+          <select id="f-place">
+            <option value="">—</option>
+            <option value="Avant le départ">Avant le départ</option>
+            <option value="Osaka">Osaka</option>
+            <option value="Kyoto">Kyoto</option>
+            <option value="Hakone">Hakone</option>
+            <option value="Tokyo">Tokyo</option>
+            <option value="Hiroshima / Miyajima">Hiroshima / Miyajima</option>
+            <option value="Nara">Nara</option>
+            <option value="Kawaguchiko / Mont Fuji">Kawaguchiko / Mont Fuji</option>
+            <option value="Kamakura">Kamakura</option>
+            <option value="En transit">En transit</option>
+            <option value="Retour">Retour</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="f-title">Titre (optionnel)</label>
+        <input type="text" id="f-title" placeholder="Ex : Premier yakitori à Dōtonbori">
+      </div>
+      <div class="field">
+        <label for="f-text">Récit</label>
+        <textarea id="f-text" placeholder="Racontez votre journée, vos impressions, les anecdotes..."></textarea>
+      </div>
+      <div class="field photo-upload">
+        <label>Photographies</label>
+        <div class="upload-zone" id="uploadZone">
+          <strong>Cliquez ou déposez</strong> des photos ici<br>
+          <small>Les photos sont automatiquement compressées (max 1280 px, JPEG)</small>
+          <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+        </div>
+        <div class="upload-previews" id="previews"></div>
+        <div class="size-warning" id="sizeInfo"></div>
+      </div>
+      <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
+        <button type="submit" class="btn" id="submitBtn">Publier l'entrée</button>
+        <button type="button" class="btn secondary" id="cancelEdit" style="display:none;">Annuler la modification</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- LIST -->
+  <section>
+    <div class="section-title">Entrées du journal (<span id="postCount">0</span>)</div>
+
+    <div class="actions-bar">
+      <button class="btn secondary" id="btnExport">⤓ Exporter JSON</button>
+      <button class="btn secondary" id="btnImport">⤒ Importer JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none">
+      <span style="margin-left:auto; font-size:0.78rem; color:var(--ink-mute); align-self:center;" id="storageInfo"></span>
+    </div>
+
+    <div class="filters">
+      <select id="filterPlace">
+        <option value="">Tous les lieux</option>
+      </select>
+      <input type="text" id="filterSearch" placeholder="Recherche libre...">
+    </div>
+
+    <div class="posts" id="postsList"></div>
+    <div class="empty-state" id="emptyState">Aucune entrée pour le moment. Publiez votre première ci-dessus.</div>
+  </section>
+
+  <footer class="foot">
+    <div class="jp">日記 — Carnet de voyage</div>
+    Données stockées localement dans votre navigateur. Photos compressées automatiquement.
+    Pensez à exporter régulièrement vers un fichier JSON pour ne rien perdre.
+  </footer>
+</div>
+
+<div class="lightbox" id="lightbox"><img src="" alt=""></div>
+
+<script>
+/* =====================================================
+   JOURNAL — Voyage Japon 2026
+   Stockage localStorage avec photos en dataURL (compressées)
+   ===================================================== */
+
+const STORAGE_KEY = 'japan2026.journal.v1';
+const $ = (id) => document.getElementById(id);
+
+let posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let pendingPhotos = []; // dataURLs of photos being added in form
+let editingId = null;
+
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const today = () => new Date().toISOString().slice(0, 10);
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function save() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+    updateStorageInfo();
+  } catch (e) {
+    alert('Espace de stockage saturé. Exportez vos données et supprimez d\'anciennes entrées ou photos.');
+  }
+}
+
+function updateStorageInfo() {
+  const data = localStorage.getItem(STORAGE_KEY) || '';
+  const kb = Math.round(data.length / 1024);
+  const mb = (kb / 1024).toFixed(1);
+  $('storageInfo').textContent = `Stockage local : ~${kb < 1024 ? kb + ' Ko' : mb + ' Mo'}`;
+}
+
+// ---- Photo compression ----
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = () => { img.src = reader.result; };
+    reader.onerror = reject;
+    img.onload = () => {
+      const MAX = 1280;
+      let { width, height } = img;
+      if (width > MAX || height > MAX) {
+        if (width > height) {
+          height = Math.round(height * (MAX / width));
+          width = MAX;
+        } else {
+          width = Math.round(width * (MAX / height));
+          height = MAX;
+        }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+      resolve(dataUrl);
+    };
+    img.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleFiles(fileList) {
+  const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  $('sizeInfo').textContent = `Traitement de ${files.length} photo${files.length>1?'s':''}...`;
+  for (const f of files) {
+    try {
+      const data = await compressImage(f);
+      pendingPhotos.push(data);
+    } catch (e) {
+      console.error('Erreur compression:', e);
+    }
+  }
+  $('sizeInfo').textContent = `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} en attente`;
+  renderPreviews();
+}
+
+function renderPreviews() {
+  $('previews').innerHTML = pendingPhotos.map((src, i) => `
+    <div class="upload-preview">
+      <img src="${src}" alt="">
+      <button type="button" data-i="${i}" aria-label="Retirer">×</button>
+    </div>
+  `).join('');
+}
+
+$('previews').addEventListener('click', (ev) => {
+  const btn = ev.target.closest('button[data-i]');
+  if (!btn) return;
+  pendingPhotos.splice(parseInt(btn.dataset.i, 10), 1);
+  renderPreviews();
+  $('sizeInfo').textContent = pendingPhotos.length ? `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} en attente` : '';
+});
+
+// Upload zone interactions
+$('uploadZone').addEventListener('click', () => $('fileInput').click());
+$('fileInput').addEventListener('change', (ev) => {
+  handleFiles(ev.target.files);
+  ev.target.value = '';
+});
+$('uploadZone').addEventListener('dragover', (ev) => {
+  ev.preventDefault();
+  $('uploadZone').classList.add('drag');
+});
+$('uploadZone').addEventListener('dragleave', () => $('uploadZone').classList.remove('drag'));
+$('uploadZone').addEventListener('drop', (ev) => {
+  ev.preventDefault();
+  $('uploadZone').classList.remove('drag');
+  handleFiles(ev.dataTransfer.files);
+});
+
+// ---- Form ----
+function resetForm() {
+  $('postForm').reset();
+  $('f-date').value = today();
+  pendingPhotos = [];
+  renderPreviews();
+  $('sizeInfo').textContent = '';
+  $('formTitle').textContent = 'Nouvelle entrée';
+  $('submitBtn').textContent = 'Publier l\'entrée';
+  $('cancelEdit').style.display = 'none';
+  editingId = null;
+}
+
+function loadPostToForm(p) {
+  $('f-date').value = p.date;
+  $('f-place').value = p.place || '';
+  $('f-title').value = p.title || '';
+  $('f-text').value = p.text || '';
+  pendingPhotos = [...(p.photos || [])];
+  renderPreviews();
+  $('sizeInfo').textContent = `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} attachée${pendingPhotos.length>1?'s':''}`;
+  $('formTitle').textContent = 'Modifier l\'entrée';
+  $('submitBtn').textContent = 'Enregistrer';
+  $('cancelEdit').style.display = 'inline-block';
+  editingId = p.id;
+  window.scrollTo({ top: $('postForm').offsetTop - 80, behavior: 'smooth' });
+}
+
+$('postForm').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const text = $('f-text').value.trim();
+  const title = $('f-title').value.trim();
+  if (!text && !title && pendingPhotos.length === 0) {
+    alert('Ajoutez au moins un titre, un texte ou une photo.');
+    return;
+  }
+  const post = {
+    id: editingId || uid(),
+    date: $('f-date').value,
+    place: $('f-place').value || null,
+    title,
+    text,
+    photos: [...pendingPhotos],
+    createdAt: editingId ? (posts.find(x => x.id === editingId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+  if (editingId) {
+    posts = posts.map(p => p.id === editingId ? post : p);
+  } else {
+    posts.unshift(post);
+  }
+  save();
+  resetForm();
+  renderAll();
+});
+
+$('cancelEdit').addEventListener('click', resetForm);
+
+// ---- List ----
+function renderList() {
+  const body = $('postsList');
+  const empty = $('emptyState');
+  const search = $('filterSearch').value.toLowerCase().trim();
+  const fp = $('filterPlace').value;
+
+  // Update places filter
+  const places = Array.from(new Set(posts.map(p => p.place).filter(Boolean))).sort();
+  const currentPlace = $('filterPlace').value;
+  $('filterPlace').innerHTML = '<option value="">Tous les lieux</option>' +
+    places.map(pl => `<option value="${escapeHtml(pl)}" ${pl===currentPlace?'selected':''}>${escapeHtml(pl)}</option>`).join('');
+
+  let rows = [...posts].sort((a, b) => b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt));
+  rows = rows.filter(p => {
+    if (fp && p.place !== fp) return false;
+    if (search) {
+      const haystack = ((p.title || '') + ' ' + (p.text || '') + ' ' + (p.place || '')).toLowerCase();
+      if (!haystack.includes(search)) return false;
+    }
+    return true;
+  });
+
+  $('postCount').textContent = rows.length;
+  empty.style.display = rows.length === 0 ? 'block' : 'none';
+
+  body.innerHTML = rows.map(p => `
+    <article class="post" data-id="${p.id}">
+      <div class="post-head">
+        <div>
+          <div class="post-date">${formatDate(p.date)}</div>
+          ${p.place ? `<span class="post-place">${escapeHtml(p.place)}</span>` : ''}
+        </div>
+        <div class="post-actions">
+          <button class="btn danger" data-action="edit" title="Modifier">✎ Éditer</button>
+          <button class="btn danger" data-action="del" title="Supprimer">× Supprimer</button>
+        </div>
+      </div>
+      ${p.title ? `<h3 class="post-title">${escapeHtml(p.title)}</h3>` : ''}
+      ${p.text ? `<div class="post-text">${escapeHtml(p.text)}</div>` : ''}
+      ${(p.photos && p.photos.length) ? `<div class="post-gallery">${p.photos.map((src, i) => `<img src="${src}" alt="Photo ${i+1}" data-i="${i}">`).join('')}</div>` : ''}
+    </article>
+  `).join('');
+}
+
+$('postsList').addEventListener('click', (ev) => {
+  const btn = ev.target.closest('button[data-action]');
+  if (btn) {
+    const article = btn.closest('article');
+    const id = article.dataset.id;
+    const p = posts.find(x => x.id === id);
+    if (!p) return;
+    if (btn.dataset.action === 'edit') {
+      loadPostToForm(p);
+    } else if (btn.dataset.action === 'del') {
+      if (confirm(`Supprimer cette entrée du ${formatDate(p.date)} ?`)) {
+        posts = posts.filter(x => x.id !== id);
+        save();
+        renderAll();
+      }
+    }
+    return;
+  }
+  // Photo click → lightbox
+  const img = ev.target.closest('img[data-i]');
+  if (img) {
+    openLightbox(img.src);
+  }
+});
+
+// ---- Lightbox ----
+function openLightbox(src) {
+  const lb = $('lightbox');
+  lb.querySelector('img').src = src;
+  lb.classList.add('open');
+}
+$('lightbox').addEventListener('click', () => $('lightbox').classList.remove('open'));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('lightbox').classList.contains('open')) {
+    $('lightbox').classList.remove('open');
+  }
+});
+
+// ---- Filters ----
+['filterPlace','filterSearch'].forEach(id => {
+  $(id).addEventListener('input', renderList);
+});
+
+// ---- Export / Import ----
+$('btnExport').addEventListener('click', () => {
+  const data = { posts, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `japan2026-journal-${today()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('btnImport').addEventListener('click', () => $('importFile').click());
+$('importFile').addEventListener('change', (ev) => {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (!Array.isArray(data.posts)) throw new Error('Format invalide');
+      if (!confirm(`Importer ${data.posts.length} entrée${data.posts.length>1?'s':''} ? Les entrées actuelles seront remplacées.`)) return;
+      posts = data.posts;
+      save();
+      renderAll();
+      alert('Import réussi.');
+    } catch (e) {
+      alert('Erreur d\'import : ' + e.message);
+    }
+  };
+  r.readAsText(file);
+  ev.target.value = '';
+});
+
+// ---- Init ----
+function renderAll() {
+  renderList();
+  updateStorageInfo();
+}
+
+resetForm();
+renderAll();
+</script>
+
+</body>
+</html>
