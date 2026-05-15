@@ -130,6 +130,13 @@ nav.main-nav {
   color: var(--paper);
   background: var(--ink);
 }
+a.nav-tab { text-decoration: none; }
+a.nav-tab.external {
+  color: var(--accent);
+  font-weight: 600;
+  border: 1px solid var(--accent);
+}
+a.nav-tab.external:hover { background: var(--accent); color: var(--paper); }
 .nav-brand-mobile-trigger {
   display: none;
   background: none;
@@ -369,6 +376,24 @@ h4 {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(26,26,46,0.1);
 }
+.step-card[data-jump-tab] { cursor: pointer; }
+.step-card[data-jump-tab]:hover { box-shadow: 0 16px 40px rgba(230,57,70,0.18); }
+.step-card[data-jump-tab]:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.step-card[data-jump-tab] .step-card-body::after {
+  content: '› Découvrir cette étape';
+  display: block;
+  margin-top: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+.step-card[data-jump-tab]:hover .step-card-body::after { opacity: 1; transform: translateX(0); }
 .step-card-art {
   aspect-ratio: 16/10;
   background: var(--bg-warm);
@@ -1450,7 +1475,7 @@ footer {
       <button class="nav-tab" data-tab="map">Carte</button>
       <button class="nav-tab" data-tab="calendar">Calendrier</button>
       <button class="nav-tab" data-tab="planning">Planning</button>
-      <button class="nav-tab" data-tab="budget">Budget</button>
+      <button class="nav-tab" data-tab="budget">Prévisionnel</button>
       <button class="nav-tab" data-tab="flights">Vols</button>
       <button class="nav-tab" data-tab="osaka">Osaka</button>
       <button class="nav-tab" data-tab="kyoto">Kyoto</button>
@@ -1458,6 +1483,8 @@ footer {
       <button class="nav-tab" data-tab="tokyo">Tokyo</button>
       <button class="nav-tab" data-tab="vocab">Vocabulaire</button>
       <button class="nav-tab" data-tab="tips">Conseils</button>
+      <a class="nav-tab external" href="budget.html">Comptes</a>
+      <a class="nav-tab external" href="journal.html">Journal</a>
     </div>
   </div>
 </nav>
@@ -1516,7 +1543,7 @@ footer {
   <h3>Les quatre étapes</h3>
   <div class="overview-grid">
 
-    <article class="step-card">
+    <article class="step-card" data-jump-tab="osaka" tabindex="0" role="button" aria-label="Aller à la page Osaka">
       <div class="step-card-art">
         <span class="badge">Étape 1</span>
         <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -1574,7 +1601,7 @@ footer {
       </div>
     </article>
 
-    <article class="step-card">
+    <article class="step-card" data-jump-tab="kyoto" tabindex="0" role="button" aria-label="Aller à la page Kyoto">
       <div class="step-card-art">
         <span class="badge">Étape 2</span>
         <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -1621,7 +1648,7 @@ footer {
       </div>
     </article>
 
-    <article class="step-card">
+    <article class="step-card" data-jump-tab="hakone" tabindex="0" role="button" aria-label="Aller à la page Hakone">
       <div class="step-card-art">
         <span class="badge">Étape 3</span>
         <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -1664,7 +1691,7 @@ footer {
       </div>
     </article>
 
-    <article class="step-card">
+    <article class="step-card" data-jump-tab="tokyo" tabindex="0" role="button" aria-label="Aller à la page Tokyo">
       <div class="step-card-art">
         <span class="badge">Étape 4</span>
         <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -3842,9 +3869,25 @@ footer {
 // ============================
 // TABS
 // ============================
-const tabs = document.querySelectorAll('.nav-tab');
+const tabs = document.querySelectorAll('.nav-tab:not(.external)');
 const panels = document.querySelectorAll('.tab-panel');
 const mapsInitialized = {};
+
+function switchToTab(target) {
+  const tab = document.querySelector(`.nav-tab[data-tab="${target}"]`);
+  if (!tab) return;
+  tab.click();
+}
+
+// Make home-page step cards clickable → switch to escale tab
+document.querySelectorAll('.step-card[data-jump-tab]').forEach(card => {
+  const target = card.dataset.jumpTab;
+  const go = () => switchToTab(target);
+  card.addEventListener('click', go);
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+  });
+});
 
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
