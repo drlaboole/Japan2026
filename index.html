@@ -763,6 +763,57 @@ h4 {
 .cal-day.fly .tag { color: var(--sunset-2); }
 .cal-day.transit { background: repeating-linear-gradient(45deg, var(--bg-warm), var(--bg-warm) 4px, var(--line) 4px, var(--line) 8px); color: var(--ink); }
 .cal-day.daytrip { background: rgba(255,107,53,0.18); color: #b54a1f; }
+.cal-day.clickable { cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; position: relative; }
+.cal-day.clickable:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+.cal-day.clickable::after {
+  content: '';
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
+}
+
+/* =========================
+   DAY MODAL
+   ========================= */
+.day-modal {
+  position: fixed; inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: flex-start; justify-content: center;
+  padding: 4vh 1rem;
+}
+.day-modal.open { display: flex; }
+.day-modal-overlay {
+  position: absolute; inset: 0;
+  background: rgba(26,26,46,0.65);
+  backdrop-filter: blur(4px);
+}
+.day-modal-content {
+  position: relative;
+  background: var(--bg-warm);
+  border-radius: 14px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+  max-width: 760px; width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 2.5rem 2rem 2rem;
+  z-index: 1;
+}
+.day-modal-close {
+  position: absolute;
+  top: 0.8rem; right: 1rem;
+  background: none; border: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--ink-mute);
+  padding: 0.2rem 0.6rem;
+}
+.day-modal-close:hover { color: var(--accent); }
+.day-modal-content .day-card { margin: 0; box-shadow: none; border: none; }
 
 /* =========================
    DAY CARDS (planning)
@@ -2269,6 +2320,15 @@ footer {
   <div class="tip">
     <strong>Réserver le Shinkansen Hiroshima à l'avance</strong>
     Sur l'app <a href="https://smart-ex.jp/en/" target="_blank">SmartEX</a> (JR Tokai/West), créez un compte et réservez les 8 sièges côte à côte pour le 29 juillet dès que l'app ouvre la fenêtre J-30. Plus simple que le guichet le jour J avec 8 personnes.
+  </div>
+  <div class="tip warning">
+    <strong>⚠️ USJ 28/7 — Action urgente : ouverture des ventes le 29 mai 2026 à 17h (heure de Paris)</strong>
+    Universal Studios Japan ouvre la vente des billets <strong>exactement 60 jours avant</strong> chaque date, à 00h00 heure japonaise. Pour le 28 juillet, ventes ouvertes le <strong>29 mai 2026 à 00h00 JST = 28 mai à 17h00 Paris</strong> (heure d'été). Fin juillet = pleine saison, les Express Pass et même les Studio Pass standard partent en quelques heures pendant l'été. Soyez prêt à 16h55 sur :
+    <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem;">
+      <li><a href="https://www.usj.co.jp/web/fr/jp" target="_blank">Site officiel USJ</a> (compte créé à l'avance, paiement par carte)</li>
+      <li>OU <a href="https://www.klook.com" target="_blank">Klook</a> / <a href="https://www.kkday.com/" target="_blank">KKday</a> (souvent plus rapides + en français/anglais)</li>
+    </ul>
+    Achetez en priorité un <strong>Express Pass 4 ou 7</strong> par personne — sans, prévoir 90-120 min d'attente par attraction phare un jour d'été. Coût indicatif : ¥9 800 Studio Pass + ¥7 800 à ¥21 000 Express Pass selon l'option.
   </div>
 
   <h3>Notre logement</h3>
@@ -3874,7 +3934,53 @@ function initTokyoStageMap() {
   addTransitLine(map, [home, [35.66, 139.77], teamlab], '#f7b801', 'JR + Yurikamome · 40 min · TeamLab');
   addTransitLine(map, [home, haneda], '#f7b801', 'Taxi 5h · 35 min · départ Haneda 11/8');
 }
+
+// ============================
+// CLICKABLE CALENDAR → MODAL
+// ============================
+(function initCalendarModal() {
+  const travelDays = document.querySelectorAll('.cal-day:not(.empty):not(.outside)');
+  const dayCards = document.querySelectorAll('#planning .day-card');
+  const modal = document.getElementById('dayModal');
+  const modalBody = document.getElementById('dayModalBody');
+  const modalClose = document.querySelector('.day-modal-close');
+  const modalOverlay = document.querySelector('.day-modal-overlay');
+
+  if (!modal || dayCards.length === 0) return;
+
+  travelDays.forEach((cell, idx) => {
+    if (idx >= dayCards.length) return;
+    cell.classList.add('clickable');
+    cell.setAttribute('role', 'button');
+    cell.setAttribute('tabindex', '0');
+    cell.setAttribute('title', 'Cliquez pour voir le détail de la journée');
+    const open = () => {
+      modalBody.innerHTML = '';
+      modalBody.appendChild(dayCards[idx].cloneNode(true));
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    cell.addEventListener('click', open);
+    cell.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  });
+
+  const close = () => { modal.classList.remove('open'); document.body.style.overflow = ''; };
+  modalClose && modalClose.addEventListener('click', close);
+  modalOverlay && modalOverlay.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
 </script>
+
+<!-- Day detail modal -->
+<div id="dayModal" class="day-modal" aria-hidden="true" role="dialog">
+  <div class="day-modal-overlay"></div>
+  <div class="day-modal-content">
+    <button class="day-modal-close" aria-label="Fermer">×</button>
+    <div id="dayModalBody"></div>
+  </div>
+</div>
 
 </body>
 </html>
