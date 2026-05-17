@@ -81,7 +81,7 @@
       title: "Universal Studios Japan",
       jp: "ユニバーサル・スタジオ・ジャパン",
       escale: "Osaka",
-      meta: "Jour 3 — Toute la journée",
+      meta: "Jour 4 — Toute la journée",
       wiki: "Universal_Studios_Japan",
       wikiLang: "fr",
       photos: [
@@ -98,13 +98,13 @@
         price: "Studio Pass ¥9 800 ad. · ¥6 800 enf. + Express Pass conseillé",
         transport: "JR Yumesaki Line jusqu'à Universal-city Station (5 min à pied de l'entrée)"
       },
-      tip: "Critique : billets en vente J-60 (29 mai 2026 pour le 28/7), épuisés en 24-48h en été. Acheter le 28 mai à 17h Paris pile sur usj.co.jp ou Klook. Prendre IMPÉRATIVEMENT un Express Pass 4 ou 7 — sans, prévoir 2h d'attente par grosse attraction."
+      tip: "Critique : billets en vente J-60 (30 mai 2026 pour le 29/7), épuisés en 24-48h en été. Acheter le 29 mai à 17h Paris pile sur usj.co.jp ou Klook. Prendre IMPÉRATIVEMENT un Express Pass 4 ou 7 — sans, prévoir 2h d'attente par grosse attraction."
     },
     "hiroshima-miyajima": {
       title: "Hiroshima + Miyajima",
       jp: "広島・宮島",
       escale: "Osaka",
-      meta: "Jour 4 — Day trip",
+      meta: "Jour 3 — Day trip",
       wiki: "Hiroshima",
       wikiLang: "fr",
       photos: [
@@ -122,7 +122,7 @@
         price: "Musée ¥200 · Sanctuaire ¥300 · Ferry JR ¥360 A/R",
         transport: "Shinkansen Sakura Shin-Osaka → Hiroshima (1h30) puis JR Sanyo + Ferry"
       },
-      tip: "Réserver Shinkansen 8 places côte à côte sur SmartEX J-30. Consulter le calendrier des marées avant le départ — la marée haute (vue torii flottant) est la plus photogénique."
+      tip: "Pas besoin de réserver le Shinkansen à l'avance : départs Shin-Osaka → Hiroshima toutes les 15-30 min. Achetez vos 8 billets au guichet vert le matin même. Consulter le calendrier des marées avant le départ — la marée haute (vue torii flottant) est la plus photogénique."
     },
     "kuromon": {
       title: "Marché Kuromon",
@@ -736,16 +736,16 @@
       ],
       desc: [
         "Day trip depuis Tokyo pour voir le mont Fuji en grand. Kawaguchiko, à 1h45 de Shinjuku en Highway Bus, est l'un des cinq lacs Fuji et offre la meilleure vue panoramique sur la face nord de la montagne (3 776 m).",
-        "Trois points de vue essentiels : la rive nord du lac (téléphérique Kachi-Kachi vers le mont Tenjō, 1 075 m, vue spectaculaire), le pavillon Chūreitō (5 étages, photo iconique Fuji + pagode, accessible depuis Shimoyoshida station par 400 marches), et le village reconstitué Oshino Hakkai (8 sources sacrées avec vue Fuji).",
-        "Pour les enfants : le parc d'attractions Fuji-Q Highland (un peu spécial, montagnes russes hardcore — à débattre selon l'âge). Sinon, vélos en location autour du lac (~¥2 000/jour) pour une promenade en famille avec vue Fuji constante."
+        "Le matin est crucial : en août, le Fuji n'est visible que ~30% du temps à midi mais près de 80% avant 9h. <strong>Premier bus 5h30 depuis Busta Shinjuku obligatoire</strong> pour maximiser ses chances. Réservation J-30 sur <a href='https://highway-buses.jp/' target='_blank'>highway-buses.jp</a>.",
+        "Programme idéal : 8h00 — pagode <strong>Chūreitō</strong> (Arakurayama Sengen Park, 10 min à pied depuis Shimoyoshida Station, 400 marches), photo iconique Fuji + pagode rouge à 5 étages. Puis tour du lac à vélo (~17 km, plat), téléphérique Mt. Tenjō (¥1 000), ou Oshino Hakkai (8 sources sacrées). Déjeuner Hōtō (nouilles miso locales) chez Kosaku."
       ],
       info: {
         address: "Fujikawaguchiko, préfecture de Yamanashi",
         hours: "Sites variés 9h-17h · téléphérique 9h-17h",
-        price: "Bus Shinjuku ¥4 400 A/R · Téléphérique ¥1 000",
-        transport: "Highway Bus depuis Busta Shinjuku (4e étage)"
+        price: "Bus Shinjuku ¥4 400 A/R · Téléphérique ¥1 000 · Vélos ~¥1 500/jour",
+        transport: "Highway Bus 5h30 depuis Busta Shinjuku (4e étage)"
       },
-      tip: "Premier bus de 5h30 obligatoire en été : vue Fuji optimale avant 9h, après ça les nuages arrivent. Réservation J-30 sur highway-buses.jp. Chūreitō est l'arrêt photographique à ne pas manquer."
+      tip: "Premier bus de 5h30 IMPÉRATIF en été. Réservation J-30 sur highway-buses.jp. Chūreitō avant 10h pour la lumière idéale (l'après-midi, les nuages enveloppent le sommet). Apporter chapeau, eau, chaussures confortables pour les marches."
     },
     "kamakura": {
       title: "Kamakura",
