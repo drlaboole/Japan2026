@@ -874,6 +874,42 @@ h4 {
   background: var(--bg-warm);
 }
 .house-art svg { width: 100%; height: 100%; display: block; }
+.house-art img.house-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.house-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin: -0.5rem 0 2rem;
+}
+.house-gallery img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: zoom-in;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: var(--bg-warm);
+}
+.house-gallery img:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(26,26,46,0.12); }
+.house-gallery-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+}
+.photo-lightbox {
+  position: fixed; inset: 0;
+  background: rgba(26,26,46,0.92);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 2rem;
+  z-index: 2500;
+  cursor: zoom-out;
+}
+.photo-lightbox.open { display: flex; }
+.photo-lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
 .house-content { padding: 1.8rem; }
 .house-content .kicker {
   font-family: 'JetBrains Mono', monospace;
@@ -1351,6 +1387,35 @@ footer {
   gap: 1rem;
   flex-wrap: wrap;
 }
+.footer-nav {
+  max-width: 1400px;
+  margin: 1.5rem auto 0;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(251,233,201,0.15);
+}
+.footer-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(251,233,201,0.8);
+  padding: 0.5rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid rgba(251,233,201,0.2);
+  background: rgba(251,233,201,0.05);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.footer-nav a:hover {
+  background: var(--sunset-2);
+  color: var(--ink);
+  border-color: var(--sunset-2);
+}
+.footer-nav a.external { color: var(--sunset-2); border-color: var(--sunset-2); }
+.footer-nav a.external:hover { background: var(--sunset-2); color: var(--ink); }
 
 /* =========================
    MOBILE — design soigné
@@ -1485,6 +1550,7 @@ footer {
       <button class="nav-tab" data-tab="tips">Conseils</button>
       <a class="nav-tab external" href="budget.html">Comptes</a>
       <a class="nav-tab external" href="journal.html">Journal</a>
+      <a class="nav-tab external" href="voitures.html">Voitures</a>
     </div>
   </div>
 </nav>
@@ -2580,54 +2646,47 @@ footer {
 
   <h3>Notre logement</h3>
   <div class="house">
-    <div class="house-art"><svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-<defs><linearGradient id="nSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a0a2a"/><stop offset="100%" stop-color="#3a1a4a"/></linearGradient></defs>
-<rect width="400" height="300" fill="url(#nSky)"/>
-<g fill="#0a0518" opacity="0.95">
-<rect x="0" y="80" width="50" height="220"/><rect x="55" y="120" width="40" height="180"/>
-<rect x="100" y="60" width="60" height="240"/><rect x="165" y="100" width="35" height="200"/>
-<rect x="205" y="40" width="55" height="260"/><rect x="265" y="90" width="45" height="210"/>
-<rect x="315" y="70" width="50" height="230"/><rect x="370" y="120" width="30" height="180"/>
-</g>
-<g><rect x="8" y="100" width="34" height="12" fill="#e63946"/><rect x="8" y="120" width="34" height="8" fill="#ff6b35"/>
-<rect x="60" y="135" width="30" height="10" fill="#f7b801"/><rect x="60" y="150" width="30" height="6" fill="#ffeb3b"/>
-<rect x="110" y="80" width="45" height="14" fill="#e63946"/><rect x="110" y="100" width="45" height="6" fill="#ff6bb5"/><rect x="110" y="115" width="45" height="10" fill="#ffeb3b"/>
-<rect x="170" y="120" width="25" height="10" fill="#7d3093"/><rect x="170" y="135" width="25" height="6" fill="#ff6bb5"/>
-<rect x="212" y="60" width="42" height="12" fill="#ffeb3b"/><rect x="212" y="78" width="42" height="8" fill="#e63946"/><rect x="212" y="92" width="42" height="10" fill="#00b4d8"/>
-<rect x="270" y="110" width="35" height="10" fill="#ff6b35"/><rect x="270" y="125" width="35" height="6" fill="#ffeb3b"/>
-<rect x="322" y="90" width="38" height="12" fill="#e63946"/><rect x="322" y="108" width="38" height="8" fill="#00b4d8"/>
-<rect x="375" y="140" width="22" height="8" fill="#f7b801"/>
-</g>
-<g fill="#ffeb3b" opacity="0.9">
-<rect x="15" y="160" width="2" height="3"/><rect x="22" y="170" width="2" height="3"/><rect x="32" y="180" width="2" height="3"/>
-<rect x="63" y="175" width="2" height="3"/><rect x="78" y="190" width="2" height="3"/>
-<rect x="118" y="140" width="2" height="3"/><rect x="130" y="160" width="2" height="3"/><rect x="145" y="180" width="2" height="3"/>
-<rect x="175" y="160" width="2" height="3"/><rect x="188" y="180" width="2" height="3"/>
-<rect x="220" y="120" width="2" height="3"/><rect x="235" y="140" width="2" height="3"/><rect x="248" y="160" width="2" height="3"/>
-<rect x="275" y="150" width="2" height="3"/><rect x="290" y="170" width="2" height="3"/>
-<rect x="328" y="135" width="2" height="3"/><rect x="345" y="155" width="2" height="3"/><rect x="358" y="175" width="2" height="3"/>
-<rect x="380" y="160" width="2" height="3"/>
-</g>
-<path d="M 0,255 L 400,255 L 400,300 L 0,300 Z" fill="#1a0a2a" opacity="0.7"/>
-<g stroke="#ff6b35" stroke-width="1" fill="none" opacity="0.5">
-<line x1="0" y1="265" x2="400" y2="265"/>
-<line x1="0" y1="275" x2="400" y2="275"/>
-</g></svg></div>
+    <div class="house-art">
+      <img class="house-photo"
+           src="https://a0.muscache.com/im/pictures/miso/Hosting-1354818484014487855/original/f8a7f129-4d8e-407c-93bb-b04b9456488e.jpeg?im_w=1200"
+           alt="Maison Sakuragawa — vue principale"
+           referrerpolicy="no-referrer"
+           loading="lazy">
+    </div>
     <div class="house-content">
       <div class="kicker">Du 26 au 30 juillet · 4 nuits</div>
       <h3>Maison Sakuragawa</h3>
-      <div class="jp-name">139 m² au cœur de Naniwa</div>
+      <div class="jp-name">139 m² au cœur de Naniwa · ★ 4,97 (39 avis)</div>
       <div class="house-meta">
         <div class="house-meta-item"><div class="label">Adresse</div><div class="value">3-chōme-4-21 Sakuragawa<br>Naniwa Ward, Osaka 556-0022</div></div>
         <div class="house-meta-item"><div class="label">Confirmation</div><div class="value">HMDP2RP3YP</div></div>
-        <div class="house-meta-item"><div class="label">Hôte</div><div class="value">哲 (Tetsu) · +81 90-9168-6225</div></div>
+        <div class="house-meta-item"><div class="label">Hôte</div><div class="value">哲 (Tetsu) · Superhôte · +81 90-9168-6225</div></div>
         <div class="house-meta-item"><div class="label">Coût total</div><div class="value">882 € (~110 €/pers)</div></div>
       </div>
       <div class="features">
-        <span class="feature">139 m²</span><span class="feature">8 voyageurs</span><span class="feature">Métro 3 min</span><span class="feature">Wifi</span><span class="feature">Cuisine</span><span class="feature">Lave-linge</span>
+        <span class="feature">139 m²</span><span class="feature">8 voyageurs</span><span class="feature">4 chambres · 6 lits</span><span class="feature">1,5 SDB</span><span class="feature">Métro 3 min</span><span class="feature">Wifi</span><span class="feature">Cuisine</span><span class="feature">Lave-linge</span><span class="feature">Espace de travail</span><span class="feature">Balcon</span>
       </div>
-      <p style="font-size:0.9rem;color:var(--ink-soft);">À 5 min de Dōtonbori, accès direct Sakuragawa Sen-Nichimae. Logement spacieux idéal pour deux familles.</p>
+      <p style="font-size:0.9rem;color:var(--ink-soft);">Maison d'hôtes neuve sur 3 étages, entièrement privée. À 2 min à pied de la gare Sakuragawa (Hanshin + métro), 10 min de la gare JR Namba, 15 min à pied de Dōtonbori. Conçue pour les groupes et familles : lits bas adaptés aux enfants, balcon ouvert, supermarchés et konbini en bas. Arrivée autonome par digicode entre 15h et 22h. <a href="https://www.airbnb.fr/rooms/1354818484014487855" target="_blank" rel="noopener" style="color:var(--accent);">Voir l'annonce Airbnb →</a></p>
     </div>
+  </div>
+
+  <div class="house-gallery-caption">Galerie · 5 photos</div>
+  <div class="house-gallery">
+    <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1354818484014487855/original/f8a7f129-4d8e-407c-93bb-b04b9456488e.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/miso/Hosting-1354818484014487855/original/f8a7f129-4d8e-407c-93bb-b04b9456488e.jpeg?im_w=1600"
+         alt="Maison Sakuragawa — photo 1" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1354818484014487855/original/c4606675-54b9-436a-9197-63ec1b60aeb6.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-1354818484014487855/original/c4606675-54b9-436a-9197-63ec1b60aeb6.jpeg?im_w=1600"
+         alt="Maison Sakuragawa — photo 2" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM1NDgxODQ4NDAxNDQ4Nzg1NQ==/original/7012f19f-7299-491b-ae5f-d25111838e73.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM1NDgxODQ4NDAxNDQ4Nzg1NQ==/original/7012f19f-7299-491b-ae5f-d25111838e73.jpeg?im_w=1600"
+         alt="Maison Sakuragawa — photo 3" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM1NDgxODQ4NDAxNDQ4Nzg1NQ==/original/a214e6c8-3219-435a-9951-27ed3a83141f.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM1NDgxODQ4NDAxNDQ4Nzg1NQ==/original/a214e6c8-3219-435a-9951-27ed3a83141f.jpeg?im_w=1600"
+         alt="Maison Sakuragawa — photo 4" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1354818484014487855/original/0e9639ac-f5b9-4492-a73b-3aa5bb847328.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/miso/Hosting-1354818484014487855/original/0e9639ac-f5b9-4492-a73b-3aa5bb847328.jpeg?im_w=1600"
+         alt="Maison Sakuragawa — photo 5" referrerpolicy="no-referrer" loading="lazy">
   </div>
 
   <h3>Activités prévues</h3>
@@ -2871,41 +2930,51 @@ footer {
 
   <h3>Notre logement</h3>
   <div class="house">
-    <div class="house-art"><svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-<defs><linearGradient id="pgSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fce8d4"/><stop offset="60%" stop-color="#f7b801"/><stop offset="100%" stop-color="#e63946"/></linearGradient></defs>
-<rect width="400" height="300" fill="url(#pgSky)"/>
-<circle cx="320" cy="100" r="40" fill="#fff5d6" opacity="0.85"/>
-<path d="M 0,210 Q 80,180 160,200 T 400,210 L 400,300 L 0,300 Z" fill="#3a1a3a" opacity="0.6"/>
-<path d="M 0,260 L 400,260 L 400,300 L 0,300 Z" fill="#1a0a1a" opacity="0.9"/>
-<g transform="translate(200, 70)" fill="#1a1a2e">
-<polygon points="-50,200 50,200 45,190 -45,190"/>
-<rect x="-20" y="180" width="40" height="10"/>
-<polygon points="-45,180 45,180 38,165 -38,165"/>
-<rect x="-15" y="150" width="30" height="15"/>
-<polygon points="-38,150 38,150 32,135 -32,135"/>
-<rect x="-13" y="120" width="26" height="15"/>
-<polygon points="-32,120 32,120 27,105 -27,105"/>
-<rect x="-10" y="90" width="20" height="15"/>
-<polygon points="-27,90 27,90 22,75 -22,75"/>
-<rect x="-8" y="60" width="16" height="15"/>
-<polygon points="-22,60 22,60 0,30"/>
-<rect x="-1" y="20" width="2" height="15"/>
-<circle cx="0" cy="20" r="3"/>
-</g>
-<g fill="#1a0a1a"><path d="M 40,250 Q 60,220 70,250 Q 75,235 85,250"/><path d="M 320,250 Q 340,225 350,250 Q 355,235 365,250"/></g></svg></div>
+    <div class="house-art">
+      <img class="house-photo"
+           src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/413f1f81-dcd7-40a0-ac8e-f15469bbf5ce.jpeg?im_w=1200"
+           alt="Koju — maison Higashiyama vue principale"
+           referrerpolicy="no-referrer"
+           loading="lazy">
+    </div>
     <div class="house-content">
       <div class="kicker">Du 30 juillet au 3 août · 4 nuits</div>
-      <h3>Higashiyama 3-Storey Home</h3>
-      <div class="jp-name">Maison traditionnelle 3 étages</div>
+      <h3>Koju · Higashiyama House</h3>
+      <div class="jp-name">112 m² · maison moderne 3 étages · ★ 4,97 (31 avis)</div>
       <div class="house-meta">
         <div class="house-meta-item"><div class="label">Adresse</div><div class="value">61 Shimobentenchō<br>Kyoto 605-0823</div></div>
         <div class="house-meta-item"><div class="label">Confirmation</div><div class="value">HM4A543SWH</div></div>
-        <div class="house-meta-item"><div class="label">Hôte</div><div class="value">Shiki · +81 75-708-8030</div></div>
+        <div class="house-meta-item"><div class="label">Hôte</div><div class="value">Shiki · Superhôte · 12 ans · +81 75-708-8030</div></div>
         <div class="house-meta-item"><div class="label">Coût total</div><div class="value">1 534 € (~192 €/pers)</div></div>
       </div>
-      <div class="features"><span class="feature">3 étages</span><span class="feature">Higashiyama</span><span class="feature">Centre historique</span><span class="feature">Jardin</span><span class="feature">Wifi</span><span class="feature">Cuisine</span></div>
-      <p style="font-size:0.9rem;color:var(--ink-soft);">Dans le quartier historique de Higashiyama. À 10 min de Kiyomizu-dera et de Gion. Maison traditionnelle pour deux familles.</p>
+      <div class="features"><span class="feature">112 m²</span><span class="feature">8 voyageurs</span><span class="feature">4 chambres · 6 lits</span><span class="feature">3,5 SDB</span><span class="feature">Jardin japonais</span><span class="feature">Tatami</span><span class="feature">Wifi</span><span class="feature">Cuisine équipée</span><span class="feature">Lave/sèche-linge</span><span class="feature">Climatisation</span></div>
+      <p style="font-size:0.9rem;color:var(--ink-soft);">Maison moderne avec touches japonaises subtiles au cœur du quartier historique de Higashiyama. <strong>2 min à pied de Ninenzaka, 4 min de Gion, 15 min de Kiyomizu-dera.</strong> Genkan d'entrée, chambre tatami au 1<sup>er</sup>, chambre style occidental + jardin sur balcon au 2<sup>e</sup>, deux chambres au 3<sup>e</sup>. Trois salles de bain pour 8 personnes, c'est confortable. Arrivée digicode 16h-2h. <a href="https://www.airbnb.fr/rooms/1456123877669608628" target="_blank" rel="noopener" style="color:var(--accent);">Voir l'annonce Airbnb →</a></p>
     </div>
+  </div>
+
+  <div class="house-gallery-caption">Galerie · 8 photos</div>
+  <div class="house-gallery">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/413f1f81-dcd7-40a0-ac8e-f15469bbf5ce.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/413f1f81-dcd7-40a0-ac8e-f15469bbf5ce.jpeg?im_w=1600"
+         alt="Koju Higashiyama — photo 1" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/887e5ece-5f0e-40d1-8acc-b486434b8674.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/887e5ece-5f0e-40d1-8acc-b486434b8674.jpeg?im_w=1600"
+         alt="Koju Higashiyama — chambre 1" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/1091a2ad-aef9-4d3f-a379-15d1c34d72a0.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/1091a2ad-aef9-4d3f-a379-15d1c34d72a0.jpeg?im_w=1600"
+         alt="Koju Higashiyama — photo 3" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/82c0334c-9e31-4930-8289-c348bdf71f79.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/82c0334c-9e31-4930-8289-c348bdf71f79.jpeg?im_w=1600"
+         alt="Koju Higashiyama — photo 4" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/3eb29d2e-33c5-4029-be13-e913d024ef41.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/3eb29d2e-33c5-4029-be13-e913d024ef41.jpeg?im_w=1600"
+         alt="Koju Higashiyama — photo 5" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/279effb6-5fa4-4d63-a48d-e812a85d10e7.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/279effb6-5fa4-4d63-a48d-e812a85d10e7.jpeg?im_w=1600"
+         alt="Koju Higashiyama — chambre 2" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/f4332009-5ea2-4d6a-b52b-27ea75e48f19.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTQ1NjEyMzg3NzY2OTYwODYyOA==/original/f4332009-5ea2-4d6a-b52b-27ea75e48f19.jpeg?im_w=1600"
+         alt="Koju Higashiyama — chambre 3" referrerpolicy="no-referrer" loading="lazy">
   </div>
 
   <h3>Activités prévues</h3>
@@ -3131,50 +3200,54 @@ footer {
 
   <h3>Notre logement</h3>
   <div class="house">
-    <div class="house-art"><svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-<defs><linearGradient id="onBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a3a5a"/><stop offset="100%" stop-color="#7d6093"/></linearGradient></defs>
-<rect width="400" height="300" fill="url(#onBg)"/>
-<g fill="#1a1a2e" opacity="0.6"><path d="M 0,140 Q 100,100 200,120 T 400,140 L 400,200 L 0,200 Z"/></g>
-<g fill="#5a5a7a"><path d="M 0,180 L 400,180 L 400,200 L 0,200 Z"/></g>
-<path d="M 0,200 Q 100,195 200,200 T 400,200 L 400,300 L 0,300 Z" fill="#3d8a8a" opacity="0.85"/>
-<g stroke="#a8d8d8" stroke-width="1.5" fill="none" opacity="0.7">
-<path d="M 0,215 q 50,-5 100,0 t 100,0 t 100,0 t 100,0"/>
-<path d="M 0,240 q 50,-5 100,0 t 100,0 t 100,0 t 100,0"/>
-<path d="M 0,265 q 50,-5 100,0 t 100,0 t 100,0 t 100,0"/>
-</g>
-<g fill="#fef7ec" opacity="0.5">
-<ellipse cx="80" cy="200" rx="30" ry="6"/>
-<ellipse cx="220" cy="195" rx="40" ry="7"/>
-<ellipse cx="340" cy="200" rx="25" ry="5"/>
-</g>
-<g fill="#fef7ec" opacity="0.4">
-<ellipse cx="80" cy="180" rx="22" ry="20"/>
-<ellipse cx="80" cy="165" rx="18" ry="15"/>
-<ellipse cx="80" cy="150" rx="14" ry="11"/>
-<ellipse cx="240" cy="180" rx="28" ry="24"/>
-<ellipse cx="240" cy="160" rx="22" ry="18"/>
-<ellipse cx="340" cy="175" rx="20" ry="18"/>
-</g>
-<g fill="#1a1a2e" opacity="0.7">
-<rect x="40" y="100" width="40" height="80"/>
-<polygon points="35,100 85,100 75,85 45,85"/>
-<rect x="300" y="120" width="35" height="60"/>
-<polygon points="295,120 340,120 332,108 303,108"/>
-</g>
-<circle cx="340" cy="55" r="22" fill="#fff5d6" opacity="0.85"/></svg></div>
+    <div class="house-art">
+      <img class="house-photo"
+           src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/04b98a75-c9cd-4534-855f-9e3329e90586.jpeg?im_w=1200"
+           alt="Hakone Ninotaira Cottage — vue principale"
+           referrerpolicy="no-referrer"
+           loading="lazy">
+    </div>
     <div class="house-content">
       <div class="kicker">Du 3 au 6 août · 3 nuits</div>
-      <h3>Hot Spring BBQ Cottage</h3>
-      <div class="jp-name">Ninotaira — onsen privatif</div>
+      <h3>Hakone Ninotaira Cottage</h3>
+      <div class="jp-name">200 m² · villa privative en forêt · ★ 4,91 (79 avis)</div>
       <div class="house-meta">
         <div class="house-meta-item"><div class="label">Adresse</div><div class="value">1297-179 Ninotaira<br>Hakone-machi</div></div>
         <div class="house-meta-item"><div class="label">Confirmation</div><div class="value">HMRBZKQ8QW</div></div>
-        <div class="house-meta-item"><div class="label">Téléphone</div><div class="value">+81 70-1369-1334</div></div>
+        <div class="house-meta-item"><div class="label">Hôte</div><div class="value">Hakone Ninotaira · Superhôte · +81 70-1369-1334</div></div>
         <div class="house-meta-item"><div class="label">Coût total</div><div class="value">~1 416 € (~177 €/pers)</div></div>
       </div>
-      <div class="features"><span class="feature">Onsen privatif</span><span class="feature">BBQ</span><span class="feature">Sound theater</span><span class="feature">Forêt</span><span class="feature">Cuisine</span></div>
-      <p style="font-size:0.9rem;color:var(--ink-soft);">Bus J03 jusqu'à l'arrêt Midori no Mura Iriguchi, puis 7 min à pied. Cottage avec onsen privatif, équipement BBQ fourni. <a href="https://familiarlink.notion.site/Hakone-Ninotaira-Cottage-1c4ff48c0797815f8398c6c0c2fc2804" target="_blank">Page Notion détaillée</a>.</p>
+      <div class="features"><span class="feature">200 m² (5LDK)</span><span class="feature">11 voyageurs max</span><span class="feature">3 chambres · 6 lits</span><span class="feature">Onsen naturel privatif</span><span class="feature">BBQ</span><span class="feature">Parking 2 voitures</span><span class="feature">Mahjong</span><span class="feature">Ping-pong</span><span class="feature">Haut-parleurs TAD</span><span class="feature">Vue Mt Myojogatake</span></div>
+      <p style="font-size:0.9rem;color:var(--ink-soft);">Villa privée à louer pour un groupe par jour. Bain thermal naturel (l'eau de source met 2-3h à remplir la baignoire — anticipez), BBQ couvert pour soirées en famille, tennis de table et mahjong pour les enfants. À 6 min du Hakone Open-Air Museum, 5 min de Yunessun, 4 min en voiture d'un FamilyMart. Arrivée digicode 15h-23h. Bus J03 jusqu'à Midori no Mura Iriguchi puis 7 min à pied. <strong>Faune locale</strong> : sangliers, singes, serpents possibles aux abords — habituel en montagne. <a href="https://www.airbnb.fr/rooms/1385113493479361280" target="_blank" rel="noopener" style="color:var(--accent);">Voir l'annonce Airbnb →</a> · <a href="https://familiarlink.notion.site/Hakone-Ninotaira-Cottage-1c4ff48c0797815f8398c6c0c2fc2804" target="_blank" rel="noopener" style="color:var(--accent);">Page Notion détaillée →</a></p>
     </div>
+  </div>
+
+  <div class="house-gallery-caption">Galerie · 8 photos</div>
+  <div class="house-gallery">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/04b98a75-c9cd-4534-855f-9e3329e90586.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/04b98a75-c9cd-4534-855f-9e3329e90586.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — photo 1" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1385113493479361280/original/87fbcd2a-4f3f-46f8-98f3-9fd6ac9b7ecc.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-1385113493479361280/original/87fbcd2a-4f3f-46f8-98f3-9fd6ac9b7ecc.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — photo 2" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/485d756e-a6cd-4702-a06f-a1d3615d470c.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/485d756e-a6cd-4702-a06f-a1d3615d470c.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — photo 3" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/6bfe3d69-31fd-4bd2-825f-48a1ec13bf7b.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/6bfe3d69-31fd-4bd2-825f-48a1ec13bf7b.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — photo 4" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/6b234c5e-21e1-4d1c-8696-aa90eb03ff4a.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/6b234c5e-21e1-4d1c-8696-aa90eb03ff4a.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — photo 5" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/987476b1-db6c-4881-9e14-ef1c148e764f.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/987476b1-db6c-4881-9e14-ef1c148e764f.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — chambre 1" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/4b13f3fd-2afc-49b2-8df4-800fe5a017b3.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/4b13f3fd-2afc-49b2-8df4-800fe5a017b3.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — chambre 2" referrerpolicy="no-referrer" loading="lazy">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/acc83bbb-19f6-4575-a4a4-55dfd38d6c23.jpeg?im_w=720"
+         data-full="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTM4NTExMzQ5MzQ3OTM2MTI4MA==/original/acc83bbb-19f6-4575-a4a4-55dfd38d6c23.jpeg?im_w=1600"
+         alt="Hakone Ninotaira Cottage — chambre 3 (futons)" referrerpolicy="no-referrer" loading="lazy">
   </div>
 
   <h3>Activités prévues</h3>
@@ -3860,6 +3933,23 @@ footer {
       <p style="margin-top:1rem;">Référent : David · drlaboole@gmail.com · +33 6 10 09 09 51</p>
     </div>
   </div>
+  <nav class="footer-nav" aria-label="Navigation rapide">
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=overview]').click(); return false;">Aperçu</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=map]').click(); return false;">Carte</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=calendar]').click(); return false;">Calendrier</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=planning]').click(); return false;">Planning</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=budget]').click(); return false;">Prévisionnel</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=flights]').click(); return false;">Vols</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=osaka]').click(); return false;">Osaka</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=kyoto]').click(); return false;">Kyoto</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=hakone]').click(); return false;">Hakone</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=tokyo]').click(); return false;">Tokyo</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=vocab]').click(); return false;">Vocabulaire</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=tips]').click(); return false;">Conseils</a>
+    <a href="budget.html" class="external">Comptes</a>
+    <a href="journal.html" class="external">Journal</a>
+    <a href="voitures.html" class="external">Voitures</a>
+  </nav>
   <div class="footer-bottom">
     <span>日本 Voyage 2026</span>
     <span>25.07.26 → 11.08.26</span>
@@ -3890,6 +3980,28 @@ document.querySelectorAll('.step-card[data-jump-tab]').forEach(card => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
   });
 });
+
+// Photo lightbox for .house-gallery thumbnails
+(function setupPhotoLightbox() {
+  if (document.getElementById('photoLightbox')) return;
+  const lb = document.createElement('div');
+  lb.id = 'photoLightbox';
+  lb.className = 'photo-lightbox';
+  lb.innerHTML = '<img src="" alt="">';
+  document.body.appendChild(lb);
+  const lbImg = lb.querySelector('img');
+  const close = () => { lb.classList.remove('open'); lbImg.src = ''; };
+  lb.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lb.classList.contains('open')) close();
+  });
+  document.querySelectorAll('.house-gallery img').forEach(img => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.dataset.full || img.src;
+      lb.classList.add('open');
+    });
+  });
+})();
 
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
@@ -4252,7 +4364,7 @@ if (document.readyState === 'loading') {
 </div>
 
 <!-- Fiches activités (modale + données + handlers) -->
-<script src="activities.js?v=3"></script>
+<script src="activities.js?v=4"></script>
 
 </body>
 </html>
