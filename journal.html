@@ -18,6 +18,26 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; min-height: 100vh; }
+
+/* === MAIN NAV (shared with index.html) === */
+.main-nav { position: sticky; top: 0; background: rgba(254,247,236,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); z-index: 200; }
+.main-nav.is-footer { position: static; margin-top: 3rem; border-bottom: none; border-top: 1px solid var(--line); background: transparent; }
+.main-nav .nav-bar { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; padding: 0.6rem 1.5rem; gap: 1.5rem; }
+.main-nav .nav-brand { font-family: 'DM Serif Display', serif; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.main-nav .nav-brand .jp { font-size: 1.3rem; color: var(--accent); }
+.main-nav .nav-tabs { flex: 1; display: flex; flex-wrap: wrap; align-items: center; row-gap: 0.35rem; column-gap: 0.15rem; margin-left: 1rem; }
+.main-nav .nav-tab { padding: 0.5rem 0.85rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.01em; color: var(--ink-mute); white-space: nowrap; transition: color 0.2s, background 0.2s; border-radius: 100px; text-decoration: none; background: none; border: none; }
+.main-nav .nav-tab:hover { color: var(--ink); background: var(--bg-warm); text-decoration: none; }
+.main-nav .nav-tab.external:first-of-type { margin-left: 0.6rem; padding-left: 0.85rem; border-left: 1px solid var(--line); }
+.main-nav .nav-tab.external { color: var(--accent); font-weight: 600; background: rgba(230,57,70,0.06); padding: 0.42rem 0.85rem; }
+.main-nav .nav-tab.external:hover { background: var(--accent); color: var(--paper); }
+.main-nav .nav-tab.external.active { background: var(--accent); color: var(--paper); }
+@media (max-width: 768px) {
+  .main-nav .nav-bar { padding: 0.55rem 0.9rem; gap: 0.6rem; }
+  .main-nav .nav-brand { font-size: 1rem; }
+  .main-nav .nav-tabs { margin-left: 0.3rem; }
+  .main-nav .nav-tab { padding: 0.45rem 0.7rem; font-size: 0.78rem; }
+}
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .app { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
@@ -105,23 +125,38 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
 </style>
 </head>
 <body>
-<div class="app">
 
-  <a href="index.html" class="nav-back">← Retour au site principal</a>
+<nav class="main-nav" aria-label="Navigation principale">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-brand"><span class="jp">日本</span> Voyage 2026</a>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html#overview">Aperçu</a>
+      <a class="nav-tab" href="index.html#map">Carte</a>
+      <a class="nav-tab" href="index.html#calendar">Calendrier</a>
+      <a class="nav-tab" href="index.html#planning">Planning</a>
+      <a class="nav-tab" href="index.html#budget">Prévisionnel</a>
+      <a class="nav-tab" href="index.html#flights">Vols</a>
+      <a class="nav-tab" href="index.html#osaka">Osaka</a>
+      <a class="nav-tab" href="index.html#kyoto">Kyoto</a>
+      <a class="nav-tab" href="index.html#hakone">Hakone</a>
+      <a class="nav-tab" href="index.html#tokyo">Tokyo</a>
+      <a class="nav-tab" href="index.html#vocab">Vocabulaire</a>
+      <a class="nav-tab" href="index.html#tips">Conseils</a>
+      <a class="nav-tab external" href="checklist.html">Check-list</a>
+      <a class="nav-tab external" href="budget.html">Comptes</a>
+      <a class="nav-tab external active" href="journal.html">Journal</a>
+      <a class="nav-tab external" href="voitures.html">Voitures</a>
+    </div>
+  </div>
+</nav>
+
+<div class="app">
 
   <header class="page-head">
     <div class="kicker"><span class="num">03</span> Carnet de voyage · synchronisé</div>
     <h1>Journal du <em>voyage</em></h1>
     <p class="subtitle">日記 — Posts et photos partagés entre toutes les familles, sur tous les appareils</p>
   </header>
-
-  <nav class="page-nav" aria-label="Sections du voyage">
-    <a href="index.html">Site principal</a>
-    <a href="checklist.html">Check-list</a>
-    <a href="budget.html">Budget</a>
-    <a href="journal.html" class="active">Journal de voyage</a>
-    <a href="voitures.html">Voitures Hakone</a>
-  </nav>
 
   <!-- FORM -->
   <section class="card">
@@ -159,8 +194,18 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
           <label for="f-author">Auteur</label>
           <select id="f-author">
             <option value="">—</option>
-            <option value="haubertin">Famille Haubertin</option>
-            <option value="mallet">Famille Mallet</option>
+            <optgroup label="Famille Haubertin">
+              <option value="David Haubertin">David Haubertin</option>
+              <option value="Delphine Haubertin">Delphine Haubertin</option>
+              <option value="Anouck Haubertin">Anouck Haubertin</option>
+              <option value="Marilou Haubertin">Marilou Haubertin</option>
+            </optgroup>
+            <optgroup label="Famille Mallet">
+              <option value="Christophe Mallet">Christophe Mallet</option>
+              <option value="Léonie Mallet">Léonie Mallet</option>
+              <option value="Adrian Mallet">Adrian Mallet</option>
+              <option value="Aline Rol">Aline Rol</option>
+            </optgroup>
           </select>
         </div>
       </div>
@@ -200,9 +245,23 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
         <option value="">Tous les lieux</option>
       </select>
       <select id="filterAuthor">
-        <option value="">Toutes les familles</option>
-        <option value="haubertin">Famille Haubertin</option>
-        <option value="mallet">Famille Mallet</option>
+        <option value="">Tous les auteurs</option>
+        <optgroup label="Par famille">
+          <option value="family:haubertin">Toute la famille Haubertin</option>
+          <option value="family:mallet">Toute la famille Mallet</option>
+        </optgroup>
+        <optgroup label="Famille Haubertin">
+          <option value="David Haubertin">David Haubertin</option>
+          <option value="Delphine Haubertin">Delphine Haubertin</option>
+          <option value="Anouck Haubertin">Anouck Haubertin</option>
+          <option value="Marilou Haubertin">Marilou Haubertin</option>
+        </optgroup>
+        <optgroup label="Famille Mallet">
+          <option value="Christophe Mallet">Christophe Mallet</option>
+          <option value="Léonie Mallet">Léonie Mallet</option>
+          <option value="Adrian Mallet">Adrian Mallet</option>
+          <option value="Aline Rol">Aline Rol</option>
+        </optgroup>
       </select>
       <input type="text" id="filterSearch" placeholder="Recherche libre...">
     </div>
@@ -212,12 +271,28 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
     <div class="empty-state" id="emptyState" style="display:none;">Aucune entrée pour le moment. Publiez votre première ci-dessus.</div>
   </section>
 
-  <nav class="page-nav" style="margin-top:3rem;border-bottom:none;border-top:1px solid var(--line-soft);padding-top:1.5rem;padding-bottom:0;" aria-label="Navigation pied de page">
-    <a href="index.html">Site principal</a>
-    <a href="checklist.html">Check-list</a>
-    <a href="budget.html">Budget</a>
-    <a href="journal.html" class="active">Journal</a>
-    <a href="voitures.html">Voitures Hakone</a>
+  <nav class="main-nav is-footer" aria-label="Navigation pied de page">
+    <div class="nav-bar">
+      <a href="index.html" class="nav-brand"><span class="jp">日本</span> Voyage 2026</a>
+      <div class="nav-tabs">
+        <a class="nav-tab" href="index.html#overview">Aperçu</a>
+        <a class="nav-tab" href="index.html#map">Carte</a>
+        <a class="nav-tab" href="index.html#calendar">Calendrier</a>
+        <a class="nav-tab" href="index.html#planning">Planning</a>
+        <a class="nav-tab" href="index.html#budget">Prévisionnel</a>
+        <a class="nav-tab" href="index.html#flights">Vols</a>
+        <a class="nav-tab" href="index.html#osaka">Osaka</a>
+        <a class="nav-tab" href="index.html#kyoto">Kyoto</a>
+        <a class="nav-tab" href="index.html#hakone">Hakone</a>
+        <a class="nav-tab" href="index.html#tokyo">Tokyo</a>
+        <a class="nav-tab" href="index.html#vocab">Vocabulaire</a>
+        <a class="nav-tab" href="index.html#tips">Conseils</a>
+        <a class="nav-tab external" href="checklist.html">Check-list</a>
+        <a class="nav-tab external" href="budget.html">Comptes</a>
+        <a class="nav-tab external active" href="journal.html">Journal</a>
+        <a class="nav-tab external" href="voitures.html">Voitures</a>
+      </div>
+    </div>
   </nav>
 
   <footer class="foot">
@@ -231,6 +306,22 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
 <script src="api-client.js"></script>
 <script>
 const $ = (id) => document.getElementById(id);
+
+// 8 participants du voyage
+const PARTICIPANTS = [
+  { name: 'David Haubertin',     family: 'haubertin' },
+  { name: 'Delphine Haubertin',  family: 'haubertin' },
+  { name: 'Anouck Haubertin',    family: 'haubertin' },
+  { name: 'Marilou Haubertin',   family: 'haubertin' },
+  { name: 'Christophe Mallet',   family: 'mallet' },
+  { name: 'Léonie Mallet',       family: 'mallet' },
+  { name: 'Adrian Mallet',       family: 'mallet' },
+  { name: 'Aline Rol',           family: 'mallet' },
+];
+function familyOf(authorName) {
+  const p = PARTICIPANTS.find(p => p.name === authorName);
+  return p ? p.family : null;
+}
 
 let posts = [];
 let pendingPhotos = []; // { key, url } already uploaded to R2
@@ -422,7 +513,14 @@ function renderList() {
   let rows = [...posts].sort((a, b) => b.date.localeCompare(a.date) || (b.created_at || '').localeCompare(a.created_at || ''));
   rows = rows.filter(p => {
     if (fp && p.place !== fp) return false;
-    if (fa && p.author !== fa) return false;
+    if (fa) {
+      if (fa.startsWith('family:')) {
+        const fam = fa.slice(7);
+        if (familyOf(p.author) !== fam) return false;
+      } else if (p.author !== fa) {
+        return false;
+      }
+    }
     if (search) {
       const haystack = ((p.title || '') + ' ' + (p.text || '') + ' ' + (p.place || '')).toLowerCase();
       if (!haystack.includes(search)) return false;
@@ -433,13 +531,15 @@ function renderList() {
   $('postCount').textContent = rows.length;
   empty.style.display = rows.length === 0 ? 'block' : 'none';
 
-  body.innerHTML = rows.map(p => `
+  body.innerHTML = rows.map(p => {
+    const fam = familyOf(p.author);
+    return `
     <article class="post" data-id="${escapeHtml(p.id)}">
       <div class="post-head">
         <div>
           <div class="post-date">${formatDate(p.date)}</div>
           ${p.place ? `<span class="post-place">${escapeHtml(p.place)}</span>` : ''}
-          ${p.author ? `<span class="post-author ${p.author}">${p.author === 'haubertin' ? 'Haubertin' : 'Mallet'}</span>` : ''}
+          ${p.author ? `<span class="post-author ${fam || ''}">${escapeHtml(p.author)}</span>` : ''}
         </div>
         <div class="post-actions">
           <button class="btn danger" data-action="edit" title="Modifier">✎ Éditer</button>
@@ -450,7 +550,8 @@ function renderList() {
       ${p.text ? `<div class="post-text">${escapeHtml(p.text)}</div>` : ''}
       ${(p.photos && p.photos.length) ? `<div class="post-gallery">${p.photos.map((k, i) => `<img src="/api/photo/${encodeURIComponent(k)}" alt="Photo ${i+1}" loading="lazy">`).join('')}</div>` : ''}
     </article>
-  `).join('');
+  `;
+  }).join('');
 }
 
 $('postsList').addEventListener('click', async (ev) => {

@@ -103,38 +103,56 @@ nav.main-nav {
 .nav-tabs {
   flex: 1;
   display: flex;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  align-items: center;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  gap: 0;
+  row-gap: 0.35rem;
+  column-gap: 0.15rem;
   margin-left: 1rem;
 }
 .nav-tabs::-webkit-scrollbar { display: none; }
 .nav-tab {
-  padding: 0.7rem 1rem;
+  padding: 0.5rem 0.85rem;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.83rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--ink-mute);
   cursor: pointer;
   background: none;
   border: none;
   white-space: nowrap;
-  transition: color 0.2s;
+  transition: color 0.2s, background 0.2s;
   position: relative;
   border-radius: 100px;
 }
-.nav-tab:hover { color: var(--ink); }
+.nav-tab:hover { color: var(--ink); background: var(--bg-warm); }
 .nav-tab.active {
   color: var(--paper);
   background: var(--ink);
 }
+.nav-tab.active:hover { background: var(--ink); color: var(--paper); }
+
+/* visual separator before the external block */
+.nav-tab.external:first-of-type {
+  margin-left: 0.6rem;
+  padding-left: 0.85rem;
+  border-left: 1px solid var(--line);
+  border-radius: 0 100px 100px 0;
+}
+.nav-tab.external:first-of-type::before {
+  content: '';
+  display: inline-block;
+  width: 0;
+}
+
 a.nav-tab { text-decoration: none; }
 a.nav-tab.external {
   color: var(--accent);
   font-weight: 600;
-  border: 1px solid var(--accent);
+  background: rgba(230,57,70,0.06);
+  padding: 0.42rem 0.85rem;
 }
 a.nav-tab.external:hover { background: var(--accent); color: var(--paper); }
 .nav-brand-mobile-trigger {
@@ -4181,6 +4199,14 @@ if (document.readyState === 'loading') {
   });
 })();
 
+function applyHashRoute() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) return;
+  const tab = document.querySelector(`.nav-tab[data-tab="${hash}"]`);
+  if (tab && !tab.classList.contains('active')) tab.click();
+}
+window.addEventListener('hashchange', applyHashRoute);
+
 tabs.forEach(tab => {
   tab.addEventListener('click', () => {
     const target = tab.dataset.tab;
@@ -4188,6 +4214,9 @@ tabs.forEach(tab => {
     panels.forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
     document.getElementById(target).classList.add('active');
+    if (window.location.hash !== '#' + target) {
+      history.replaceState(null, '', '#' + target);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
     if (target === 'map') {
@@ -4213,6 +4242,13 @@ tabs.forEach(tab => {
     }
   });
 });
+
+// Apply initial hash route (e.g. arriving from /journal.html with #osaka)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyHashRoute);
+} else {
+  applyHashRoute();
+}
 
 // ============================
 // CUSTOM MARKERS

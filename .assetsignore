@@ -1,0 +1,11 @@
+src/
+schema.sql
+wrangler.toml
+.DS_Store
+*.docx
+~$*
+README.md
+.git/
+.github/
+node_modules/
+package*.json
