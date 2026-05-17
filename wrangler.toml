@@ -1,0 +1,26 @@
+name = "japan2026"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# Assets statiques (HTML, JS, CSS)
+[assets]
+directory = "./"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Base de données D1
+# ⚠️  REMPLACE database_id par l'ID que tu trouves dans le dashboard Cloudflare
+[[d1_databases]]
+binding = "DB"
+database_name = "japan2026-db"
+database_id = "d8300852-d8ed-4309-a508-f97de955f549"
+
+# Bucket R2 pour les photos
+# ⚠️  Le nom doit correspondre exactement à celui créé dans le dashboard
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "japan2026-photos"
+
+# Le secret FAMILY_PASSWORD est défini séparément via :
+#   wrangler secret put FAMILY_PASSWORD
+# (ne PAS le mettre en clair ici — il finirait sur GitHub)

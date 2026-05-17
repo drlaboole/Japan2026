@@ -875,6 +875,78 @@ h4 {
 }
 .house-art svg { width: 100%; height: 100%; display: block; }
 .house-art img.house-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ========================================
+   DETAILED DAILY PLANNING PER ESCALE
+   ======================================== */
+.escale-planning-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin: 0 0 2.5rem;
+}
+@media (min-width: 960px) {
+  .escale-planning-grid { grid-template-columns: 1fr 1fr; }
+}
+.escale-planning-grid .day-card.illustrated {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  box-shadow: 0 4px 16px rgba(26,26,46,0.05);
+}
+.day-illust {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21/9;
+  background: linear-gradient(135deg, var(--bg-warm) 0%, var(--paper) 100%);
+  overflow: hidden;
+}
+.day-illust img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.day-illust img.loaded { opacity: 1; }
+.day-illust-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--ink-mute);
+  text-align: center;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, var(--bg-warm) 0%, var(--bg) 100%);
+}
+.day-illust-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+  color: rgba(255,255,255,0.95);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  z-index: 2;
+}
+.escale-planning-grid .day-card.illustrated .day-header {
+  padding: 1.2rem 1.4rem 0.6rem;
+  border: none;
+}
+.escale-planning-grid .day-card.illustrated .day-body {
+  padding: 0.4rem 1.4rem 1.4rem;
+}
+.escale-planning-grid .day-card.illustrated::before { display: none; }
 .house-gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1548,6 +1620,7 @@ footer {
       <button class="nav-tab" data-tab="tokyo">Tokyo</button>
       <button class="nav-tab" data-tab="vocab">Vocabulaire</button>
       <button class="nav-tab" data-tab="tips">Conseils</button>
+      <a class="nav-tab external" href="checklist.html">Check-list</a>
       <a class="nav-tab external" href="budget.html">Comptes</a>
       <a class="nav-tab external" href="journal.html">Journal</a>
       <a class="nav-tab external" href="voitures.html">Voitures</a>
@@ -2579,7 +2652,7 @@ footer {
 
   <div class="tip warning">
     <strong>Visit Japan Web obligatoire</strong>
-    Tous les voyageurs doivent s'enregistrer sur <a href="https://vjw-lp.digital.go.jp/fr/" target="_blank">vjw-lp.digital.go.jp</a> dans les 2 semaines précédant le départ. Génère un QR code pour passer immigration et douanes rapidement. À faire pour chacun des 8 voyageurs (les enfants compris).
+    Tous les voyageurs doivent s'enregistrer sur <a href="https://www.vjw.digital.go.jp/main/" target="_blank">vjw.digital.go.jp</a> dans les 2 semaines précédant le départ. Renseigner pour chacun : passeport, vols Qatar QR56/QR802, adresse Maison Sakuragawa, déclaration douanière. Génère un QR code par personne à présenter aux bornes d'immigration et de douane à KIX. À faire pour chacun des 8 voyageurs (enfants compris). Voir la <a href="checklist.html" style="font-weight:600;">check-list de préparation</a> pour le suivi.
   </div>
 
   <div class="tip">
@@ -2688,6 +2761,10 @@ footer {
          data-full="https://a0.muscache.com/im/pictures/miso/Hosting-1354818484014487855/original/0e9639ac-f5b9-4492-a73b-3aa5bb847328.jpeg?im_w=1600"
          alt="Maison Sakuragawa — photo 5" referrerpolicy="no-referrer" loading="lazy">
   </div>
+
+  <h3>Planning détaillé · jour par jour</h3>
+  <p style="font-size:0.95rem; color:var(--ink-soft); margin-bottom:1.4rem;">Les 4 journées sur place à Osaka. Cliquez sur les cartes pour voir le détail créneau par créneau (l'image en tête est tirée de Wikipédia).</p>
+  <div class="escale-planning-grid" data-days="ii,iii,iv,v"></div>
 
   <h3>Activités prévues</h3>
   <div class="attractions-grid">
@@ -2977,6 +3054,10 @@ footer {
          alt="Koju Higashiyama — chambre 3" referrerpolicy="no-referrer" loading="lazy">
   </div>
 
+  <h3>Planning détaillé · jour par jour</h3>
+  <p style="font-size:0.95rem; color:var(--ink-soft); margin-bottom:1.4rem;">Les 4 journées à Kyoto, du transfert depuis Osaka au day trip Nara.</p>
+  <div class="escale-planning-grid" data-days="vi,vii,viii,ix"></div>
+
   <h3>Activités prévues</h3>
   <div class="attractions-grid">
     <article class="attraction"><div class="attraction-art"><span class="attraction-tag prevu">Prévu</span><svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -3250,6 +3331,10 @@ footer {
          alt="Hakone Ninotaira Cottage — chambre 3 (futons)" referrerpolicy="no-referrer" loading="lazy">
   </div>
 
+  <h3>Planning détaillé · jour par jour</h3>
+  <p style="font-size:0.95rem; color:var(--ink-soft); margin-bottom:1.4rem;">Les 3 journées à Hakone, du transfert depuis Kyoto au Round Course et à la détente onsen.</p>
+  <div class="escale-planning-grid" data-days="x,xi,xii"></div>
+
   <h3>Activités prévues</h3>
   <div class="attractions-grid">
     <article class="attraction"><div class="attraction-art"><span class="attraction-tag prevu">Prévu</span>
@@ -3473,6 +3558,10 @@ footer {
       <p style="font-size:0.9rem;color:var(--ink-soft);">Maison spacieuse à Honmachi, accès direct Shinjuku. <a href="https://www.airbnb.fr/rooms/1226668910713555107" target="_blank">Lien Airbnb</a>.</p>
     </div>
   </div>
+
+  <h3>Planning détaillé · jour par jour</h3>
+  <p style="font-size:0.95rem; color:var(--ink-soft); margin-bottom:1.4rem;">Les 6 journées à Tokyo, du transfert depuis Hakone au retour vers Nice. Inclut les day trips Mont Fuji et Kamakura.</p>
+  <div class="escale-planning-grid" data-days="xiii,xiv,xv,xvi,xvii,xviii"></div>
 
   <h3>Activités prévues</h3>
   <div class="attractions-grid">
@@ -3803,7 +3892,7 @@ footer {
   <h3>Formalités d'entrée</h3>
   <div class="tip warning">
     <strong>Visit Japan Web obligatoire</strong>
-    Tous les voyageurs doivent s'enregistrer sur <a href="https://vjw-lp.digital.go.jp/fr/" target="_blank">vjw-lp.digital.go.jp</a> dans les 2 semaines précédant le départ. Génère un QR code pour passer immigration et douanes en quelques minutes. À faire individuellement pour chacun des 8 voyageurs, y compris les enfants.
+    Tous les voyageurs doivent s'enregistrer sur <a href="https://www.vjw.digital.go.jp/main/" target="_blank">vjw.digital.go.jp</a> dans les 2 semaines précédant le départ. Génère un QR code pour passer immigration et douanes en quelques minutes. À faire individuellement pour chacun des 8 voyageurs, y compris les enfants. Voir la <a href="checklist.html" style="font-weight:600;">check-list de préparation</a>.
   </div>
   <ul>
     <li><strong>Passeport</strong> en cours de validité (au moins 6 mois après le retour).</li>
@@ -3901,7 +3990,7 @@ footer {
 
   <h3>Liens utiles avant de partir</h3>
   <ul>
-    <li><strong>Visit Japan Web</strong> (obligatoire) : <a href="https://vjw-lp.digital.go.jp/fr/" target="_blank">vjw-lp.digital.go.jp/fr</a></li>
+    <li><strong>Visit Japan Web</strong> (obligatoire) : <a href="https://www.vjw.digital.go.jp/main/" target="_blank">vjw.digital.go.jp</a></li>
     <li><strong>Site officiel JNTO</strong> (office du tourisme) : <a href="https://www.japan.travel/fr" target="_blank">japan.travel/fr</a></li>
     <li><strong>JR Pass calculator</strong> : <a href="https://japan-rail-pass.com/calculator" target="_blank">japan-rail-pass.com/calculator</a></li>
     <li><strong>Météo et webcams Kawaguchiko</strong> : <a href="https://live.tenki.jp" target="_blank">live.tenki.jp</a></li>
@@ -3946,6 +4035,7 @@ footer {
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=tokyo]').click(); return false;">Tokyo</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=vocab]').click(); return false;">Vocabulaire</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=tips]').click(); return false;">Conseils</a>
+    <a href="checklist.html" class="external">Check-list</a>
     <a href="budget.html" class="external">Comptes</a>
     <a href="journal.html" class="external">Journal</a>
     <a href="voitures.html" class="external">Voitures</a>
@@ -3980,6 +4070,94 @@ document.querySelectorAll('.step-card[data-jump-tab]').forEach(card => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
   });
 });
+
+// ============================
+// DETAILED PLANNING PER ESCALE — clone day-cards + fetch hero image
+// ============================
+const DAY_WIKI = {
+  i:     { wiki: null,                                     fb: '✈️ Nice → Doha' },
+  ii:    { wiki: 'Aéroport_international_du_Kansai',       fb: 'Arrivée KIX · Osaka' },
+  iii:   { wiki: 'Château_d\'Osaka',                       fb: 'Osaka classique' },
+  iv:    { wiki: 'Itsukushima-jinja',                      fb: 'Hiroshima · Miyajima' },
+  v:     { wiki: 'Universal_Studios_Japan',                fb: 'Universal Studios Japan' },
+  vi:    { wiki: 'Kiyomizu-dera',                          fb: 'Kyoto · Higashiyama' },
+  vii:   { wiki: 'Arashiyama',                             fb: 'Arashiyama · bambous' },
+  viii:  { wiki: 'Fushimi_Inari-taisha',                   fb: 'Fushimi Inari' },
+  ix:    { wiki: 'Tōdai-ji',                               fb: 'Nara · day trip' },
+  x:     { wiki: 'Hakone',                                 fb: 'Arrivée Hakone' },
+  xi:    { wiki: 'Ōwakudani',                              fb: 'Round Course · Yunessun' },
+  xii:   { wiki: 'Onsen',                                  fb: 'Détente cottage' },
+  xiii:  { wiki: 'Sensō-ji',                               fb: 'Asakusa · Sensō-ji' },
+  xiv:   { wiki: 'Shibuya',                                fb: 'Harajuku · Shibuya' },
+  xv:    { wiki: 'Pagode_Chūreitō',                        fb: 'Mont Fuji' },
+  xvi:   { wiki: 'Daibutsu_de_Kamakura',                   fb: 'Kamakura' },
+  xvii:  { wiki: 'Akihabara',                              fb: 'TeamLab · Akihabara' },
+  xviii: { wiki: null,                                     fb: '✈️ Retour Nice' }
+};
+
+function populateEscalePlannings() {
+  const sourceDays = document.querySelectorAll('#planning .day-card');
+  if (!sourceDays.length) return;
+  // Build map: roman numeral → original day-card
+  const byRoman = {};
+  sourceDays.forEach(card => {
+    const num = card.querySelector('.day-num')?.textContent?.trim().replace('.', '');
+    if (num) byRoman[num] = card;
+  });
+
+  const hosts = document.querySelectorAll('.escale-planning-grid[data-days]');
+  hosts.forEach(host => {
+    const days = host.dataset.days.split(',').map(d => d.trim());
+    days.forEach(d => {
+      const original = byRoman[d];
+      if (!original) return;
+      const clone = original.cloneNode(true);
+      clone.classList.add('illustrated');
+
+      const info = DAY_WIKI[d] || { fb: '' };
+      const illust = document.createElement('div');
+      illust.className = 'day-illust';
+
+      const fallback = document.createElement('div');
+      fallback.className = 'day-illust-fallback';
+      fallback.textContent = info.fb;
+      illust.appendChild(fallback);
+
+      const overlay = document.createElement('div');
+      overlay.className = 'day-illust-overlay';
+      overlay.textContent = 'Jour ' + d;
+      illust.appendChild(overlay);
+
+      clone.prepend(illust);
+      host.appendChild(clone);
+
+      // Fetch async if we have a wiki entry
+      if (info.wiki) {
+        fetch(`https://fr.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(info.wiki)}`)
+          .then(r => r.ok ? r.json() : null)
+          .then(data => {
+            if (!data) return;
+            const src = data.originalimage?.source || data.thumbnail?.source;
+            if (!src) return;
+            const img = document.createElement('img');
+            img.alt = info.fb;
+            img.loading = 'lazy';
+            img.referrerPolicy = 'no-referrer';
+            img.onload = () => img.classList.add('loaded');
+            img.src = src;
+            illust.insertBefore(img, fallback);
+          })
+          .catch(() => { /* silent */ });
+      }
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', populateEscalePlannings);
+} else {
+  populateEscalePlannings();
+}
 
 // Photo lightbox for .house-gallery thumbnails
 (function setupPhotoLightbox() {

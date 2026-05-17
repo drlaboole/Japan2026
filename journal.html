@@ -9,361 +9,99 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #fef7ec;
-  --bg-warm: #fbe9c9;
-  --paper: #ffffff;
-  --ink: #1a1a2e;
-  --ink-soft: #3a3a52;
-  --ink-mute: #6b6b85;
-  --line: #e8d9b8;
-  --line-soft: #f3e8cd;
-  --accent: #e63946;
-  --accent-soft: #ff6b35;
-  --gold: #f7b801;
-  --green: #2a8073;
-  --purple: #6a3093;
+  --bg: #fef7ec; --bg-warm: #fbe9c9; --paper: #ffffff;
+  --ink: #1a1a2e; --ink-soft: #3a3a52; --ink-mute: #6b6b85;
+  --line: #e8d9b8; --line-soft: #f3e8cd;
+  --accent: #e63946; --accent-soft: #ff6b35; --gold: #f7b801;
+  --green: #2a8073; --purple: #6a3093;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.65;
-  min-height: 100vh;
-}
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.65; min-height: 100vh; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
-
-.app {
-  max-width: 920px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
-}
-.nav-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 1.5rem;
-  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
-  background: var(--paper);
-  border-radius: 100px;
-  border: 1px solid var(--line-soft);
-}
+.app { max-width: 920px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.nav-back { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 1.5rem; padding: 0.4rem 0.8rem 0.4rem 0.55rem; background: var(--paper); border-radius: 100px; border: 1px solid var(--line-soft); }
 .nav-back:hover { color: var(--accent); text-decoration: none; }
-
 header.page-head { margin-bottom: 2rem; }
-.kicker {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 0.5rem;
-}
-.kicker .num {
-  display: inline-block;
-  background: var(--accent);
-  color: white;
-  padding: 0.2rem 0.55rem;
-  border-radius: 100px;
-  margin-right: 0.5rem;
-  font-weight: 600;
-}
-h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2.6rem;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 0.4rem;
-}
+.kicker { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 0.5rem; }
+.kicker .num { display: inline-block; background: var(--accent); color: white; padding: 0.2rem 0.55rem; border-radius: 100px; margin-right: 0.5rem; font-weight: 600; }
+h1 { font-family: 'DM Serif Display', serif; font-size: 2.6rem; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 0.4rem; }
 h1 em { font-style: italic; color: var(--accent); }
-.subtitle {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  color: var(--ink-mute);
-  font-size: 1.15rem;
-}
-
-.page-nav {
-  display: flex; flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 2.2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--line-soft);
-}
-.page-nav a {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  padding: 0.45rem 0.9rem;
-  border-radius: 100px;
-  border: 1px solid var(--line-soft);
-  background: var(--paper);
-}
+.subtitle { font-family: 'DM Serif Display', serif; font-style: italic; color: var(--ink-mute); font-size: 1.15rem; }
+.page-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line-soft); }
+.page-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); padding: 0.45rem 0.9rem; border-radius: 100px; border: 1px solid var(--line-soft); background: var(--paper); }
 .page-nav a:hover { color: var(--accent); text-decoration: none; border-color: var(--accent); }
 .page-nav a.active { background: var(--accent); color: var(--paper); border-color: var(--accent); }
 
-.card {
-  background: var(--paper);
-  border: 1px solid var(--line-soft);
-  border-radius: 16px;
-  padding: 1.5rem 1.6rem;
-  margin-bottom: 1.4rem;
-}
-.section-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  display: flex; align-items: center; gap: 0.6rem;
-}
-.section-title::before {
-  content: '';
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-}
+.card { background: var(--paper); border: 1px solid var(--line-soft); border-radius: 16px; padding: 1.5rem 1.6rem; margin-bottom: 1.4rem; }
+.section-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.6rem; }
+.section-title::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
 
 .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
-.field label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
+.field label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); }
+.field input[type="text"], .field input[type="date"], .field select, .field textarea {
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 0.6rem 0.8rem;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); width: 100%;
 }
-.field input[type="text"],
-.field input[type="date"],
-.field select,
-.field textarea {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.95rem;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper);
-  color: var(--ink);
-  width: 100%;
-}
-.field textarea { min-height: 120px; resize: vertical; font-family: 'DM Sans',sans-serif; line-height: 1.55; }
-.field input:focus, .field select:focus, .field textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(230,57,70,0.12);
-}
-
-.row-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+.field textarea { min-height: 120px; resize: vertical; line-height: 1.55; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(230,57,70,0.12); }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 600px) { .row-2 { grid-template-columns: 1fr; } }
 
-button.btn {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-weight: 600;
-  padding: 0.7rem 1.1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  background: var(--accent);
-  color: white;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-button.btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
+button.btn { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding: 0.7rem 1.1rem; border: none; border-radius: 8px; cursor: pointer; background: var(--accent); color: white; transition: transform 0.15s, box-shadow 0.15s; }
+button.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
+button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 button.btn.secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
-button.btn.secondary:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+button.btn.secondary:hover:not(:disabled) { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
 button.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-button.btn.danger {
-  background: transparent;
-  color: var(--accent);
-  border: 1px solid transparent;
-  padding: 0.4rem 0.6rem;
-  font-size: 0.7rem;
-}
+button.btn.danger { background: transparent; color: var(--accent); border: 1px solid transparent; padding: 0.4rem 0.6rem; font-size: 0.7rem; }
 button.btn.danger:hover { background: rgba(230,57,70,0.1); transform: none; box-shadow: none; }
 
-/* Photo upload */
-.photo-upload {
-  display: flex; flex-direction: column; gap: 0.6rem;
-}
-.upload-zone {
-  border: 2px dashed var(--line);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  color: var(--ink-mute);
-  font-size: 0.9rem;
-  transition: border-color 0.2s, background 0.2s;
-}
+.photo-upload { display: flex; flex-direction: column; gap: 0.6rem; }
+.upload-zone { border: 2px dashed var(--line); border-radius: 12px; padding: 1.5rem; text-align: center; cursor: pointer; color: var(--ink-mute); font-size: 0.9rem; transition: border-color 0.2s, background 0.2s; }
 .upload-zone:hover { border-color: var(--accent); background: rgba(230,57,70,0.04); }
 .upload-zone.drag { border-color: var(--accent); background: rgba(230,57,70,0.08); color: var(--accent); }
 .upload-zone strong { color: var(--accent); }
-.upload-previews {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-  gap: 0.5rem;
-}
-.upload-preview {
-  position: relative;
-  aspect-ratio: 1;
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--bg);
-}
-.upload-preview img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-}
-.upload-preview button {
-  position: absolute;
-  top: 4px; right: 4px;
-  width: 22px; height: 22px;
-  border: none; border-radius: 50%;
-  background: rgba(26,26,46,0.8);
-  color: white;
-  cursor: pointer;
-  font-size: 0.9rem; line-height: 1;
-}
+.upload-previews { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.5rem; }
+.upload-preview { position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: var(--bg); }
+.upload-preview img { width: 100%; height: 100%; object-fit: cover; }
+.upload-preview .uploading { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; }
+.upload-preview button { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border: none; border-radius: 50%; background: rgba(26,26,46,0.8); color: white; cursor: pointer; font-size: 0.9rem; line-height: 1; }
 
-/* Posts */
 .posts { display: flex; flex-direction: column; gap: 1.5rem; }
-.post {
-  background: var(--paper);
-  border: 1px solid var(--line-soft);
-  border-radius: 16px;
-  padding: 1.5rem 1.6rem 1.6rem;
-  position: relative;
-}
-.post-head {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.8rem;
-}
-.post-date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.post-place {
-  display: inline-block;
-  margin-top: 0.3rem;
-  background: var(--bg-warm);
-  padding: 0.18rem 0.55rem;
-  border-radius: 100px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--ink-soft);
-}
-.post-actions {
-  display: flex; gap: 0.3rem;
-  flex-shrink: 0;
-}
-.post-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.6rem;
-  letter-spacing: -0.015em;
-  margin-bottom: 0.6rem;
-}
-.post-text {
-  white-space: pre-wrap;
-  color: var(--ink-soft);
-  font-size: 0.98rem;
-  line-height: 1.7;
-  margin-bottom: 1rem;
-}
-.post-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.5rem;
-}
-.post-gallery img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
+.post { background: var(--paper); border: 1px solid var(--line-soft); border-radius: 16px; padding: 1.5rem 1.6rem 1.6rem; position: relative; }
+.post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.8rem; }
+.post-date { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); }
+.post-place { display: inline-block; margin-top: 0.3rem; background: var(--bg-warm); padding: 0.18rem 0.55rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-soft); }
+.post-author { display: inline-block; margin-left: 0.3rem; padding: 0.18rem 0.55rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.post-author.haubertin { background: rgba(230,57,70,0.15); color: var(--accent); }
+.post-author.mallet { background: rgba(42,67,101,0.15); color: #2a4365; }
+.post-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
+.post-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; letter-spacing: -0.015em; margin-bottom: 0.6rem; }
+.post-text { white-space: pre-wrap; color: var(--ink-soft); font-size: 0.98rem; line-height: 1.7; margin-bottom: 1rem; }
+.post-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
+.post-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.2s; background: var(--bg-warm); }
 .post-gallery img:hover { transform: scale(1.02); }
 
-.empty-state {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--ink-mute);
-  font-style: italic;
-}
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--ink-mute); font-style: italic; }
+.loading-state { text-align: center; padding: 2rem 1rem; color: var(--ink-mute); font-style: italic; }
+.loading-state::before { content: ''; display: inline-block; width: 16px; height: 16px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-.actions-bar {
-  display: flex; flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.filters {
-  display: flex; flex-wrap: wrap; gap: 0.5rem;
-  margin-bottom: 1.4rem;
-}
-.filters select, .filters input {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper);
-}
+.actions-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; align-items: center; }
+.cloud-status { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em; color: var(--green); padding: 0.3rem 0.7rem; background: rgba(42,128,115,0.08); border-radius: 100px; }
+.cloud-status.error { color: var(--accent); background: rgba(230,57,70,0.08); }
 
-/* Lightbox */
-.lightbox {
-  position: fixed; inset: 0;
-  background: rgba(26,26,46,0.92);
-  display: none;
-  align-items: center; justify-content: center;
-  padding: 2rem;
-  z-index: 100;
-  cursor: zoom-out;
-}
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.4rem; }
+.filters select, .filters input { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; padding: 0.45rem 0.7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+
+.lightbox { position: fixed; inset: 0; background: rgba(26,26,46,0.92); display: none; align-items: center; justify-content: center; padding: 2rem; z-index: 100; cursor: zoom-out; }
 .lightbox.open { display: flex; }
 .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
 
-.size-warning {
-  font-size: 0.78rem;
-  color: var(--ink-mute);
-  margin-top: 0.4rem;
-}
-
-footer.foot {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--line-soft);
-  font-size: 0.78rem;
-  color: var(--ink-mute);
-  text-align: center;
-}
-.foot .jp {
-  font-family: 'DM Serif Display', serif;
-  font-style: italic;
-  color: var(--accent);
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
+footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--line-soft); font-size: 0.78rem; color: var(--ink-mute); text-align: center; }
+.foot .jp { font-family: 'DM Serif Display', serif; font-style: italic; color: var(--accent); font-size: 1rem; margin-bottom: 0.5rem; }
 </style>
 </head>
 <body>
@@ -372,13 +110,14 @@ footer.foot {
   <a href="index.html" class="nav-back">← Retour au site principal</a>
 
   <header class="page-head">
-    <div class="kicker"><span class="num">03</span> Carnet de voyage</div>
+    <div class="kicker"><span class="num">03</span> Carnet de voyage · synchronisé</div>
     <h1>Journal du <em>voyage</em></h1>
-    <p class="subtitle">日記 — Souvenirs et photographies au fil des jours</p>
+    <p class="subtitle">日記 — Posts et photos partagés entre toutes les familles, sur tous les appareils</p>
   </header>
 
   <nav class="page-nav" aria-label="Sections du voyage">
     <a href="index.html">Site principal</a>
+    <a href="checklist.html">Check-list</a>
     <a href="budget.html">Budget</a>
     <a href="journal.html" class="active">Journal de voyage</a>
     <a href="voitures.html">Voitures Hakone</a>
@@ -411,9 +150,19 @@ footer.foot {
           </select>
         </div>
       </div>
-      <div class="field">
-        <label for="f-title">Titre (optionnel)</label>
-        <input type="text" id="f-title" placeholder="Ex : Premier yakitori à Dōtonbori">
+      <div class="row-2">
+        <div class="field">
+          <label for="f-title">Titre (optionnel)</label>
+          <input type="text" id="f-title" placeholder="Ex : Premier yakitori à Dōtonbori">
+        </div>
+        <div class="field">
+          <label for="f-author">Auteur</label>
+          <select id="f-author">
+            <option value="">—</option>
+            <option value="haubertin">Famille Haubertin</option>
+            <option value="mallet">Famille Mallet</option>
+          </select>
+        </div>
       </div>
       <div class="field">
         <label for="f-text">Récit</label>
@@ -423,11 +172,11 @@ footer.foot {
         <label>Photographies</label>
         <div class="upload-zone" id="uploadZone">
           <strong>Cliquez ou déposez</strong> des photos ici<br>
-          <small>Les photos sont automatiquement compressées (max 1280 px, JPEG)</small>
+          <small>Compression auto (max 1280 px, JPEG) puis upload chiffré vers le cloud</small>
           <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
         </div>
         <div class="upload-previews" id="previews"></div>
-        <div class="size-warning" id="sizeInfo"></div>
+        <div id="sizeInfo" style="font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.4rem;"></div>
       </div>
       <div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">
         <button type="submit" class="btn" id="submitBtn">Publier l'entrée</button>
@@ -441,51 +190,52 @@ footer.foot {
     <div class="section-title">Entrées du journal (<span id="postCount">0</span>)</div>
 
     <div class="actions-bar">
+      <button class="btn secondary" id="btnRefresh">↻ Rafraîchir</button>
       <button class="btn secondary" id="btnExport">⤓ Exporter JSON</button>
-      <button class="btn secondary" id="btnImport">⤒ Importer JSON</button>
-      <input type="file" id="importFile" accept=".json" style="display:none">
-      <span style="margin-left:auto; font-size:0.78rem; color:var(--ink-mute); align-self:center;" id="storageInfo"></span>
+      <div class="cloud-status" id="cloudStatus">☁ Synchronisé</div>
     </div>
 
     <div class="filters">
       <select id="filterPlace">
         <option value="">Tous les lieux</option>
       </select>
+      <select id="filterAuthor">
+        <option value="">Toutes les familles</option>
+        <option value="haubertin">Famille Haubertin</option>
+        <option value="mallet">Famille Mallet</option>
+      </select>
       <input type="text" id="filterSearch" placeholder="Recherche libre...">
     </div>
 
     <div class="posts" id="postsList"></div>
-    <div class="empty-state" id="emptyState">Aucune entrée pour le moment. Publiez votre première ci-dessus.</div>
+    <div class="loading-state" id="loadingState">Chargement des entrées depuis le cloud…</div>
+    <div class="empty-state" id="emptyState" style="display:none;">Aucune entrée pour le moment. Publiez votre première ci-dessus.</div>
   </section>
 
   <nav class="page-nav" style="margin-top:3rem;border-bottom:none;border-top:1px solid var(--line-soft);padding-top:1.5rem;padding-bottom:0;" aria-label="Navigation pied de page">
     <a href="index.html">Site principal</a>
+    <a href="checklist.html">Check-list</a>
     <a href="budget.html">Budget</a>
     <a href="journal.html" class="active">Journal</a>
     <a href="voitures.html">Voitures Hakone</a>
   </nav>
 
   <footer class="foot">
-    <div class="jp">日記 — Carnet de voyage</div>
-    Données stockées localement dans votre navigateur. Photos compressées automatiquement.
-    Pensez à exporter régulièrement vers un fichier JSON pour ne rien perdre.
+    <div class="jp">日記 — Carnet de voyage cloud</div>
+    Posts et photos synchronisés en temps réel entre tous les appareils des 2 familles. Stockage Cloudflare D1 + R2.
   </footer>
 </div>
 
 <div class="lightbox" id="lightbox"><img src="" alt=""></div>
 
+<script src="api-client.js"></script>
 <script>
-/* =====================================================
-   JOURNAL — Voyage Japon 2026
-   Stockage localStorage avec photos en dataURL (compressées)
-   ===================================================== */
-
-const STORAGE_KEY = 'japan2026.journal.v1';
 const $ = (id) => document.getElementById(id);
 
-let posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-let pendingPhotos = []; // dataURLs of photos being added in form
+let posts = [];
+let pendingPhotos = []; // { key, url } already uploaded to R2
 let editingId = null;
+let editingOriginal = null;
 
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const today = () => new Date().toISOString().slice(0, 10);
@@ -495,27 +245,17 @@ function escapeHtml(s) {
 }
 
 function formatDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  try { return new Date(iso).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
+  catch { return iso; }
 }
 
-function save() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-    updateStorageInfo();
-  } catch (e) {
-    alert('Espace de stockage saturé. Exportez vos données et supprimez d\'anciennes entrées ou photos.');
-  }
+function setCloudStatus(text, isError = false) {
+  const el = $('cloudStatus');
+  el.textContent = text;
+  el.classList.toggle('error', isError);
 }
 
-function updateStorageInfo() {
-  const data = localStorage.getItem(STORAGE_KEY) || '';
-  const kb = Math.round(data.length / 1024);
-  const mb = (kb / 1024).toFixed(1);
-  $('storageInfo').textContent = `Stockage local : ~${kb < 1024 ? kb + ' Ko' : mb + ' Mo'}`;
-}
-
-// ---- Photo compression ----
+// ---- Compression photo (côté client, AVANT upload) ----
 function compressImage(file) {
   return new Promise((resolve, reject) => {
     const img = new Image();
@@ -526,21 +266,16 @@ function compressImage(file) {
       const MAX = 1280;
       let { width, height } = img;
       if (width > MAX || height > MAX) {
-        if (width > height) {
-          height = Math.round(height * (MAX / width));
-          width = MAX;
-        } else {
-          width = Math.round(width * (MAX / height));
-          height = MAX;
-        }
+        if (width > height) { height = Math.round(height * (MAX / width)); width = MAX; }
+        else { width = Math.round(width * (MAX / height)); height = MAX; }
       }
       const canvas = document.createElement('canvas');
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, width, height);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
-      resolve(dataUrl);
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      canvas.toBlob((blob) => {
+        if (!blob) return reject(new Error('blob failed'));
+        resolve(blob);
+      }, 'image/jpeg', 0.82);
     };
     img.onerror = reject;
     reader.readAsDataURL(file);
@@ -550,23 +285,33 @@ function compressImage(file) {
 async function handleFiles(fileList) {
   const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
   if (!files.length) return;
-  $('sizeInfo').textContent = `Traitement de ${files.length} photo${files.length>1?'s':''}...`;
-  for (const f of files) {
+  $('sizeInfo').textContent = `Compression et upload de ${files.length} photo${files.length>1?'s':''}…`;
+  for (let i = 0; i < files.length; i++) {
     try {
-      const data = await compressImage(f);
-      pendingPhotos.push(data);
+      const blob = await compressImage(files[i]);
+      // Show local preview immediately
+      const localUrl = URL.createObjectURL(blob);
+      const placeholderIdx = pendingPhotos.length;
+      pendingPhotos.push({ url: localUrl, uploading: true });
+      renderPreviews();
+      // Upload to R2
+      const buf = await blob.arrayBuffer();
+      const result = await Japan2026Api.uploadPhotoFromBuffer(buf, 'image/jpeg');
+      pendingPhotos[placeholderIdx] = { key: result.key, url: result.url };
+      renderPreviews();
     } catch (e) {
-      console.error('Erreur compression:', e);
+      console.error('Photo error:', e);
+      $('sizeInfo').textContent = `Erreur : ${e.message}`;
     }
   }
-  $('sizeInfo').textContent = `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} en attente`;
-  renderPreviews();
+  $('sizeInfo').textContent = `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} prêtes`;
 }
 
 function renderPreviews() {
-  $('previews').innerHTML = pendingPhotos.map((src, i) => `
+  $('previews').innerHTML = pendingPhotos.map((p, i) => `
     <div class="upload-preview">
-      <img src="${src}" alt="">
+      <img src="${p.url}" alt="">
+      ${p.uploading ? '<div class="uploading">↑ upload…</div>' : ''}
       <button type="button" data-i="${i}" aria-label="Retirer">×</button>
     </div>
   `).join('');
@@ -577,25 +322,13 @@ $('previews').addEventListener('click', (ev) => {
   if (!btn) return;
   pendingPhotos.splice(parseInt(btn.dataset.i, 10), 1);
   renderPreviews();
-  $('sizeInfo').textContent = pendingPhotos.length ? `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} en attente` : '';
 });
 
-// Upload zone interactions
 $('uploadZone').addEventListener('click', () => $('fileInput').click());
-$('fileInput').addEventListener('change', (ev) => {
-  handleFiles(ev.target.files);
-  ev.target.value = '';
-});
-$('uploadZone').addEventListener('dragover', (ev) => {
-  ev.preventDefault();
-  $('uploadZone').classList.add('drag');
-});
+$('fileInput').addEventListener('change', (ev) => { handleFiles(ev.target.files); ev.target.value = ''; });
+$('uploadZone').addEventListener('dragover', (ev) => { ev.preventDefault(); $('uploadZone').classList.add('drag'); });
 $('uploadZone').addEventListener('dragleave', () => $('uploadZone').classList.remove('drag'));
-$('uploadZone').addEventListener('drop', (ev) => {
-  ev.preventDefault();
-  $('uploadZone').classList.remove('drag');
-  handleFiles(ev.dataTransfer.files);
-});
+$('uploadZone').addEventListener('drop', (ev) => { ev.preventDefault(); $('uploadZone').classList.remove('drag'); handleFiles(ev.dataTransfer.files); });
 
 // ---- Form ----
 function resetForm() {
@@ -608,6 +341,7 @@ function resetForm() {
   $('submitBtn').textContent = 'Publier l\'entrée';
   $('cancelEdit').style.display = 'none';
   editingId = null;
+  editingOriginal = null;
 }
 
 function loadPostToForm(p) {
@@ -615,17 +349,19 @@ function loadPostToForm(p) {
   $('f-place').value = p.place || '';
   $('f-title').value = p.title || '';
   $('f-text').value = p.text || '';
-  pendingPhotos = [...(p.photos || [])];
+  $('f-author').value = p.author || '';
+  pendingPhotos = (p.photos || []).map(key => ({ key, url: `/api/photo/${key}` }));
   renderPreviews();
   $('sizeInfo').textContent = `${pendingPhotos.length} photo${pendingPhotos.length>1?'s':''} attachée${pendingPhotos.length>1?'s':''}`;
   $('formTitle').textContent = 'Modifier l\'entrée';
   $('submitBtn').textContent = 'Enregistrer';
   $('cancelEdit').style.display = 'inline-block';
   editingId = p.id;
+  editingOriginal = p;
   window.scrollTo({ top: $('postForm').offsetTop - 80, behavior: 'smooth' });
 }
 
-$('postForm').addEventListener('submit', (ev) => {
+$('postForm').addEventListener('submit', async (ev) => {
   ev.preventDefault();
   const text = $('f-text').value.trim();
   const title = $('f-title').value.trim();
@@ -633,24 +369,38 @@ $('postForm').addEventListener('submit', (ev) => {
     alert('Ajoutez au moins un titre, un texte ou une photo.');
     return;
   }
+  if (pendingPhotos.some(p => p.uploading)) {
+    alert('Patientez la fin de l\'upload des photos.');
+    return;
+  }
+
+  const submitBtn = $('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Envoi en cours…';
+
   const post = {
-    id: editingId || uid(),
+    id: editingId || undefined,
     date: $('f-date').value,
     place: $('f-place').value || null,
-    title,
-    text,
-    photos: [...pendingPhotos],
-    createdAt: editingId ? (posts.find(x => x.id === editingId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    title, text,
+    photos: pendingPhotos.map(p => p.key),
+    author: $('f-author').value || null,
+    createdAt: editingOriginal ? editingOriginal.created_at : undefined,
   };
-  if (editingId) {
-    posts = posts.map(p => p.id === editingId ? post : p);
-  } else {
-    posts.unshift(post);
+
+  try {
+    await Japan2026Api.savePost(post);
+    setCloudStatus('☁ Synchronisé');
+    resetForm();
+    await loadPosts();
+  } catch (e) {
+    console.error(e);
+    setCloudStatus('⚠ Erreur cloud', true);
+    alert('Erreur d\'enregistrement : ' + e.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = editingId ? 'Enregistrer' : 'Publier l\'entrée';
   }
-  save();
-  resetForm();
-  renderAll();
 });
 
 $('cancelEdit').addEventListener('click', resetForm);
@@ -661,6 +411,7 @@ function renderList() {
   const empty = $('emptyState');
   const search = $('filterSearch').value.toLowerCase().trim();
   const fp = $('filterPlace').value;
+  const fa = $('filterAuthor').value;
 
   // Update places filter
   const places = Array.from(new Set(posts.map(p => p.place).filter(Boolean))).sort();
@@ -668,9 +419,10 @@ function renderList() {
   $('filterPlace').innerHTML = '<option value="">Tous les lieux</option>' +
     places.map(pl => `<option value="${escapeHtml(pl)}" ${pl===currentPlace?'selected':''}>${escapeHtml(pl)}</option>`).join('');
 
-  let rows = [...posts].sort((a, b) => b.date.localeCompare(a.date) || b.createdAt.localeCompare(a.createdAt));
+  let rows = [...posts].sort((a, b) => b.date.localeCompare(a.date) || (b.created_at || '').localeCompare(a.created_at || ''));
   rows = rows.filter(p => {
     if (fp && p.place !== fp) return false;
+    if (fa && p.author !== fa) return false;
     if (search) {
       const haystack = ((p.title || '') + ' ' + (p.text || '') + ' ' + (p.place || '')).toLowerCase();
       if (!haystack.includes(search)) return false;
@@ -682,11 +434,12 @@ function renderList() {
   empty.style.display = rows.length === 0 ? 'block' : 'none';
 
   body.innerHTML = rows.map(p => `
-    <article class="post" data-id="${p.id}">
+    <article class="post" data-id="${escapeHtml(p.id)}">
       <div class="post-head">
         <div>
           <div class="post-date">${formatDate(p.date)}</div>
           ${p.place ? `<span class="post-place">${escapeHtml(p.place)}</span>` : ''}
+          ${p.author ? `<span class="post-author ${p.author}">${p.author === 'haubertin' ? 'Haubertin' : 'Mallet'}</span>` : ''}
         </div>
         <div class="post-actions">
           <button class="btn danger" data-action="edit" title="Modifier">✎ Éditer</button>
@@ -695,12 +448,12 @@ function renderList() {
       </div>
       ${p.title ? `<h3 class="post-title">${escapeHtml(p.title)}</h3>` : ''}
       ${p.text ? `<div class="post-text">${escapeHtml(p.text)}</div>` : ''}
-      ${(p.photos && p.photos.length) ? `<div class="post-gallery">${p.photos.map((src, i) => `<img src="${src}" alt="Photo ${i+1}" data-i="${i}">`).join('')}</div>` : ''}
+      ${(p.photos && p.photos.length) ? `<div class="post-gallery">${p.photos.map((k, i) => `<img src="/api/photo/${encodeURIComponent(k)}" alt="Photo ${i+1}" loading="lazy">`).join('')}</div>` : ''}
     </article>
   `).join('');
 }
 
-$('postsList').addEventListener('click', (ev) => {
+$('postsList').addEventListener('click', async (ev) => {
   const btn = ev.target.closest('button[data-action]');
   if (btn) {
     const article = btn.closest('article');
@@ -711,21 +464,23 @@ $('postsList').addEventListener('click', (ev) => {
       loadPostToForm(p);
     } else if (btn.dataset.action === 'del') {
       if (confirm(`Supprimer cette entrée du ${formatDate(p.date)} ?`)) {
-        posts = posts.filter(x => x.id !== id);
-        save();
-        renderAll();
+        try {
+          await Japan2026Api.deletePost(p.id);
+          await loadPosts();
+          setCloudStatus('☁ Synchronisé');
+        } catch (e) {
+          setCloudStatus('⚠ Erreur cloud', true);
+          alert('Erreur de suppression : ' + e.message);
+        }
       }
     }
     return;
   }
   // Photo click → lightbox
-  const img = ev.target.closest('img[data-i]');
-  if (img) {
-    openLightbox(img.src);
-  }
+  const img = ev.target.closest('.post-gallery img');
+  if (img) openLightbox(img.src);
 });
 
-// ---- Lightbox ----
 function openLightbox(src) {
   const lb = $('lightbox');
   lb.querySelector('img').src = src;
@@ -738,12 +493,28 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ---- Filters ----
-['filterPlace','filterSearch'].forEach(id => {
+['filterPlace','filterAuthor','filterSearch'].forEach(id => {
   $(id).addEventListener('input', renderList);
 });
 
-// ---- Export / Import ----
+// ---- Load + refresh ----
+async function loadPosts() {
+  try {
+    setCloudStatus('☁ Chargement…');
+    posts = await Japan2026Api.listPosts();
+    $('loadingState').style.display = 'none';
+    renderList();
+    setCloudStatus('☁ Synchronisé');
+  } catch (e) {
+    console.error(e);
+    setCloudStatus('⚠ Erreur cloud', true);
+    $('loadingState').textContent = 'Erreur de chargement. Vérifie le mot de passe.';
+  }
+}
+
+$('btnRefresh').addEventListener('click', loadPosts);
+
+// ---- Export (read-only backup) ----
 $('btnExport').addEventListener('click', () => {
   const data = { posts, exportedAt: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -755,36 +526,9 @@ $('btnExport').addEventListener('click', () => {
   URL.revokeObjectURL(url);
 });
 
-$('btnImport').addEventListener('click', () => $('importFile').click());
-$('importFile').addEventListener('change', (ev) => {
-  const file = ev.target.files[0];
-  if (!file) return;
-  const r = new FileReader();
-  r.onload = () => {
-    try {
-      const data = JSON.parse(r.result);
-      if (!Array.isArray(data.posts)) throw new Error('Format invalide');
-      if (!confirm(`Importer ${data.posts.length} entrée${data.posts.length>1?'s':''} ? Les entrées actuelles seront remplacées.`)) return;
-      posts = data.posts;
-      save();
-      renderAll();
-      alert('Import réussi.');
-    } catch (e) {
-      alert('Erreur d\'import : ' + e.message);
-    }
-  };
-  r.readAsText(file);
-  ev.target.value = '';
-});
-
 // ---- Init ----
-function renderAll() {
-  renderList();
-  updateStorageInfo();
-}
-
 resetForm();
-renderAll();
+loadPosts();
 </script>
 
 </body>
