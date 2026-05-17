@@ -1,1 +1,28 @@
-
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "japan2026",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "japan2026-db",
+      "database_id": "d8300852-d8ed-4309-a508-f97de955f549"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "PHOTOS",
+      "bucket_name": "japan2026-photos"
+    }
+  ]
+}
