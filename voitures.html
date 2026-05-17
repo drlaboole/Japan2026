@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Location de voitures · Hakone · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef7ec;
+  --bg-warm: #fbe9c9;
+  --paper: #ffffff;
+  --ink: #1a1a2e;
+  --ink-soft: #3a3a52;
+  --ink-mute: #6b6b85;
+  --line: #e8d9b8;
+  --line-soft: #f3e8cd;
+  --accent: #e63946;
+  --accent-soft: #ff6b35;
+  --gold: #f7b801;
+  --green: #2a8073;
+  --hakone: #2a8073;
+  --haubertin: #e63946;
+  --mallet: #2a4365;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.app { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
+  background: var(--paper);
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+}
+.nav-back:hover { color: var(--accent); text-decoration: none; }
+
+header.page-head { margin-bottom: 2rem; }
+.kicker {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+}
+.kicker .num {
+  display: inline-block;
+  background: var(--hakone);
+  color: white;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+h1 em { font-style: italic; color: var(--hakone); }
+.subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-size: 1.15rem;
+}
+
+.page-nav {
+  display: flex; flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.page-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 0.45rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+.page-nav a:hover { color: var(--hakone); text-decoration: none; border-color: var(--hakone); }
+.page-nav a.active { background: var(--hakone); color: var(--paper); border-color: var(--hakone); }
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.5rem;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.55rem;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+  letter-spacing: -0.01em;
+}
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--hakone);
+}
+.section-title.accent::before { background: var(--accent); }
+
+p { margin-bottom: 0.9rem; font-size: 0.98rem; color: var(--ink-soft); }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink); }
+
+ul, ol { margin: 0.6rem 0 1.2rem 1.4rem; }
+li { margin-bottom: 0.5rem; font-size: 0.96rem; color: var(--ink-soft); }
+li strong { color: var(--ink); }
+
+.summary-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.tile {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+}
+.tile.haubertin { border-top: 4px solid var(--haubertin); }
+.tile.mallet { border-top: 4px solid var(--mallet); }
+.tile.total { border-top: 4px solid var(--gold); }
+.tile .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.4rem;
+}
+.tile .value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.tile .sub { font-size: 0.78rem; color: var(--ink-mute); margin-top: 0.3rem; }
+
+.tip {
+  background: linear-gradient(135deg, rgba(247,184,1,0.13) 0%, rgba(230,57,70,0.08) 100%);
+  border-left: 4px solid var(--gold);
+  padding: 1rem 1.2rem;
+  border-radius: 0 10px 10px 0;
+  margin: 1rem 0 0.5rem;
+  font-size: 0.92rem;
+}
+.tip strong { display: block; margin-bottom: 0.3rem; color: #a37f00; }
+.tip.warning {
+  background: linear-gradient(135deg, rgba(230,57,70,0.12) 0%, rgba(255,107,53,0.08) 100%);
+  border-left-color: var(--accent);
+}
+.tip.warning strong { color: var(--accent); }
+.tip.success {
+  background: linear-gradient(135deg, rgba(42,128,115,0.12) 0%, rgba(42,128,115,0.05) 100%);
+  border-left-color: var(--green);
+}
+.tip.success strong { color: var(--green); }
+
+table.info {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.6rem 0 1rem;
+  font-size: 0.9rem;
+}
+table.info th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 2px solid var(--line);
+  background: var(--bg-warm);
+}
+table.info td {
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+table.info td strong { color: var(--ink); }
+table.info .num { font-family: 'JetBrains Mono', monospace; text-align: right; white-space: nowrap; }
+table.info tr:last-child td { border-bottom: none; }
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+.timeline li {
+  position: relative;
+  padding: 0.2rem 0 0.8rem 2.4rem;
+  border-left: 2px solid var(--line);
+  margin: 0;
+}
+.timeline li::before {
+  content: counter(step);
+  counter-increment: step;
+  position: absolute;
+  left: -16px;
+  top: 0;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--hakone);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.timeline { counter-reset: step; }
+.timeline li strong { display: block; font-family: 'DM Serif Display', serif; font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 0.2rem; }
+.timeline li:last-child { border-left: 2px solid transparent; }
+
+.agency-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.agency {
+  background: var(--bg-warm);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--line-soft);
+}
+.agency h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+.agency-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 100px;
+  background: var(--paper);
+  margin-bottom: 0.5rem;
+  color: var(--ink-mute);
+  font-weight: 600;
+}
+.agency-tag.recommended { background: var(--green); color: white; }
+.agency p { font-size: 0.88rem; margin-bottom: 0.4rem; }
+.agency a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+footer.foot {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+.foot .jp {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--hakone);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <a href="index.html" class="nav-back">← Retour au site principal</a>
+
+  <header class="page-head">
+    <div class="kicker"><span class="num">04</span> Location de voitures · Hakone</div>
+    <h1>Deux <em>voitures</em>, trois jours</h1>
+    <p class="subtitle">レンタカー — Liberté de mouvement dans le parc national</p>
+  </header>
+
+  <nav class="page-nav" aria-label="Sections du voyage">
+    <a href="index.html">Site principal</a>
+    <a href="budget.html">Budget</a>
+    <a href="journal.html">Journal</a>
+    <a href="voitures.html" class="active">Voitures Hakone</a>
+  </nav>
+
+  <!-- POURQUOI 2 VOITURES -->
+  <section class="card">
+    <div class="section-title">La logique du choix</div>
+    <p>Du <strong>3 au 6 août</strong>, vous serez 8 voyageurs dans deux familles, basés au cottage Hakone Ninotaira. Deux voitures pour deux familles, c'est l'arrangement le plus naturel : 4 personnes par véhicule, autonomie totale, possibilité de séparer les programmes à la journée si Haubertin et Mallet veulent faire des choses différentes (l'un au Open-Air Museum pendant que l'autre flâne autour du lac Ashi, par exemple).</p>
+    <p>Le cottage dispose d'<strong>un parking privé pour 2 voitures</strong>, c'est donc le format idéal — aucun stress de stationnement chez vous.</p>
+    <div class="tip success">
+      <strong>✓ Pertinence du choix</strong>
+      Avec une voiture, vous pouvez sortir du périmètre Hakone classique : Gotemba Premium Outlets (30 min), Mt Yamanaka, sources thermales discrètes hors des circuits, supermarchés A-Coop pour faire des courses BBQ au cottage, ou même pousser jusqu'au mont Komagatake. Le Hakone Free Pass ne couvre que la zone touristique.
+    </div>
+  </section>
+
+  <!-- DOCUMENTS -->
+  <section class="card">
+    <div class="section-title">Documents requis</div>
+    <p>La conduite au Japon par des Français nécessite <strong>impérativement</strong> un document de conduite reconnu. Il y a deux variantes possibles :</p>
+    <table class="info">
+      <thead>
+        <tr><th>Document</th><th>Délivré par</th><th>Validité</th><th>Statut</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Permis international (Convention de Genève 1949)</strong></td>
+          <td>Préfecture en France via <a href="https://permisdeconduire.ants.gouv.fr" target="_blank">ANTS</a></td>
+          <td>1 an au Japon</td>
+          <td><strong>Voie standard</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Traduction officielle du permis</strong></td>
+          <td>JAF (Japan Automobile Federation) ou consulat japonais</td>
+          <td>Tant que le permis FR est valide</td>
+          <td>Voie alternative — accepté par certaines agences</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip warning">
+      <strong>⚠️ À confirmer auprès de l'agence de location</strong>
+      Vous avez commandé la <strong>traduction</strong> de vos permis. Avant le départ, contactez votre agence de location pour confirmer que cette traduction (et non le permis international format Genève 1949) sera acceptée. La plupart des grandes agences (Toyota, Nippon, Times) acceptent les deux, mais c'est mieux d'avoir la confirmation par mail avant. Sinon, lancer en parallèle la demande de permis international sur ANTS (gratuit, ~2 semaines de délai).
+    </div>
+    <p style="margin-top:1rem;"><strong>Le jour de la prise en charge, à apporter :</strong></p>
+    <ul>
+      <li><strong>Permis de conduire français</strong> original (pas une photocopie)</li>
+      <li><strong>Permis international</strong> OU <strong>traduction JAF</strong> (selon ce que vous avez)</li>
+      <li><strong>Passeport</strong> du conducteur principal (et idéalement copie pour le conducteur additionnel)</li>
+      <li><strong>Carte bancaire</strong> au nom du conducteur (caution bloquée généralement ¥30 000 à ¥50 000)</li>
+    </ul>
+  </section>
+
+  <!-- TIMING -->
+  <section class="card">
+    <div class="section-title accent">Quand réserver</div>
+    <p>Nous sommes le <strong>17 mai 2026</strong>. Votre voyage commence dans environ <strong>10 semaines</strong>. Pour Hakone en pleine saison estivale, voici la fenêtre optimale :</p>
+    <ol class="timeline">
+      <li><strong>Maintenant (mai)</strong> Réserver les 2 voitures. Les compactes et berlines partent vite en juillet-août, surtout les jours autour des fêtes japonaises. Annulation gratuite jusqu'à 24-48h avant chez la plupart des agences — donc pas de risque à réserver tôt.</li>
+      <li><strong>1 mois avant (début juillet)</strong> Confirmer la réservation et vérifier les pièces justificatives demandées. Imprimer le voucher.</li>
+      <li><strong>1 semaine avant</strong> Vérifier la météo et l'état des routes (typhons possibles en août). Charger le numéro de l'agence et l'adresse sur le téléphone.</li>
+      <li><strong>Jour J (3 août)</strong> Récupération à Odawara dès l'arrivée du Shinkansen. Compter 30-45 min pour la paperasse et la prise en main.</li>
+    </ol>
+  </section>
+
+  <!-- AGENCES -->
+  <section class="card">
+    <div class="section-title">Agences recommandées</div>
+    <p>Le hub naturel pour récupérer une voiture pour Hakone est <strong>Odawara Station</strong> (l'arrivée du Shinkansen depuis Kyoto). Toutes les grandes agences y ont un comptoir. Voici les options par ordre de préférence pour des conducteurs étrangers :</p>
+    <div class="agency-grid">
+      <div class="agency">
+        <span class="agency-tag recommended">Recommandée</span>
+        <h4>Toyota Rent A Car</h4>
+        <p>La plus rassurante pour les Français : interface anglaise impeccable, employés formés à recevoir les étrangers, flotte récente, GPS multilingue. Compact 4 places (Vitz/Yaris) à partir de ¥7 000/jour, berline familiale (Corolla, Axio) à ¥9 500/jour.</p>
+        <a href="https://rent.toyota.co.jp/en/" target="_blank">rent.toyota.co.jp →</a>
+      </div>
+      <div class="agency">
+        <span class="agency-tag recommended">Recommandée</span>
+        <h4>Klook (multi-agences)</h4>
+        <p>Comparateur en français qui regroupe Toyota, Nippon, Times et Orix. Souvent les meilleurs prix promotionnels. Réservation et paiement direct sur Klook (¥/€), retrait à l'agence physique. Annulation gratuite généralement 24h avant.</p>
+        <a href="https://www.klook.com/transport/car-rental/" target="_blank">klook.com →</a>
+      </div>
+      <div class="agency">
+        <span class="agency-tag">Bonne alternative</span>
+        <h4>Nippon Rent-A-Car</h4>
+        <p>Numéro 2 du marché japonais, présent à Odawara. Prix légèrement inférieurs à Toyota, anglais correct, flotte un peu plus ancienne mais bien entretenue.</p>
+        <a href="https://www.nrgroup-global.com/en/" target="_blank">nrgroup-global.com →</a>
+      </div>
+      <div class="agency">
+        <span class="agency-tag">Bonne alternative</span>
+        <h4>Times Car</h4>
+        <p>Très populaire localement. Bonne flotte de berlines familiales. App d'auto-récupération possible (digicode sur le véhicule). Anglais sommaire.</p>
+        <a href="https://rental.timescar.jp/en/" target="_blank">rental.timescar.jp →</a>
+      </div>
+      <div class="agency">
+        <span class="agency-tag">Spécialiste étrangers</span>
+        <h4>ToCoo! Travel</h4>
+        <p>Comparateur multi-agences spécifiquement conçu pour les étrangers visitant le Japon. Filtres "permis international accepté", "GPS anglais", "ETC fournie". Excellent pour clarifier les questions de documents.</p>
+        <a href="https://www2.tocoo.jp/en/" target="_blank">tocoo.jp →</a>
+      </div>
+      <div class="agency">
+        <span class="agency-tag">Si budget serré</span>
+        <h4>Orix Rent-a-Car</h4>
+        <p>Prix les plus bas du marché, flotte correcte mais service moins poli. Anglais limité. Plutôt pour conducteurs déjà à l'aise avec le Japon.</p>
+        <a href="https://car.orix.co.jp/eng/" target="_blank">car.orix.co.jp →</a>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>Astuce groupe</strong>
+      Si vous réservez les 2 voitures chez la <strong>même agence</strong>, vous pouvez souvent négocier un petit rabais (~10%) ou un upgrade gratuit. Mentionnez-le par mail à l'agence après réservation.
+    </div>
+  </section>
+
+  <!-- VEHICULES -->
+  <section class="card">
+    <div class="section-title">Quels véhicules pour 4 personnes ?</div>
+    <p>Pour 4 personnes avec quelques bagages (vous voyagez léger après envoi des grosses valises en Takkyubin entre Kyoto et Tokyo), trois formats sont pertinents :</p>
+    <table class="info">
+      <thead>
+        <tr><th>Catégorie</th><th>Exemples</th><th>Confort</th><th class="num">Tarif /jour</th><th class="num">3 jours</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Compacte</strong></td>
+          <td>Toyota Vitz/Yaris, Honda Fit, Nissan Note</td>
+          <td>4 personnes serrés + 2 valises</td>
+          <td class="num">¥6 500-8 000</td>
+          <td class="num">¥20-24 000 (~140 €)</td>
+        </tr>
+        <tr style="background:rgba(42,128,115,0.06);">
+          <td><strong>Berline familiale</strong> ✓</td>
+          <td>Toyota Corolla Axio, Nissan Sylphy, Honda Grace</td>
+          <td>4 personnes confort + 3 valises</td>
+          <td class="num">¥9 000-11 000</td>
+          <td class="num">¥27-33 000 (~190 €)</td>
+        </tr>
+        <tr>
+          <td><strong>Monospace compact</strong></td>
+          <td>Toyota Sienta, Honda Freed</td>
+          <td>5-7 places + 4 valises</td>
+          <td class="num">¥12 000-15 000</td>
+          <td class="num">¥36-45 000 (~250 €)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Notre recommandation : la berline familiale (Corolla Axio ou équivalent)</strong>. Plus confortable que la compacte sur les routes sinueuses de Hakone, plus maniable que le monospace dans les villages étroits. Coffre suffisant pour 4 sacs de week-end.</p>
+    <p>Options à demander à la réservation :</p>
+    <ul>
+      <li><strong>GPS multilingue</strong> (français ou anglais) — souvent inclus, sinon ¥500/jour</li>
+      <li><strong>Carte ETC</strong> (Electronic Toll Collection) — pour les péages d'autoroute sans s'arrêter, ¥300/jour de location + caution ¥1 000 ; <strong>essentiel</strong> si vous comptez sortir de Hakone</li>
+      <li><strong>Assurance complète (CDW + NOC)</strong> — couvre dommages collision + perte d'exploitation. Surcoût ~¥1 100/jour mais vous évite un trou de plusieurs milliers d'€ en cas de pépin</li>
+      <li><strong>Siège bébé / enfant</strong> si nécessaire — obligatoire au Japon pour moins de 6 ans, ~¥1 000/séjour</li>
+    </ul>
+  </section>
+
+  <!-- BUDGET -->
+  <section class="card">
+    <div class="section-title accent">Budget prévisionnel</div>
+    <div class="summary-tiles">
+      <div class="tile haubertin">
+        <div class="label">Famille Haubertin</div>
+        <div class="value">~200 €</div>
+        <div class="sub">Berline 3 jours + extras</div>
+      </div>
+      <div class="tile mallet">
+        <div class="label">Famille Mallet</div>
+        <div class="value">~200 €</div>
+        <div class="sub">Berline 3 jours + extras</div>
+      </div>
+      <div class="tile total">
+        <div class="label">Total</div>
+        <div class="value">~400 €</div>
+        <div class="sub">Soit ~50 €/pers sur 3 jours</div>
+      </div>
+    </div>
+    <table class="info">
+      <thead>
+        <tr><th>Poste</th><th>Détail</th><th class="num">Par voiture</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Location berline</td><td>¥10 000 × 3 jours</td><td class="num">¥30 000 (~170 €)</td></tr>
+        <tr><td>Assurance CDW + NOC</td><td>¥1 100 × 3 jours</td><td class="num">¥3 300 (~19 €)</td></tr>
+        <tr><td>Carte ETC + GPS</td><td>Options diverses</td><td class="num">¥2 000 (~12 €)</td></tr>
+        <tr><td>Essence</td><td>~200 km à 12 km/L, ¥175/L</td><td class="num">¥3 000 (~17 €)</td></tr>
+        <tr><td>Péages (si excursion)</td><td>Hakone-Atami ou similaire</td><td class="num">¥1 500 (~9 €)</td></tr>
+        <tr><td>Parkings</td><td>Sites touristiques, ¥500-1 000/visite</td><td class="num">¥3 000 (~17 €)</td></tr>
+        <tr style="font-weight:600;background:var(--bg-warm);">
+          <td colspan="2">Total par voiture</td>
+          <td class="num">~¥43 000 (~245 €)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top:0.8rem;font-size:0.88rem;"><strong>Comparaison avec Hakone Free Pass</strong> : ¥6 100 adulte + ¥1 100 enfant × 8 = ~¥40 000 (~235 €). Les 2 voitures coûtent ~50% de plus, mais offrent la flexibilité d'aller où vous voulez et la possibilité de réelles excursions hors-zone.</p>
+  </section>
+
+  <!-- CONDUITE -->
+  <section class="card">
+    <div class="section-title">Conduire au Japon · Hakone</div>
+    <p>Pas d'inquiétude : conduire au Japon est <strong>beaucoup plus facile</strong> qu'on ne l'imagine. Les Japonais sont disciplinés, polis, jamais agressifs. La signalisation est claire (panneaux bilingues kanji/romaji sur les axes principaux). Quelques règles essentielles :</p>
+    <ul>
+      <li><strong>Conduite à gauche</strong> (comme au UK). Volant à droite. Quelques heures pour s'habituer. Faites un test sur des routes calmes à la prise en charge avant d'attaquer la montagne.</li>
+      <li><strong>Vitesse</strong> : 80 km/h sur autoroute (parfois 100), 50 km/h en zone urbaine, 30-40 km/h en montagne. Les Japonais conduisent <strong>plus lentement</strong> que les limites — calez-vous sur le rythme local.</li>
+      <li><strong>Alcoolémie : tolérance ZÉRO.</strong> Même un verre. Les amendes sont sévères (¥500 000 et 5 ans de prison potentiels) et peuvent affecter le visa.</li>
+      <li><strong>Téléphone au volant</strong> : interdit, même en bluetooth si vous tenez l'appareil. Amende ¥18 000.</li>
+      <li><strong>Ceinture obligatoire</strong> à toutes les places, y compris arrière.</li>
+      <li><strong>Sièges enfants</strong> obligatoires pour les moins de 6 ans.</li>
+    </ul>
+    <div class="tip warning">
+      <strong>⚠️ Hakone : routes de montagne</strong>
+      Les routes du parc national de Hakone sont étroites, sinueuses, avec des virages aveugles. En août, la pluie peut être violente (saison des typhons) et le brouillard fréquent au-dessus de 800 m. Conduisez doucement, klaxonnez avant les virages aveugles serrés (les Japonais le font, c'est attendu). Évitez les heures de pointe touristique (10h-12h, 15h-17h) sur la route principale 1 et la route 138.
+    </div>
+    <p><strong>Stationnement :</strong> les sites touristiques (Pola Museum, Open-Air Museum, Ōwakudani, Motohakone) ont tous des parkings, généralement payants (¥500 à ¥1 000 par visite). Le cottage a son propre parking, donc pas de souci pour la nuit. Les konbini ont des parkings gratuits si vous achetez quelque chose.</p>
+  </section>
+
+  <!-- ITINERAIRES SUPPL -->
+  <section class="card">
+    <div class="section-title">Idées d'excursions accessibles en voiture</div>
+    <p>Au-delà des sites Hakone classiques, voilà ce que la voiture vous ouvre :</p>
+    <ul>
+      <li><strong>Gotemba Premium Outlets</strong> (30 min) — Le plus grand outlet du Japon, avec vue Mt Fuji par temps clair. Idéal si vous voulez ramener des souvenirs ou des marques japonaises (Beams, United Arrows, etc.) à prix doux.</li>
+      <li><strong>Mt Komagatake téléphérique</strong> (15 min depuis Ninotaira) — Vue panoramique 360° meilleure encore qu'Ōwakudani. Moins fréquenté.</li>
+      <li><strong>Hakone Glass Forest Museum</strong> (10 min) — Forêt de cristaux Murano installés en plein air. Magnifique avec les enfants.</li>
+      <li><strong>Pola Museum of Art</strong> (15 min) — Architecture remarquable, collection Renoir et Monet impressionnante. Difficile d'accès en bus.</li>
+      <li><strong>Lac Kawaguchi côté Fuji</strong> (1h15) — Si vous voulez compléter le day trip Fuji prévu depuis Tokyo en doublant la vue depuis Hakone.</li>
+      <li><strong>Atami</strong> (30 min) — Petite ville thermale en bord de mer, contraste agréable avec la montagne.</li>
+    </ul>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="card">
+    <div class="section-title">Checklist avant le départ</div>
+    <ul>
+      <li>✓ Confirmer avec l'agence quel document elle accepte (traduction ou IDP)</li>
+      <li>✓ Réserver 2 véhicules (idéalement chez la même agence pour groupage)</li>
+      <li>✓ Imprimer le voucher de réservation</li>
+      <li>✓ Apporter les permis originaux + traduction/IDP + passeports + CB</li>
+      <li>✓ Télécharger Google Maps Japon hors-ligne (le GPS du véhicule + ça en backup)</li>
+      <li>✓ Noter l'adresse de l'agence et celle du cottage Hakone en kanji (pour le GPS japonais)</li>
+      <li>✓ Avoir 1 conducteur principal par voiture qui se sent à l'aise avec la conduite à gauche</li>
+      <li>✓ Prévoir une heure de marge le 3 août (Shinkansen + paperasse + prise en main)</li>
+      <li>✓ Souscrire l'assurance complète (CDW + NOC) — non négociable</li>
+    </ul>
+  </section>
+
+  <nav class="page-nav" style="margin-top:3rem;border-bottom:none;border-top:1px solid var(--line-soft);padding-top:1.5rem;padding-bottom:0;" aria-label="Navigation pied de page">
+    <a href="index.html">Site principal</a>
+    <a href="budget.html">Budget</a>
+    <a href="journal.html">Journal</a>
+    <a href="voitures.html" class="active">Voitures Hakone</a>
+  </nav>
+
+  <footer class="foot">
+    <div class="jp">レンタカー — Carnet de location</div>
+    Voitures pour Hakone · 3-6 août 2026 · 2 véhicules · 2 familles
+  </footer>
+</div>
+
+</body>
+</html>
