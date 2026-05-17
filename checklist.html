@@ -1,0 +1,900 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>À faire avant le départ · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef7ec;
+  --bg-warm: #fbe9c9;
+  --paper: #ffffff;
+  --ink: #1a1a2e;
+  --ink-soft: #3a3a52;
+  --ink-mute: #6b6b85;
+  --line: #e8d9b8;
+  --line-soft: #f3e8cd;
+  --accent: #e63946;
+  --accent-soft: #ff6b35;
+  --gold: #f7b801;
+  --green: #2a8073;
+  --purple: #6a3093;
+  --haubertin: #e63946;
+  --mallet: #2a4365;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.app { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+.nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.55rem;
+  background: var(--paper);
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+}
+.nav-back:hover { color: var(--accent); text-decoration: none; }
+
+header.page-head { margin-bottom: 2rem; }
+.kicker {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+}
+.kicker .num {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  margin-right: 0.5rem;
+  font-weight: 600;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+h1 em { font-style: italic; color: var(--accent); }
+.subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-size: 1.15rem;
+}
+
+.page-nav {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-bottom: 2.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.page-nav a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 0.45rem 0.9rem;
+  border-radius: 100px;
+  border: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+.page-nav a:hover { color: var(--accent); text-decoration: none; border-color: var(--accent); }
+.page-nav a.active { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+/* Progress card */
+.progress-card {
+  background: var(--paper);
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--line-soft);
+}
+.progress-row {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+.progress-row:last-child { margin-bottom: 0; }
+.progress-label {
+  flex-shrink: 0;
+  width: 110px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+.progress-label.haubertin { color: var(--haubertin); }
+.progress-label.mallet { color: var(--mallet); }
+.progress-bar {
+  flex: 1;
+  height: 14px;
+  background: var(--bg-warm);
+  border-radius: 100px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.4s ease;
+}
+.progress-bar-fill.haubertin { background: linear-gradient(90deg, var(--haubertin) 0%, var(--accent-soft) 100%); }
+.progress-bar-fill.mallet { background: linear-gradient(90deg, var(--mallet) 0%, var(--purple) 100%); }
+.progress-text {
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* Section */
+.section {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 16px;
+  padding: 1.5rem 1.6rem;
+  margin-bottom: 1.5rem;
+}
+.section-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.55rem;
+  letter-spacing: -0.01em;
+}
+.section-icon {
+  font-size: 1.4rem;
+  margin-right: 0.4rem;
+}
+.section-progress {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: right;
+  flex-shrink: 0;
+}
+.section-progress strong { display: block; font-size: 1rem; color: var(--ink); font-weight: 600; }
+
+/* Task */
+.task {
+  background: var(--bg-warm);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 1rem;
+  align-items: start;
+  border-left: 4px solid var(--line);
+  transition: opacity 0.25s;
+}
+.task:last-child { margin-bottom: 0; }
+.task.priority-critical { border-left-color: var(--accent); }
+.task.priority-high { border-left-color: var(--gold); }
+.task.priority-normal { border-left-color: var(--green); }
+.task.done { opacity: 0.55; }
+.task-content { min-width: 0; }
+.task-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.005em;
+}
+.task-deadline {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.55rem;
+  border-radius: 100px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--line);
+}
+.task.priority-critical .task-deadline {
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
+}
+.task.priority-high .task-deadline {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+.task-desc {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.task-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+.task-checks {
+  display: flex; flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.task-check {
+  display: flex; align-items: center; gap: 0.4rem;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.45rem 0.7rem;
+  border-radius: 100px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  transition: all 0.2s;
+}
+.task-check input { display: none; }
+.task-check .box {
+  width: 16px; height: 16px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.task-check.haubertin { color: var(--haubertin); }
+.task-check.mallet { color: var(--mallet); }
+.task-check:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+.task-check input:checked + .box {
+  background: currentColor;
+}
+.task-check input:checked + .box::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+}
+.task-check input:checked ~ .lbl {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+@media (max-width: 700px) {
+  .task { grid-template-columns: 1fr; }
+  .task-checks { flex-direction: row; }
+}
+
+/* Filters / actions */
+.toolbar {
+  display: flex; flex-wrap: wrap; gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+button.btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.55rem 0.9rem;
+  border: none; border-radius: 8px;
+  cursor: pointer;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+button.btn:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+button.btn.danger { color: var(--accent); border-color: var(--accent); background: transparent; }
+button.btn.danger:hover { background: rgba(230,57,70,0.08); }
+
+/* Highlight box */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(247,184,1,0.13) 0%, rgba(230,57,70,0.08) 100%);
+  border-left: 4px solid var(--gold);
+  padding: 1.2rem 1.4rem;
+  border-radius: 0 12px 12px 0;
+  margin-bottom: 1.5rem;
+}
+.highlight-box.critical {
+  background: linear-gradient(135deg, rgba(230,57,70,0.12) 0%, rgba(255,107,53,0.05) 100%);
+  border-left-color: var(--accent);
+}
+.highlight-box h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+.highlight-box p { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 0.6rem; }
+.highlight-box p:last-child { margin-bottom: 0; }
+.highlight-box ol { margin: 0.5rem 0 0 1.2rem; font-size: 0.9rem; color: var(--ink-soft); }
+.highlight-box ol li { margin-bottom: 0.3rem; }
+
+footer.foot {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  text-align: center;
+}
+.foot .jp {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <a href="index.html" class="nav-back">← Retour au site principal</a>
+
+  <header class="page-head">
+    <div class="kicker"><span class="num">05</span> Check-list de préparation</div>
+    <h1>À <em>faire</em> avant le départ</h1>
+    <p class="subtitle">出発前 — Une case cochée, un souci de moins</p>
+  </header>
+
+  <nav class="page-nav" aria-label="Sections du voyage">
+    <a href="index.html">Site principal</a>
+    <a href="budget.html">Budget</a>
+    <a href="journal.html">Journal</a>
+    <a href="voitures.html">Voitures Hakone</a>
+    <a href="checklist.html" class="active">Check-list</a>
+  </nav>
+
+  <!-- Progress -->
+  <div class="progress-card">
+    <div class="progress-row">
+      <div class="progress-label haubertin">Haubertin</div>
+      <div class="progress-bar"><div class="progress-bar-fill haubertin" id="progress-haubertin"></div></div>
+      <div class="progress-text" id="progress-text-haubertin">0 / 0</div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label mallet">Mallet</div>
+      <div class="progress-bar"><div class="progress-bar-fill mallet" id="progress-mallet"></div></div>
+      <div class="progress-text" id="progress-text-mallet">0 / 0</div>
+    </div>
+  </div>
+
+  <!-- Encart Visit Japan Web -->
+  <div class="highlight-box critical">
+    <h3>🛂 Le QR code Visit Japan Web — à ne pas oublier</h3>
+    <p>À l'arrivée à l'aéroport Kansai (KIX), vous présenterez votre passeport <strong>et un QR code par voyageur</strong> aux bornes d'immigration et de douane. Ce QR code est généré par le service officiel du gouvernement japonais.</p>
+    <ol>
+      <li>Allez sur <a href="https://www.vjw.digital.go.jp/main/" target="_blank"><strong>vjw.digital.go.jp</strong></a> dans les 2 semaines précédant le départ (le compte peut être créé plus tôt, les vols et hébergements remplis ensuite).</li>
+      <li>Créez un compte et renseignez : <strong>passeport, vol Qatar QR56/QR802, adresse Maison Sakuragawa (3-chōme-4-21 Sakuragawa, Naniwa Ward, Osaka 556-0022), déclaration de douane</strong>.</li>
+      <li>Le site génère un QR code par personne. <strong>8 voyageurs = 8 enregistrements distincts</strong> (parents pour les enfants).</li>
+      <li>À l'arrivée à KIX, présentez passeport + QR code aux bornes ou agents. Compter quelques secondes par personne au lieu de 10-15 min de paperasse manuelle.</li>
+    </ol>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button class="btn" id="btnExport">⤓ Exporter JSON</button>
+    <button class="btn" id="btnImport">⤒ Importer JSON</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+    <button class="btn danger" id="btnReset" style="margin-left:auto;">Tout décocher</button>
+  </div>
+
+  <div id="sections"></div>
+
+  <nav class="page-nav" style="margin-top:3rem;border-bottom:none;border-top:1px solid var(--line-soft);padding-top:1.5rem;padding-bottom:0;" aria-label="Navigation pied de page">
+    <a href="index.html">Site principal</a>
+    <a href="budget.html">Budget</a>
+    <a href="journal.html">Journal</a>
+    <a href="voitures.html">Voitures Hakone</a>
+    <a href="checklist.html" class="active">Check-list</a>
+  </nav>
+
+  <footer class="foot">
+    <div class="jp">出発前 — Liste de préparation</div>
+    Cochez à votre rythme. Les cases sont enregistrées dans votre navigateur — exportez le JSON pour partager l'état entre les deux familles.
+  </footer>
+</div>
+
+<script>
+/* =====================================================
+   CHECKLIST — Voyage Japon 2026
+   ===================================================== */
+
+const STORAGE_KEY = 'japan2026.checklist.v1';
+const $ = (id) => document.getElementById(id);
+
+/* ----------------- Données ----------------- */
+const SECTIONS = [
+  {
+    title: "Immigration & arrivée",
+    icon: "🛂",
+    items: [
+      {
+        id: "vjw",
+        title: "Visit Japan Web — créer le compte et générer les QR codes",
+        deadline: "Dans les 2 semaines avant le 25/7",
+        priority: "critical",
+        desc: "8 enregistrements distincts (un par voyageur, parents pour les enfants). Renseigner pour chacun : passeport, vol Qatar QR56 (Nice-Doha 15h55 le 25/7) + QR802 (Doha-KIX), adresse Maison Sakuragawa, déclaration douanière. Le compte peut être créé maintenant, les vols et hébergement complétés plus tard.",
+        link: "https://www.vjw.digital.go.jp/main/"
+      },
+      {
+        id: "passport",
+        title: "Vérifier la validité des 8 passeports",
+        deadline: "Maintenant",
+        priority: "critical",
+        desc: "Validité minimum : 6 mois après la date de retour (soit jusqu'à fin février 2027). Faire renouveler immédiatement si nécessaire — le délai est de 4-6 semaines en France."
+      },
+      {
+        id: "passport-copy",
+        title: "Photocopies / scans des passeports",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Une copie papier dans une valise différente du passeport original. Un scan dans l'email de chaque adulte (en cas de perte/vol). Sécurise le rapatriement si problème."
+      }
+    ]
+  },
+  {
+    title: "Réservations critiques",
+    icon: "🎫",
+    items: [
+      {
+        id: "usj",
+        title: "Universal Studios Japan + Express Pass",
+        deadline: "29 mai 2026 à 17h Paris (J-60 du 29/7)",
+        priority: "critical",
+        desc: "Ouverture des ventes à 00h00 heure japonaise = 17h00 heure de Paris. Préparer compte usj.co.jp et Klook à l'avance, carte bancaire enregistrée. Cible : 8 Studio Pass + 8 Express Pass 4 ou 7 (¥9 800 ad. / ¥6 800 enf. + ¥7 800 à ¥21 000 Express).",
+        link: "https://www.usj.co.jp/web/fr/jp"
+      },
+      {
+        id: "teamlab",
+        title: "TeamLab Planets (créneau du 10/8)",
+        deadline: "10 juillet 2026 (J-30)",
+        priority: "critical",
+        desc: "Les créneaux horaires partent vite. Choisir 9h30 (ouverture, peu de monde) ou 18h-19h (fin de journée). Prévoir short ou pantalon roulable (l'expo est pieds nus dans l'eau).",
+        link: "https://www.teamlab.art/e/planets/"
+      },
+      {
+        id: "sagano",
+        title: "Sagano Romantic Train (31/7)",
+        deadline: "30 juin 2026 (J-30)",
+        priority: "high",
+        desc: "Préférer le wagon 5 \"The Rich\" (panoramique ouvert) pour les photos. Pour 8 places ensemble, réserver dès l'ouverture. Sinon, file au guichet de Saga-Arashiyama dès 8h le jour J.",
+        link: "https://www.sagano-kanko.co.jp/en/"
+      },
+      {
+        id: "shinkansen-kyoto-odawara",
+        title: "Shinkansen Hikari Kyoto → Odawara (3/8)",
+        deadline: "3 juillet 2026 (J-30, optionnel)",
+        priority: "normal",
+        desc: "Pour sécuriser 8 sièges côte à côte, réserver sur SmartEX. Sinon, achat le matin même au guichet de Kyoto Station fonctionne (départs toutes les 30 min).",
+        link: "https://smart-ex.jp/en/"
+      },
+      {
+        id: "romance-car",
+        title: "Odakyu Romance Car Hakone → Shinjuku (6/8)",
+        deadline: "6 juillet 2026 (J-30)",
+        priority: "high",
+        desc: "Réservation obligatoire (train à places assises). 8 sièges en file ou face à face si possible. App Odakyu en anglais.",
+        link: "https://www.odakyu.jp/"
+      },
+      {
+        id: "highway-bus-fuji",
+        title: "Highway Bus Shinjuku → Kawaguchiko (8/8, 5h30)",
+        deadline: "9 juillet 2026 (J-30)",
+        priority: "high",
+        desc: "Premier bus du matin obligatoire pour maximiser les chances de voir le Mt Fuji (visibilité ~80% avant 9h, 30% à midi). 8 places, départ Busta Shinjuku 4e étage.",
+        link: "https://highway-buses.jp/"
+      },
+      {
+        id: "cars-hakone",
+        title: "2 voitures Hakone (3-6 août)",
+        deadline: "Dès maintenant",
+        priority: "high",
+        desc: "2 berlines familiales chez la même agence (Toyota Rent A Car ou Klook), prise en charge Odawara Station le 3/8. Voir la page Voitures pour le détail.",
+        link: "voitures.html"
+      },
+      {
+        id: "shibuya-sky",
+        title: "Shibuya Sky au coucher du soleil (7/8, optionnel)",
+        deadline: "J-30",
+        priority: "normal",
+        desc: "Créneau 18h30-19h en été. Réservation en ligne tickets.shibuya-scramble-square.com. Vue iconique sur Tokyo au coucher de soleil.",
+        link: "https://www.shibuya-scramble-square.com/sky/"
+      },
+      {
+        id: "taxis-haneda",
+        title: "2 taxis Honmachi → Haneda (11/8 à 5h)",
+        deadline: "10 août 2026 (la veille)",
+        priority: "normal",
+        desc: "App GO (anciennement JapanTaxi). Berline 4 places avec coffre × 2. Réserver la veille au soir avec adresse précise. Compter ¥10-13 000 par taxi.",
+        link: "https://goinc.jp/"
+      }
+    ]
+  },
+  {
+    title: "Documents & permis",
+    icon: "📄",
+    items: [
+      {
+        id: "permis-international",
+        title: "Permis international (ou traduction JAF)",
+        deadline: "Maintenant (délai 2-4 semaines)",
+        priority: "critical",
+        desc: "Vous avez commandé la traduction de vos permis. Confirmer avec l'agence de location qu'elle l'accepte. Sinon, demander en parallèle le permis international Convention de Genève 1949 sur ANTS (gratuit). Un conducteur principal par famille.",
+        link: "https://permisdeconduire.ants.gouv.fr"
+      },
+      {
+        id: "assurance-voyage",
+        title: "Assurance voyage / Carte européenne",
+        deadline: "1 mois avant",
+        priority: "high",
+        desc: "La carte européenne d'assurance maladie ne fonctionne PAS au Japon. Vérifier les garanties de votre carte bancaire (Visa Premier, Mastercard Gold, Amex) ou souscrire une assurance dédiée (Chapka, Mondial Assistance, AVA). Couverture frais médicaux, rapatriement, perte bagages."
+      },
+      {
+        id: "billets-avion",
+        title: "Imprimer / sauvegarder les billets d'avion",
+        deadline: "Quelques jours avant",
+        priority: "normal",
+        desc: "PNR Qatar : X6KB5D. Réservation : 40-824953652. Retour China Eastern ID 3058857772. Avoir une copie papier + dans le téléphone (pas dépendant de la 4G)."
+      }
+    ]
+  },
+  {
+    title: "Argent & paiements",
+    icon: "💴",
+    items: [
+      {
+        id: "card-no-fees",
+        title: "Carte bancaire sans frais à l'étranger",
+        deadline: "1 mois avant",
+        priority: "high",
+        desc: "Revolut, Wise, N26, Boursorama Ultim. Le taux de change est meilleur qu'avec une carte classique (économies de 50-150 € sur le voyage). Activer la carte et tester avant le départ."
+      },
+      {
+        id: "yen-cash",
+        title: "Retirer ~30 000¥ par voyageur",
+        deadline: "À l'arrivée à KIX",
+        priority: "normal",
+        desc: "Le Japon reste cash-heavy. Distributeurs 7-Eleven (24/7, anglais, taux excellent) ou Japan Post. Pas besoin d'avoir des yens avant de partir — les distributeurs sont meilleurs que les bureaux de change français."
+      },
+      {
+        id: "suica-icoca",
+        title: "Activer Suica/ICOCA mobile (Apple/Google Wallet)",
+        deadline: "Quelques jours avant",
+        priority: "normal",
+        desc: "Sur iPhone : Wallet → ajouter une carte → Suica. Sur Android : Google Wallet. Recharge à la volée avec votre CB sans frais étranger. Alternative : acheter ICOCA physique à KIX (¥2 000 dont ¥500 caution).",
+        link: "https://support.apple.com/fr-fr/HT207154"
+      }
+    ]
+  },
+  {
+    title: "Communication & internet",
+    icon: "📱",
+    items: [
+      {
+        id: "esim",
+        title: "eSIM ou pocket WiFi Japon",
+        deadline: "1-2 semaines avant",
+        priority: "high",
+        desc: "Option 1 : eSIM (Airalo, Ubigi, Sakura Mobile) — ~15-25 € pour 20 Go sur 16 jours, activation instantanée à l'arrivée. Option 2 : pocket WiFi à récupérer à KIX (~5 000¥ pour 16 jours, jusqu'à 10 appareils). Une eSIM par adulte minimum.",
+        link: "https://www.airalo.com/japan-esim"
+      },
+      {
+        id: "apps",
+        title: "Installer les apps essentielles",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Google Maps + cache hors-ligne du Japon, Google Translate + pack japonais hors-ligne, SmartEX (Shinkansen), Klook, Odakyu, GO Taxi, Hyperdia ou NAVITIME (trains), LINE (messages locaux), Yurekuru Call (alertes séisme)."
+      },
+      {
+        id: "vpn",
+        title: "VPN pour les services bloqués (optionnel)",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Pour accéder à votre Netflix français ou Disney+ avec les contenus français depuis le Japon. NordVPN, ExpressVPN, Surfshark. Pas indispensable mais sympa pour les soirées au cottage Hakone."
+      }
+    ]
+  },
+  {
+    title: "Santé & médicaments",
+    icon: "💊",
+    items: [
+      {
+        id: "medications",
+        title: "Médicaments personnels (17 jours + marge)",
+        deadline: "2 semaines avant",
+        priority: "high",
+        desc: "Anticiper les renouvellements d'ordonnances. Garder dans le bagage à main, jamais en soute. Pour traitement de fond, ordonnance traduite en anglais en cas de contrôle douanier."
+      },
+      {
+        id: "pharmacy-kit",
+        title: "Trousse pharmacie de voyage",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Paracétamol, ibuprofène, Smecta/diarrhée, Imodium, anti-allergique (Aerius), désinfectant, pansements, anti-moustiques (efficacité ++ au Japon), crème solaire haute protection (achetable sur place aussi, qualité excellente)."
+      },
+      {
+        id: "kids-medication",
+        title: "Médicaments enfants spécifiques",
+        deadline: "1 semaine avant",
+        priority: "high",
+        desc: "Doliprane, anti-vomitif (mal des transports — utile pour Hakone Round Course et bateaux), antihistaminique pédiatrique. La plupart des médicaments enfants ne se trouvent pas facilement sur place."
+      }
+    ]
+  },
+  {
+    title: "Bagages",
+    icon: "🧳",
+    items: [
+      {
+        id: "vetements-ete",
+        title: "Vêtements légers été (lin, coton)",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Manches courtes pour la journée (35°C+, humide), une manche longue légère pour les temples et la clim. Compter 4-5 jeux pour 17 jours (lave-linge dans chaque logement)."
+      },
+      {
+        id: "chaussures",
+        title: "Chaussures confortables faciles à enlever",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Beaucoup de temples et restaurants traditionnels demandent de se déchausser. Privilégier baskets ouvertes ou mocassins, éviter les lacets. Une 2e paire de rechange en cas de pluie."
+      },
+      {
+        id: "adaptateur",
+        title: "Adaptateur électrique type A",
+        deadline: "1 semaine avant",
+        priority: "high",
+        desc: "Prises japonaises = 2 broches plates (type A, 100V). La plupart des chargeurs modernes (téléphone, ordi, appareil photo) sont multitensions, vérifier sur la fiche. Prévoir 2-3 adaptateurs par famille."
+      },
+      {
+        id: "handy-fan",
+        title: "Ventilateur portable USB",
+        deadline: "À acheter sur place",
+        priority: "normal",
+        desc: "Don Quijote, ~¥1 500. Indispensable sous 35°C humide, surtout pour les temples et les transports. Tous les Japonais en ont un en été."
+      },
+      {
+        id: "essentials",
+        title: "Serviettes-éponges, mouchoirs, parapluie pliant",
+        deadline: "À acheter sur place",
+        priority: "normal",
+        desc: "Petite serviette pour s'éponger le front (tradition japonaise, dans tous les konbini ¥300). Mouchoirs (les toilettes anciennes n'ont parfois pas de papier). Parapluie pliant léger (¥500 dans les konbini en cas de typhon)."
+      },
+      {
+        id: "sac-jour",
+        title: "Sac à dos jour léger par voyageur",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "20-25 L, deux poches latérales pour la bouteille d'eau et le ventilateur. Idéal pour les journées d'exploration. Les Japonais ont quasi tous un petit sac à dos."
+      },
+      {
+        id: "valises-light",
+        title: "Voyager LÉGER pour les Shinkansen",
+        deadline: "Veille du départ",
+        priority: "normal",
+        desc: "Les Shinkansen ont peu de place pour les grosses valises. Une valise cabine + un sac à dos par personne suffit. Les grosses valises (>25\" / 70 cm) doivent être réservées en compartiment spécial à la réservation."
+      }
+    ]
+  },
+  {
+    title: "Logistique pratique",
+    icon: "🗺️",
+    items: [
+      {
+        id: "info-contact",
+        title: "Liste de contacts d'urgence",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Imprimée + dans le téléphone : numéros des hôtes (Tetsu Osaka, Shiki Kyoto, Hakone Cottage), ambassade de France au Japon (+81 3-5798-6000), assurance voyage, médecin de famille, contact référent en France."
+      },
+      {
+        id: "takkyubin",
+        title: "Repérer un service Takkyubin (transfert valises)",
+        deadline: "Le 2/8 sur place",
+        priority: "normal",
+        desc: "Pour le transfert Kyoto → Hakone (et Hakone → Tokyo), expédier la veille les grosses valises via Yamato Transport (chien noir/jaune), ¥2 000 par valise, livrée le lendemain à l'adresse suivante. Comptoirs à tous les konbini 7-Eleven et Lawson."
+      },
+      {
+        id: "info-allergies",
+        title: "Mémo allergies / régimes en japonais",
+        deadline: "Si applicable",
+        priority: "normal",
+        desc: "Si quelqu'un a des allergies alimentaires (cacahuète, gluten, fruits de mer), faire imprimer une carte en japonais qui explique le problème. Google Translate marche aussi sur place."
+      },
+      {
+        id: "weather-check",
+        title: "Vérifier la météo et les typhons (J-3)",
+        deadline: "Juste avant le départ",
+        priority: "normal",
+        desc: "Saison des typhons à partir d'août. Site fiable : tenki.jp ou jma.go.jp (Agence météo japonaise). Si typhon prévu, plans B pour les jours impactés (Hakone, Mt Fuji)."
+      }
+    ]
+  }
+];
+
+/* ----------------- State ----------------- */
+let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function toggle(taskId, family) {
+  if (!state[taskId]) state[taskId] = {};
+  state[taskId][family] = !state[taskId][family];
+  save();
+  render();
+}
+
+function isDone(taskId, family) {
+  return state[taskId] && state[taskId][family];
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ----------------- Render ----------------- */
+function render() {
+  const root = $('sections');
+  let totalH = 0, totalM = 0, doneH = 0, doneM = 0;
+
+  root.innerHTML = SECTIONS.map(sec => {
+    let secDoneH = 0, secDoneM = 0;
+    sec.items.forEach(it => {
+      totalH++; totalM++;
+      if (isDone(it.id, 'haubertin')) { doneH++; secDoneH++; }
+      if (isDone(it.id, 'mallet')) { doneM++; secDoneM++; }
+    });
+    return `
+      <section class="section">
+        <div class="section-head">
+          <div class="section-title"><span class="section-icon">${sec.icon}</span>${escapeHtml(sec.title)}</div>
+          <div class="section-progress">
+            <strong>${secDoneH}/${sec.items.length}</strong>Haubertin · <strong style="color:var(--mallet)">${secDoneM}/${sec.items.length}</strong>Mallet
+          </div>
+        </div>
+        ${sec.items.map(it => renderTask(it)).join('')}
+      </section>
+    `;
+  }).join('');
+
+  // Update progress bars
+  const pctH = totalH ? Math.round((doneH / totalH) * 100) : 0;
+  const pctM = totalM ? Math.round((doneM / totalM) * 100) : 0;
+  $('progress-haubertin').style.width = pctH + '%';
+  $('progress-mallet').style.width = pctM + '%';
+  $('progress-text-haubertin').textContent = `${doneH} / ${totalH} (${pctH}%)`;
+  $('progress-text-mallet').textContent = `${doneM} / ${totalM} (${pctM}%)`;
+
+  // Wire up checkboxes
+  document.querySelectorAll('.task-check input').forEach(inp => {
+    inp.addEventListener('change', () => {
+      toggle(inp.dataset.id, inp.dataset.family);
+    });
+  });
+}
+
+function renderTask(it) {
+  const dH = isDone(it.id, 'haubertin');
+  const dM = isDone(it.id, 'mallet');
+  const bothDone = dH && dM;
+  const link = it.link ? `<a class="task-link" href="${it.link}" ${it.link.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>${it.link.startsWith('http') ? '↗ Lien officiel' : '› Voir la page dédiée'}</a>` : '';
+  return `
+    <div class="task priority-${it.priority} ${bothDone ? 'done' : ''}">
+      <div class="task-content">
+        <div class="task-title">${escapeHtml(it.title)}</div>
+        <div class="task-deadline">⏱ ${escapeHtml(it.deadline)}</div>
+        <div class="task-desc">${it.desc}</div>
+        ${link}
+      </div>
+      <div class="task-checks">
+        <label class="task-check haubertin">
+          <input type="checkbox" data-id="${it.id}" data-family="haubertin" ${dH ? 'checked' : ''}>
+          <span class="box"></span>
+          <span class="lbl">Haubertin</span>
+        </label>
+        <label class="task-check mallet">
+          <input type="checkbox" data-id="${it.id}" data-family="mallet" ${dM ? 'checked' : ''}>
+          <span class="box"></span>
+          <span class="lbl">Mallet</span>
+        </label>
+      </div>
+    </div>
+  `;
+}
+
+/* ----------------- Export / Import / Reset ----------------- */
+$('btnExport').addEventListener('click', () => {
+  const data = { state, exportedAt: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `japan2026-checklist-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+$('btnImport').addEventListener('click', () => $('importFile').click());
+$('importFile').addEventListener('change', (ev) => {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (typeof data.state !== 'object') throw new Error('Format invalide');
+      if (!confirm('Importer cet état ? Les cases actuelles seront remplacées.')) return;
+      state = data.state;
+      save();
+      render();
+      alert('Import réussi.');
+    } catch (e) {
+      alert('Erreur d\'import : ' + e.message);
+    }
+  };
+  r.readAsText(file);
+  ev.target.value = '';
+});
+
+$('btnReset').addEventListener('click', () => {
+  if (!confirm('Tout décocher ? Pensez à exporter avant.')) return;
+  state = {};
+  save();
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
