@@ -89,20 +89,58 @@ button.btn.danger:hover { background: rgba(230,57,70,0.1); transform: none; box-
 .upload-preview .uploading { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; }
 .upload-preview button { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border: none; border-radius: 50%; background: rgba(26,26,46,0.8); color: white; cursor: pointer; font-size: 0.9rem; line-height: 1; }
 
-.posts { display: flex; flex-direction: column; gap: 1.5rem; }
-.post { background: var(--paper); border: 1px solid var(--line-soft); border-radius: 16px; padding: 1.5rem 1.6rem 1.6rem; position: relative; }
-.post-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.8rem; }
-.post-date { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); }
-.post-place { display: inline-block; margin-top: 0.3rem; background: var(--bg-warm); padding: 0.18rem 0.55rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-soft); }
-.post-author { display: inline-block; margin-left: 0.3rem; padding: 0.18rem 0.55rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
-.post-author.haubertin { background: rgba(230,57,70,0.15); color: var(--accent); }
-.post-author.mallet { background: rgba(42,67,101,0.15); color: #2a4365; }
-.post-actions { display: flex; gap: 0.3rem; flex-shrink: 0; }
-.post-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; letter-spacing: -0.015em; margin-bottom: 0.6rem; }
-.post-text { white-space: pre-wrap; color: var(--ink-soft); font-size: 0.98rem; line-height: 1.7; margin-bottom: 1rem; }
-.post-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
-.post-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.2s; background: var(--bg-warm); }
-.post-gallery img:hover { transform: scale(1.02); }
+/* ============ BLOG-STYLE POSTS ============ */
+.posts { display: flex; flex-direction: column; gap: 3.5rem; }
+.post { background: var(--paper); border-radius: 0; padding: 0; position: relative; border: none; border-top: 1px solid var(--line); padding-top: 2.5rem; }
+.post:first-child { border-top: none; padding-top: 0; }
+.post-meta-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.post-meta-row .left { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.post-date { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); font-weight: 500; }
+.post-place { display: inline-block; background: var(--bg-warm); padding: 0.25rem 0.7rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; color: var(--ink-soft); }
+.post-author { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.post-author::before { content: '✎'; opacity: 0.7; }
+.post-author.haubertin { background: rgba(230,57,70,0.13); color: var(--accent); }
+.post-author.mallet { background: rgba(42,67,101,0.13); color: #2a4365; }
+.post-actions { display: flex; gap: 0.3rem; flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s; }
+.post:hover .post-actions { opacity: 1; }
+.post-title { font-family: 'DM Serif Display', serif; font-size: 2.3rem; letter-spacing: -0.02em; line-height: 1.15; margin: 0.4rem 0 1.2rem; color: var(--ink); }
+.post-title em { font-style: italic; color: var(--accent); }
+.post-lead { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.18rem; line-height: 1.55; color: var(--ink-soft); margin-bottom: 1.4rem; }
+.post-text { white-space: pre-wrap; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.75; margin-bottom: 1.4rem; font-family: 'DM Sans', sans-serif; }
+.post-text p { margin-bottom: 1rem; }
+.post-gallery { display: grid; gap: 0.6rem; margin-bottom: 0.5rem; }
+.post-gallery.size-1 { grid-template-columns: 1fr; }
+.post-gallery.size-2 { grid-template-columns: 1fr 1fr; }
+.post-gallery.size-3 { grid-template-columns: 1fr 1fr 1fr; }
+.post-gallery.size-4 { grid-template-columns: repeat(2, 1fr); }
+.post-gallery.size-many { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.post-gallery.size-1 img { aspect-ratio: 16/10; }
+.post-gallery.size-2 img, .post-gallery.size-3 img, .post-gallery.size-4 img { aspect-ratio: 4/3; }
+.post-gallery img { width: 100%; object-fit: cover; border-radius: 10px; cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; background: var(--bg-warm); display: block; }
+.post-gallery img:hover { transform: scale(1.01); box-shadow: 0 8px 22px rgba(0,0,0,0.12); }
+
+/* ============ PRINT STYLES (export PDF) ============ */
+@media print {
+  body { background: white !important; color: var(--ink); }
+  .main-nav, .nav-back, header.page-head, .page-nav, footer.foot,
+  #authBanner, #userStatus, #formCard, .actions-bar, .filters,
+  .section-title, .post-actions, #postCount,
+  .lightbox { display: none !important; }
+  .app { max-width: none; padding: 0; }
+  .posts { gap: 2.5rem; }
+  .post { page-break-inside: avoid; border-top: 1px solid #ccc; padding-top: 1.5rem; }
+  .post:first-child { border-top: none; padding-top: 0; }
+  .post-title { font-size: 1.8rem; margin: 0.3rem 0 1rem; color: black; }
+  .post-text { color: #222; font-size: 11pt; line-height: 1.55; }
+  .post-gallery { gap: 0.4rem; page-break-inside: avoid; }
+  .post-gallery img { max-height: 250px; cursor: default; }
+  @page { margin: 1.5cm; size: A4; }
+  .print-cover { display: block !important; text-align: center; padding: 4rem 0 5rem; page-break-after: always; }
+}
+.print-cover { display: none; }
+.print-cover h1 { font-family: 'DM Serif Display', serif; font-size: 3.5rem; line-height: 1.1; margin-bottom: 0.5rem; }
+.print-cover .jp { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 4rem; color: var(--accent); margin-bottom: 1rem; }
+.print-cover .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; color: #555; margin-top: 2rem; }
 
 .empty-state { text-align: center; padding: 3rem 1rem; color: var(--ink-mute); font-style: italic; }
 .loading-state { text-align: center; padding: 2rem 1rem; color: var(--ink-mute); font-style: italic; }
@@ -254,8 +292,17 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
 
     <div class="actions-bar">
       <button class="btn secondary" id="btnRefresh">↻ Rafraîchir</button>
+      <button class="btn secondary" id="btnPrint">📄 Exporter en PDF</button>
       <button class="btn secondary" id="btnExport">⤓ Exporter JSON</button>
       <div class="cloud-status" id="cloudStatus">☁ Synchronisé</div>
+    </div>
+
+    <!-- Cover page visible only when printing -->
+    <div class="print-cover">
+      <div class="jp">日本</div>
+      <h1>Journal du voyage</h1>
+      <div style="font-family:'DM Serif Display',serif; font-style:italic; font-size:1.4rem; color:#555;">Été 2026 · au Japon</div>
+      <div class="meta">25 juillet → 11 août 2026 · Famille Haubertin & Famille Mallet</div>
     </div>
 
     <div class="filters">
@@ -551,22 +598,24 @@ function renderList() {
 
   body.innerHTML = rows.map(p => {
     const fam = familyOf(p.author);
+    const n = (p.photos || []).length;
+    const sizeClass = n === 0 ? '' : n === 1 ? 'size-1' : n === 2 ? 'size-2' : n === 3 ? 'size-3' : n === 4 ? 'size-4' : 'size-many';
     return `
     <article class="post" data-id="${escapeHtml(p.id)}">
-      <div class="post-head">
-        <div>
-          <div class="post-date">${formatDate(p.date)}</div>
-          ${p.place ? `<span class="post-place">${escapeHtml(p.place)}</span>` : ''}
+      <div class="post-meta-row">
+        <div class="left">
+          <span class="post-date">${formatDate(p.date)}</span>
+          ${p.place ? `<span class="post-place">📍 ${escapeHtml(p.place)}</span>` : ''}
           ${p.author ? `<span class="post-author ${fam || ''}">${escapeHtml(p.author)}</span>` : ''}
         </div>
         <div class="post-actions">
-          <button class="btn danger" data-action="edit" title="Modifier">✎ Éditer</button>
-          <button class="btn danger" data-action="del" title="Supprimer">× Supprimer</button>
+          <button class="btn danger" data-action="edit" title="Modifier">✎</button>
+          <button class="btn danger" data-action="del" title="Supprimer">×</button>
         </div>
       </div>
-      ${p.title ? `<h3 class="post-title">${escapeHtml(p.title)}</h3>` : ''}
+      ${p.title ? `<h2 class="post-title">${escapeHtml(p.title)}</h2>` : ''}
+      ${(p.photos && p.photos.length) ? `<div class="post-gallery ${sizeClass}">${p.photos.map((k, i) => `<img src="/api/photo/${encodeURIComponent(k)}" alt="Photo ${i+1}" loading="lazy">`).join('')}</div>` : ''}
       ${p.text ? `<div class="post-text">${escapeHtml(p.text)}</div>` : ''}
-      ${(p.photos && p.photos.length) ? `<div class="post-gallery">${p.photos.map((k, i) => `<img src="/api/photo/${encodeURIComponent(k)}" alt="Photo ${i+1}" loading="lazy">`).join('')}</div>` : ''}
     </article>
   `;
   }).join('');
@@ -632,6 +681,21 @@ async function loadPosts() {
 }
 
 $('btnRefresh').addEventListener('click', loadPosts);
+
+// ---- Print / Export PDF ----
+$('btnPrint').addEventListener('click', () => {
+  // Make sure all photos are loaded before printing
+  const imgs = document.querySelectorAll('#postsList img');
+  let pending = 0;
+  imgs.forEach(img => {
+    if (!img.complete) {
+      pending++;
+      img.addEventListener('load', () => { if (--pending === 0) setTimeout(window.print, 100); }, { once: true });
+      img.addEventListener('error', () => { if (--pending === 0) setTimeout(window.print, 100); }, { once: true });
+    }
+  });
+  if (pending === 0) window.print();
+});
 
 // ---- Export (read-only backup) ----
 $('btnExport').addEventListener('click', () => {
