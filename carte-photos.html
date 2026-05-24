@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carte des photos · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg: #fef7ec; --bg-warm: #fbe9c9; --paper: #ffffff;
+  --ink: #1a1a2e; --ink-soft: #3a3a52; --ink-mute: #6b6b85;
+  --line: #e8d9b8; --line-soft: #f3e8cd;
+  --accent: #e63946; --gold: #f7b801; --green: #2a8073;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--ink); display: flex; flex-direction: column; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* === MAIN NAV (shared with index.html) === */
+.main-nav { position: sticky; top: 0; background: rgba(254,247,236,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); z-index: 200; }
+.main-nav .nav-bar { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; padding: 0.6rem 1.5rem; gap: 1.5rem; }
+.main-nav .nav-brand { font-family: 'DM Serif Display', serif; font-size: 1.15rem; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.main-nav .nav-brand .jp { font-size: 1.3rem; color: var(--accent); }
+.main-nav .nav-tabs { flex: 1; display: flex; flex-wrap: wrap; align-items: center; row-gap: 0.35rem; column-gap: 0.15rem; margin-left: 1rem; }
+.main-nav .nav-tab { padding: 0.5rem 0.85rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.01em; color: var(--ink-mute); white-space: nowrap; transition: color 0.2s, background 0.2s; border-radius: 100px; text-decoration: none; background: none; border: none; }
+.main-nav .nav-tab:hover { color: var(--ink); background: var(--bg-warm); text-decoration: none; }
+.main-nav .nav-tab.external:first-of-type { margin-left: 0.6rem; padding-left: 0.85rem; border-left: 1px solid var(--line); }
+.main-nav .nav-tab.external { color: var(--accent); font-weight: 600; background: rgba(230,57,70,0.06); padding: 0.42rem 0.85rem; }
+.main-nav .nav-tab.external:hover { background: var(--accent); color: var(--paper); }
+.main-nav .nav-tab.external.active { background: var(--accent); color: var(--paper); }
+@media (max-width: 768px) {
+  .main-nav .nav-bar { padding: 0.55rem 0.9rem; gap: 0.6rem; }
+  .main-nav .nav-brand { font-size: 1rem; }
+  .main-nav .nav-tabs { margin-left: 0.3rem; }
+  .main-nav .nav-tab { padding: 0.45rem 0.7rem; font-size: 0.78rem; }
+}
+
+.header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+  padding: 1.2rem 1.5rem;
+}
+.header-inner { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.header h1 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; letter-spacing: -0.015em; }
+.header h1 em { font-style: italic; color: var(--accent); }
+.header .sub { font-family: 'DM Serif Display', serif; font-style: italic; color: var(--ink-mute); font-size: 0.92rem; }
+.stats { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); display: flex; gap: 1rem; flex-wrap: wrap; }
+.stats strong { color: var(--ink); font-weight: 600; }
+
+#mapHost { flex: 1; min-height: 500px; position: relative; }
+#map { width: 100%; height: 100%; }
+
+/* Custom photo marker */
+.photo-marker {
+  background: white;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  width: 48px !important; height: 48px !important;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.photo-marker:hover { transform: scale(1.1); z-index: 1000 !important; }
+.photo-marker img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cluster-marker {
+  background: var(--accent);
+  color: white;
+  border-radius: 50%;
+  width: 48px !important; height: 48px !important;
+  display: flex !important; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 3px solid white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+/* Popup style */
+.leaflet-popup-content-wrapper { border-radius: 12px; padding: 0; overflow: hidden; }
+.leaflet-popup-content { margin: 0; padding: 0; width: 280px !important; }
+.popup { font-family: 'DM Sans', sans-serif; }
+.popup img { width: 100%; height: 180px; object-fit: cover; display: block; cursor: zoom-in; }
+.popup-body { padding: 0.8rem 1rem 1rem; }
+.popup-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 0.4rem; }
+.popup-title { font-family: 'DM Serif Display', serif; font-size: 1.05rem; line-height: 1.3; margin-bottom: 0.4rem; color: var(--ink); }
+.popup-author { display: inline-block; background: var(--bg-warm); padding: 0.15rem 0.5rem; border-radius: 100px; font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-soft); margin-top: 0.2rem; }
+.popup-link { display: block; margin-top: 0.6rem; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+
+.lightbox { position: fixed; inset: 0; background: rgba(26,26,46,0.92); display: none; align-items: center; justify-content: center; padding: 2rem; z-index: 9999; cursor: zoom-out; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; }
+
+.empty-state {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(254,247,236,0.95);
+  padding: 2rem;
+  text-align: center;
+  z-index: 500;
+}
+.empty-state-inner { max-width: 460px; }
+.empty-state h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+.empty-state p { color: var(--ink-soft); margin-bottom: 0.8rem; font-size: 0.95rem; line-height: 1.55; }
+.empty-state .tip { background: var(--bg-warm); padding: 0.9rem 1.1rem; border-radius: 10px; font-size: 0.85rem; text-align: left; margin-top: 1rem; color: var(--ink-soft); }
+.empty-state .tip strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<nav class="main-nav" aria-label="Navigation principale">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-brand"><span class="jp">日本</span> Voyage 2026</a>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html#overview">Aperçu</a>
+      <a class="nav-tab" href="index.html#map">Carte</a>
+      <a class="nav-tab" href="index.html#calendar">Calendrier</a>
+      <a class="nav-tab" href="index.html#planning">Planning</a>
+      <a class="nav-tab" href="index.html#budget">Prévisionnel</a>
+      <a class="nav-tab" href="index.html#flights">Vols</a>
+      <a class="nav-tab" href="index.html#osaka">Osaka</a>
+      <a class="nav-tab" href="index.html#kyoto">Kyoto</a>
+      <a class="nav-tab" href="index.html#hakone">Hakone</a>
+      <a class="nav-tab" href="index.html#tokyo">Tokyo</a>
+      <a class="nav-tab" href="index.html#vocab">Vocabulaire</a>
+      <a class="nav-tab" href="index.html#tips">Conseils</a>
+      <a class="nav-tab external" href="checklist.html">Check-list</a>
+      <a class="nav-tab external" href="budget.html">Comptes</a>
+      <a class="nav-tab external" href="journal.html">Journal</a>
+      <a class="nav-tab external active" href="carte-photos.html">Carte photos</a>
+      <a class="nav-tab external" href="voitures.html">Voitures</a>
+    </div>
+  </div>
+</nav>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <h1>Carte des <em>photos</em></h1>
+      <div class="sub">写真地図 — Toutes les photos avec coordonnées GPS, géolocalisées sur le Japon</div>
+    </div>
+    <div class="stats" id="stats">Chargement…</div>
+  </div>
+</div>
+
+<div id="mapHost">
+  <div id="map"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <div class="empty-state-inner">
+      <h2>Aucune photo géolocalisée</h2>
+      <p>Aucune des photos déjà publiées n'a de coordonnées GPS dans ses métadonnées EXIF.</p>
+      <div class="tip">
+        <strong>💡 Pour que ça fonctionne</strong><br>
+        Sur iPhone : Réglages → Confidentialité → Services de localisation → Appareil photo → "Pendant l'utilisation"<br>
+        Lors de l'upload, utilise l'option <em>"Originaux"</em> dans Photos plutôt que "Compatible" (qui retire l'EXIF).<br>
+        Les photos partagées via WhatsApp ou réduites par AirDrop perdent souvent ces données.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox"><img src="" alt=""></div>
+
+<script>
+const map = L.map('map', { scrollWheelZoom: true }).setView([35.7, 137.5], 5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 19,
+}).addTo(map);
+
+function formatDate(iso) {
+  if (!iso) return '';
+  try { return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' }); }
+  catch { return iso; }
+}
+
+function escapeHtml(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function makeMarkerIcon(photoUrl) {
+  return L.divIcon({
+    className: '',
+    html: `<div class="photo-marker"><img src="${escapeHtml(photoUrl)}" alt=""></div>`,
+    iconSize: [48, 48],
+    iconAnchor: [24, 24],
+  });
+}
+
+function buildPopupHtml(photo, post) {
+  const fullUrl = `/api/photo/${encodeURIComponent(photo.key)}`;
+  return `
+    <div class="popup">
+      <img src="${fullUrl}" alt="" data-full="${fullUrl}">
+      <div class="popup-body">
+        <div class="popup-meta">${formatDate(post.date)}${post.place ? ' · ' + escapeHtml(post.place) : ''}</div>
+        ${post.title ? `<div class="popup-title">${escapeHtml(post.title)}</div>` : ''}
+        ${post.author ? `<span class="popup-author">${escapeHtml(post.author)}</span>` : ''}
+        <a class="popup-link" href="journal.html">→ Voir le post complet</a>
+      </div>
+    </div>
+  `;
+}
+
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  lb.querySelector('img').src = src;
+  lb.classList.add('open');
+}
+document.getElementById('lightbox').addEventListener('click', () => {
+  document.getElementById('lightbox').classList.remove('open');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
+
+(async function init() {
+  let posts = [];
+  try {
+    const res = await fetch('/api/posts');
+    posts = await res.json();
+  } catch (e) {
+    document.getElementById('stats').textContent = 'Erreur de chargement';
+    return;
+  }
+
+  // Collect all photos with GPS
+  const geoPhotos = [];
+  let totalPhotos = 0;
+  posts.forEach(post => {
+    (post.photos || []).forEach(photo => {
+      totalPhotos++;
+      // Backward compat : photo may be string (legacy) or object
+      if (typeof photo !== 'object' || photo == null) return;
+      if (photo.lat == null || photo.lng == null) return;
+      geoPhotos.push({ photo, post });
+    });
+  });
+
+  document.getElementById('stats').innerHTML =
+    `<strong>${geoPhotos.length}</strong> photo${geoPhotos.length>1?'s':''} géolocalisée${geoPhotos.length>1?'s':''} sur ${totalPhotos} total`;
+
+  if (geoPhotos.length === 0) {
+    document.getElementById('emptyState').style.display = 'flex';
+    return;
+  }
+
+  const bounds = [];
+  geoPhotos.forEach(({ photo, post }) => {
+    const thumbUrl = `/api/photo/${encodeURIComponent(photo.key)}`;
+    const marker = L.marker([photo.lat, photo.lng], { icon: makeMarkerIcon(thumbUrl) });
+    marker.bindPopup(buildPopupHtml(photo, post), { maxWidth: 280, autoPan: true });
+    marker.on('popupopen', (e) => {
+      // Wire up click-to-lightbox on the popup image
+      const img = e.popup.getElement().querySelector('img[data-full]');
+      if (img) img.addEventListener('click', () => openLightbox(img.dataset.full));
+    });
+    marker.addTo(map);
+    bounds.push([photo.lat, photo.lng]);
+  });
+
+  if (bounds.length === 1) {
+    map.setView(bounds[0], 14);
+  } else {
+    map.fitBounds(bounds, { padding: [60, 60] });
+  }
+})();
+</script>
+
+</body>
+</html>
