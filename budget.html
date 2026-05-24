@@ -150,6 +150,24 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
     <p class="subtitle">予算 — Famille Haubertin & Famille Mallet · données dans le cloud</p>
   </header>
 
+  <!-- AUTH BANNER -->
+  <section class="card" id="authBanner" style="display:none;">
+    <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+      <div style="flex:1; min-width:200px;">
+        <strong>Lecture libre du budget</strong><br>
+        <span style="font-size:0.88rem; color:var(--ink-soft);">Pour ajouter ou modifier une dépense, connecte-toi avec ton lien personnel (envoyé par David).</span>
+      </div>
+      <a href="/login.html?next=/budget.html" class="btn">🔒 Se connecter pour saisir</a>
+    </div>
+  </section>
+
+  <!-- USER STATUS -->
+  <div id="userStatus" style="display:none; margin:0 0 1.4rem; padding:0.7rem 1rem; background:rgba(42,128,115,0.08); border-radius:10px; border-left:4px solid var(--green); font-size:0.88rem; display:none; align-items:center; gap:0.7rem; flex-wrap:wrap;">
+    <span style="flex:1;">Connecté en tant que <strong id="userStatusName"></strong> <span id="userStatusRole" style="font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);"></span></span>
+    <a href="/admin.html" id="adminLink" style="display:none; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--accent);">⚙ Admin</a>
+    <a href="#" id="logoutLink" style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-mute);">Déconnexion</a>
+  </div>
+
   <!-- SUMMARY -->
   <section class="card">
     <div class="section-title">Récapitulatif</div>
@@ -179,7 +197,7 @@ footer.foot { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(-
   </section>
 
   <!-- ADD EXPENSE -->
-  <section class="card">
+  <section class="card" id="formCard" style="display:none;">
     <div class="section-title" id="formTitle">Ajouter une dépense</div>
     <form id="expenseForm">
       <div class="form-grid">
@@ -539,7 +557,31 @@ function renderAll() {
   renderList();
 }
 
+// ---- Auth state ----
+async function initAuth() {
+  let user = null;
+  try { user = await Japan2026Api.getMe(true); } catch (e) {}
+  if (!user) {
+    $('authBanner').style.display = 'block';
+    $('formCard').style.display = 'none';
+    $('userStatus').style.display = 'none';
+  } else {
+    $('authBanner').style.display = 'none';
+    $('formCard').style.display = 'block';
+    $('userStatus').style.display = 'flex';
+    $('userStatusName').textContent = user.name;
+    $('userStatusRole').textContent = user.role === 'admin' ? '· Admin' : '';
+    if (user.role === 'admin') $('adminLink').style.display = 'inline';
+  }
+}
+$('logoutLink').addEventListener('click', async (ev) => {
+  ev.preventDefault();
+  await Japan2026Api.logout();
+  location.reload();
+});
+
 resetForm();
+initAuth();
 loadRate().then(loadExpenses);
 </script>
 </body>

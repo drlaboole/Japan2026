@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef7ec; --bg-warm: #fbe9c9; --paper: #ffffff;
+  --ink: #1a1a2e; --ink-soft: #3a3a52; --ink-mute: #6b6b85;
+  --line: #e8d9b8; --line-soft: #f3e8cd;
+  --accent: #e63946; --gold: #f7b801; --green: #2a8073;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+.box { background: var(--paper); border: 1px solid var(--line-soft); border-radius: 16px; padding: 2.5rem 2.2rem; max-width: 460px; width: 100%; box-shadow: 0 10px 40px rgba(26,26,46,0.08); text-align: center; }
+.jp { font-family: 'DM Serif Display', serif; font-size: 2.6rem; color: var(--accent); font-style: italic; margin-bottom: 0.4rem; }
+h1 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
+p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; margin-bottom: 1.2rem; }
+.field { text-align: left; margin: 1.4rem 0; }
+.field label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); display: block; margin-bottom: 0.35rem; }
+.field input { width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); }
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(230,57,70,0.12); }
+button.btn { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; padding: 0.85rem 1.4rem; border: none; border-radius: 8px; cursor: pointer; background: var(--accent); color: white; width: 100%; transition: transform 0.15s, box-shadow 0.15s; }
+button.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
+button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.alert { padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.88rem; margin-top: 1rem; text-align: left; }
+.alert.error { background: rgba(230,57,70,0.1); color: var(--accent); border-left: 3px solid var(--accent); }
+.alert.success { background: rgba(42,128,115,0.1); color: var(--green); border-left: 3px solid var(--green); }
+.muted { font-size: 0.82rem; color: var(--ink-mute); margin-top: 1.6rem; }
+.muted a { color: var(--accent); text-decoration: none; }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.4rem; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="jp">日本</div>
+  <h1>Connexion rédacteur</h1>
+  <p id="intro">Entre ta clé personnelle d'accès (envoyée par David). Ta connexion sera valide 30 jours.</p>
+
+  <form id="loginForm">
+    <div class="field">
+      <label for="keyInput">Clé d'accès</label>
+      <input type="text" id="keyInput" placeholder="jp_..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+    </div>
+    <button class="btn" type="submit" id="submitBtn">Me connecter</button>
+  </form>
+
+  <div id="alertBox"></div>
+
+  <p class="muted">
+    Pas de clé ? Demande à David. <br>
+    <a href="/">← Retour au site (lecture libre)</a>
+  </p>
+</div>
+
+<script src="api-client.js?v=1"></script>
+<script>
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+const nextUrl = params.get('next') || '/';
+const keyFromUrl = params.get('key');
+
+function showAlert(msg, type = 'error') {
+  $('alertBox').innerHTML = `<div class="alert ${type}">${msg}</div>`;
+}
+
+async function attemptLogin(key) {
+  $('submitBtn').disabled = true;
+  $('submitBtn').innerHTML = '<span class="spinner"></span> Vérification…';
+  try {
+    const user = await Japan2026Api.loginWithKey(key);
+    showAlert(`Bienvenue ${user.name} ! Redirection…`, 'success');
+    setTimeout(() => { location.href = nextUrl; }, 600);
+  } catch (e) {
+    showAlert("Clé invalide ou compte désactivé. Vérifie le lien que t'a envoyé David.");
+    $('submitBtn').disabled = false;
+    $('submitBtn').textContent = 'Me connecter';
+  }
+}
+
+$('loginForm').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const key = $('keyInput').value.trim();
+  if (!key) return;
+  await attemptLogin(key);
+});
+
+// Auto-login if ?key= is in URL
+if (keyFromUrl) {
+  $('keyInput').value = keyFromUrl;
+  $('intro').textContent = "Connexion automatique en cours…";
+  attemptLogin(keyFromUrl);
+}
+</script>
+</body>
+</html>

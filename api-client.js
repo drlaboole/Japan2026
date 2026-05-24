@@ -1,49 +1,71 @@
 /**
  * api-client.js — Client API pour Japan2026
- * Wrapper autour des routes /api/* du Worker.
- * Gère :
- *   - Authentification via header X-Family-Password
- *   - Stockage du mot de passe dans sessionStorage (re-demandé à chaque ouverture du navigateur)
- *   - Wrappers pour posts, expenses, settings, photos
+ * Auth basée sur cookie de session (géré côté Worker).
+ * Pas de mot de passe à entrer côté frontend — l'auth se fait via login.html?key=...
  */
 
 (function (global) {
   const API_BASE = "/api";
-  const PW_KEY = "japan2026.password";
 
-  function getPassword() {
-    let pw = sessionStorage.getItem(PW_KEY);
-    if (!pw) {
-      pw = prompt("🔒 Mot de passe famille (Japan2026) :");
-      if (pw) sessionStorage.setItem(PW_KEY, pw);
-    }
-    return pw;
-  }
-
-  function clearPassword() {
-    sessionStorage.removeItem(PW_KEY);
-  }
+  let cachedUser = null;
+  let userPromise = null;
 
   async function request(path, opts = {}) {
-    const pw = getPassword();
-    if (!pw) throw new Error("Mot de passe requis");
-    const headers = { "X-Family-Password": pw, ...(opts.headers || {}) };
+    const headers = { ...(opts.headers || {}) };
     if (opts.body && !(opts.body instanceof ArrayBuffer) && !(opts.body instanceof Blob)) {
       headers["Content-Type"] = "application/json";
       if (typeof opts.body !== "string") opts.body = JSON.stringify(opts.body);
     }
-    const res = await fetch(API_BASE + path, { ...opts, headers });
+    const res = await fetch(API_BASE + path, { ...opts, headers, credentials: "same-origin" });
     if (res.status === 401) {
-      clearPassword();
-      alert("Mot de passe incorrect. La page va être rechargée.");
-      location.reload();
-      throw new Error("Unauthorized");
+      // Editor/admin action attempted without session → redirect to login
+      const here = encodeURIComponent(location.pathname + location.search);
+      if (!location.pathname.endsWith("/login.html")) {
+        location.href = "/login.html?next=" + here;
+      }
+      throw new Error("Authentification requise");
     }
     if (!res.ok) {
-      const t = await res.text().catch(() => "");
-      throw new Error(`API ${res.status} ${t}`);
+      const txt = await res.text().catch(() => "");
+      throw new Error(`API ${res.status} ${txt}`);
     }
     return res.json();
+  }
+
+  // ---------- Auth ----------
+  async function getMe(force = false) {
+    if (!force && cachedUser !== null) return cachedUser;
+    if (!force && userPromise) return userPromise;
+    userPromise = fetch(API_BASE + "/auth/me", { credentials: "same-origin" })
+      .then(r => r.json())
+      .then(data => { cachedUser = data.user; return cachedUser; })
+      .catch(() => { cachedUser = null; return null; })
+      .finally(() => { userPromise = null; });
+    return userPromise;
+  }
+  function isLoggedIn() { return !!cachedUser; }
+  function isAdmin()    { return !!cachedUser && cachedUser.role === "admin"; }
+  async function loginWithKey(key) {
+    const res = await fetch(API_BASE + "/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ key }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "login failed" }));
+      throw new Error(err.error || "login failed");
+    }
+    const data = await res.json();
+    cachedUser = data.user;
+    return data.user;
+  }
+  async function logout() {
+    await fetch(API_BASE + "/auth/logout", {
+      method: "POST",
+      credentials: "same-origin",
+    });
+    cachedUser = null;
   }
 
   // ---------- Posts ----------
@@ -66,41 +88,37 @@
   }
 
   // ---------- Photos ----------
-  async function uploadPhotoFromDataURL(dataUrl) {
-    // dataUrl: "data:image/jpeg;base64,..."
-    const match = /^data:([^;]+);base64,(.+)$/.exec(dataUrl);
-    if (!match) throw new Error("invalid data URL");
-    const contentType = match[1];
-    const b64 = match[2];
-    const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-    return uploadPhotoFromBuffer(bytes.buffer, contentType);
-  }
   async function uploadPhotoFromBuffer(buf, contentType) {
-    const pw = getPassword();
-    if (!pw) throw new Error("Mot de passe requis");
     const res = await fetch(API_BASE + "/upload", {
       method: "POST",
-      headers: {
-        "X-Family-Password": pw,
-        "Content-Type": contentType || "image/jpeg",
-      },
+      credentials: "same-origin",
+      headers: { "Content-Type": contentType || "image/jpeg" },
       body: buf,
     });
     if (res.status === 401) {
-      clearPassword();
-      alert("Mot de passe incorrect.");
-      location.reload();
-      throw new Error("Unauthorized");
+      const here = encodeURIComponent(location.pathname + location.search);
+      location.href = "/login.html?next=" + here;
+      throw new Error("Authentification requise");
     }
     if (!res.ok) throw new Error("Upload failed: " + res.status);
-    return res.json();   // { ok, key, url }
+    return res.json();
   }
 
+  // ---------- Admin (editors management) ----------
+  async function listEditors()              { return request("/admin/editors"); }
+  async function createEditor(payload)      { return request("/admin/editors", { method: "POST", body: payload }); }
+  async function updateEditor(id, payload)  { return request("/admin/editors/" + encodeURIComponent(id), { method: "PUT", body: payload }); }
+  async function deleteEditor(id)           { return request("/admin/editors/" + encodeURIComponent(id), { method: "DELETE" }); }
+  async function regenerateEditorKey(id)    { return request("/admin/editors/" + encodeURIComponent(id) + "/regenerate", { method: "POST" }); }
+
+  // ---------- Expose ----------
   global.Japan2026Api = {
-    getPassword, clearPassword,
+    getMe, isLoggedIn, isAdmin,
+    loginWithKey, logout,
     listPosts, savePost, deletePost,
     listExpenses, saveExpense, deleteExpense,
     getSetting, setSetting,
-    uploadPhotoFromDataURL, uploadPhotoFromBuffer,
+    uploadPhotoFromBuffer,
+    listEditors, createEditor, updateEditor, deleteEditor, regenerateEditorKey,
   };
 })(window);

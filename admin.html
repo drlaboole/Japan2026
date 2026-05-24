@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Voyage Japon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef7ec; --bg-warm: #fbe9c9; --paper: #ffffff;
+  --ink: #1a1a2e; --ink-soft: #3a3a52; --ink-mute: #6b6b85;
+  --line: #e8d9b8; --line-soft: #f3e8cd;
+  --accent: #e63946; --gold: #f7b801; --green: #2a8073;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; min-height: 100vh; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.app { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+.head-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+h1 { font-family: 'DM Serif Display', serif; font-size: 2.2rem; letter-spacing: -0.02em; }
+h1 em { font-style: italic; color: var(--accent); }
+.subtitle { font-family: 'DM Serif Display', serif; font-style: italic; color: var(--ink-mute); margin-bottom: 0.4rem; font-size: 0.95rem; }
+
+.who { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--ink-soft); display: flex; align-items: center; gap: 0.6rem; }
+.who .pill { background: var(--accent); color: white; padding: 0.3rem 0.7rem; border-radius: 100px; font-weight: 600; }
+.logout { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-mute); text-decoration: none; border: 1px solid var(--line); padding: 0.4rem 0.7rem; border-radius: 100px; }
+.logout:hover { color: var(--accent); text-decoration: none; border-color: var(--accent); }
+
+.card { background: var(--paper); border: 1px solid var(--line-soft); border-radius: 16px; padding: 1.6rem 1.7rem; margin-bottom: 1.4rem; }
+.section-title { font-family: 'DM Serif Display', serif; font-size: 1.35rem; margin-bottom: 1rem; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.7rem; align-items: end; }
+@media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
+.field { display: flex; flex-direction: column; gap: 0.3rem; }
+.field label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); }
+.field input { font-family: 'DM Sans', sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+.field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(230,57,70,0.12); }
+
+button.btn { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding: 0.7rem 1rem; border: none; border-radius: 8px; cursor: pointer; background: var(--accent); color: white; transition: transform 0.15s, box-shadow 0.15s; white-space: nowrap; }
+button.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
+button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+button.btn.secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+button.btn.secondary:hover:not(:disabled) { box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+button.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+button.btn.tiny { padding: 0.35rem 0.6rem; font-size: 0.62rem; }
+button.btn.danger { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+
+.editor-row { display: grid; grid-template-columns: 1.4fr 1.6fr 1fr auto; gap: 1rem; align-items: center; padding: 1rem 1.1rem; background: var(--bg-warm); border-radius: 12px; margin-bottom: 0.7rem; border-left: 4px solid var(--green); }
+.editor-row.inactive { opacity: 0.55; border-left-color: var(--ink-mute); }
+.editor-name { font-family: 'DM Serif Display', serif; font-size: 1.1rem; }
+.editor-name .tag { display: inline-block; margin-left: 0.4rem; padding: 0.1rem 0.45rem; background: var(--ink); color: white; font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.08em; border-radius: 100px; vertical-align: middle; }
+.editor-email { font-size: 0.85rem; color: var(--ink-soft); margin-top: 0.15rem; }
+.editor-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--ink-mute); }
+.editor-actions { display: flex; gap: 0.3rem; flex-wrap: wrap; justify-content: flex-end; }
+@media (max-width: 800px) {
+  .editor-row { grid-template-columns: 1fr; }
+  .editor-actions { justify-content: flex-start; }
+}
+
+.url-block { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 0.7rem 0.9rem; margin-top: 0.7rem; }
+.url-block .url { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--ink-soft); word-break: break-all; user-select: all; }
+.url-block .copy-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+.alert { padding: 0.9rem 1.1rem; border-radius: 10px; font-size: 0.9rem; margin: 1rem 0; }
+.alert.success { background: rgba(42,128,115,0.1); color: var(--green); border-left: 3px solid var(--green); }
+.alert.error { background: rgba(230,57,70,0.1); color: var(--accent); border-left: 3px solid var(--accent); }
+
+.empty { text-align: center; padding: 2rem; color: var(--ink-mute); font-style: italic; }
+.loading { text-align: center; padding: 2rem; color: var(--ink-mute); font-style: italic; }
+.loading::before { content: ''; display: inline-block; width: 14px; height: 14px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 0.4rem; vertical-align: middle; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.help { background: linear-gradient(135deg, rgba(247,184,1,0.13) 0%, rgba(230,57,70,0.06) 100%); border-left: 4px solid var(--gold); padding: 1rem 1.2rem; border-radius: 0 12px 12px 0; font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 1.4rem; }
+.help strong { display: block; color: #a37f00; margin-bottom: 0.3rem; }
+
+.back-link { display: inline-block; margin-bottom: 1.2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <a href="/" class="back-link">← Retour au site</a>
+
+  <div class="head-row">
+    <div>
+      <div class="subtitle">管理 — Administration</div>
+      <h1>Gestion des <em>rédacteurs</em></h1>
+    </div>
+    <div class="who">
+      <span class="pill" id="adminName">Admin</span>
+      <a href="#" class="logout" id="logoutBtn">Se déconnecter</a>
+    </div>
+  </div>
+
+  <div class="help">
+    <strong>Comment ça marche</strong>
+    Ajoute un rédacteur avec son nom (et son email optionnellement). Le système génère une URL personnelle unique. Tu la copies, tu l'envoies via WhatsApp/SMS/email à la personne. Elle clique → connectée pour 30 jours, et peut écrire dans le journal / ajouter des dépenses.
+  </div>
+
+  <!-- ADD EDITOR -->
+  <section class="card">
+    <div class="section-title">Ajouter un rédacteur</div>
+    <form id="newEditorForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="f-name">Prénom et nom</label>
+          <input type="text" id="f-name" required placeholder="Ex : Aline Rol">
+        </div>
+        <div class="field">
+          <label for="f-email">Email (optionnel)</label>
+          <input type="email" id="f-email" placeholder="aline.rol@gmail.com">
+        </div>
+        <button class="btn" type="submit" id="addBtn">+ Créer</button>
+      </div>
+    </form>
+    <div id="addAlert"></div>
+  </section>
+
+  <!-- LIST EDITORS -->
+  <section class="card">
+    <div class="section-title">Rédacteurs (<span id="editorCount">…</span>)</div>
+    <div id="editorsList"><div class="loading">Chargement…</div></div>
+  </section>
+
+</div>
+
+<script src="api-client.js?v=1"></script>
+<script>
+const $ = id => document.getElementById(id);
+let editors = [];
+
+function escapeHtml(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function buildLoginUrl(loginKey) {
+  return `${location.origin}/login.html?key=${encodeURIComponent(loginKey)}`;
+}
+function formatDate(iso) {
+  if (!iso) return '—';
+  try { return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: '2-digit' }); }
+  catch { return iso; }
+}
+
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (e) {
+    // Fallback : selection
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); document.body.removeChild(ta); return true; }
+    catch { document.body.removeChild(ta); return false; }
+  }
+}
+
+function showAddAlert(msg, type = 'success') {
+  $('addAlert').innerHTML = `<div class="alert ${type}">${msg}</div>`;
+  setTimeout(() => { $('addAlert').innerHTML = ''; }, 5000);
+}
+
+function renderEditors() {
+  const root = $('editorsList');
+  $('editorCount').textContent = editors.length;
+  if (!editors.length) {
+    root.innerHTML = '<div class="empty">Aucun rédacteur pour le moment. Ajoutez-en ci-dessus.</div>';
+    return;
+  }
+  root.innerHTML = editors.map(ed => {
+    const url = buildLoginUrl(ed.login_key);
+    return `
+      <div class="editor-row ${ed.active ? '' : 'inactive'}" data-id="${escapeHtml(ed.id)}">
+        <div>
+          <div class="editor-name">${escapeHtml(ed.name)}${ed.active ? '' : '<span class="tag">DÉSACTIVÉ</span>'}</div>
+          <div class="editor-email">${escapeHtml(ed.email || '— sans email —')}</div>
+        </div>
+        <div class="url-block">
+          <div class="url" title="${escapeHtml(url)}">${escapeHtml(url)}</div>
+          <div class="copy-row">
+            <button class="btn tiny secondary" data-action="copy">📋 Copier le lien</button>
+            <button class="btn tiny secondary" data-action="copy-msg">📝 Copier message prêt</button>
+          </div>
+        </div>
+        <div class="editor-meta">
+          Créé&nbsp;: ${formatDate(ed.created_at)}<br>
+          Dernière&nbsp;connexion&nbsp;: ${formatDate(ed.last_login_at)}
+        </div>
+        <div class="editor-actions">
+          <button class="btn tiny secondary" data-action="regen" title="Génère une nouvelle URL. L'ancienne ne fonctionnera plus.">🔄 Nouvelle URL</button>
+          <button class="btn tiny secondary" data-action="toggle">${ed.active ? '⏸ Désactiver' : '▶️ Réactiver'}</button>
+          <button class="btn tiny danger" data-action="delete">🗑 Supprimer</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+$('editorsList').addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-action]');
+  if (!btn) return;
+  const row = btn.closest('.editor-row');
+  const id = row.dataset.id;
+  const editor = editors.find(e => e.id === id);
+  if (!editor) return;
+
+  const action = btn.dataset.action;
+  if (action === 'copy') {
+    const ok = await copyToClipboard(buildLoginUrl(editor.login_key));
+    btn.textContent = ok ? '✓ Copié !' : 'Erreur copie';
+    setTimeout(() => { btn.textContent = '📋 Copier le lien'; }, 1500);
+  } else if (action === 'copy-msg') {
+    const msg = `Salut ${editor.name.split(' ')[0]} ! Voici ton accès au site du voyage au Japon — tu peux écrire dans le journal et suivre le budget : ${buildLoginUrl(editor.login_key)}\n\nGarde ce lien précieusement, il vaut "mot de passe".`;
+    const ok = await copyToClipboard(msg);
+    btn.textContent = ok ? '✓ Copié !' : 'Erreur copie';
+    setTimeout(() => { btn.textContent = '📝 Copier message prêt'; }, 1500);
+  } else if (action === 'regen') {
+    if (!confirm(`Générer une nouvelle URL pour ${editor.name} ? L'ancienne ne fonctionnera plus et sa session active sera coupée.`)) return;
+    try {
+      const r = await Japan2026Api.regenerateEditorKey(id);
+      editor.login_key = r.login_key;
+      renderEditors();
+    } catch (e) { alert('Erreur : ' + e.message); }
+  } else if (action === 'toggle') {
+    try {
+      await Japan2026Api.updateEditor(id, { active: !editor.active });
+      editor.active = editor.active ? 0 : 1;
+      renderEditors();
+    } catch (e) { alert('Erreur : ' + e.message); }
+  } else if (action === 'delete') {
+    if (!confirm(`Supprimer définitivement ${editor.name} ? Cette action est irréversible.`)) return;
+    try {
+      await Japan2026Api.deleteEditor(id);
+      editors = editors.filter(e => e.id !== id);
+      renderEditors();
+    } catch (e) { alert('Erreur : ' + e.message); }
+  }
+});
+
+// Add new editor
+$('newEditorForm').addEventListener('submit', async (ev) => {
+  ev.preventDefault();
+  const name = $('f-name').value.trim();
+  const email = $('f-email').value.trim() || null;
+  if (!name) return;
+  $('addBtn').disabled = true;
+  $('addBtn').textContent = 'Création…';
+  try {
+    const r = await Japan2026Api.createEditor({ name, email });
+    editors.unshift(r.editor);
+    renderEditors();
+    $('newEditorForm').reset();
+    showAddAlert(`✓ ${name} ajouté ! Lien personnel généré — copie-le et envoie-lui via WhatsApp/email.`);
+  } catch (e) {
+    showAddAlert('Erreur : ' + e.message, 'error');
+  } finally {
+    $('addBtn').disabled = false;
+    $('addBtn').textContent = '+ Créer';
+  }
+});
+
+// Logout
+$('logoutBtn').addEventListener('click', async (ev) => {
+  ev.preventDefault();
+  if (!confirm('Se déconnecter de l\'admin ?')) return;
+  await Japan2026Api.logout();
+  location.href = '/';
+});
+
+// Init
+(async () => {
+  try {
+    const user = await Japan2026Api.getMe(true);
+    if (user) $('adminName').textContent = user.name;
+    editors = await Japan2026Api.listEditors();
+    renderEditors();
+  } catch (e) {
+    $('editorsList').innerHTML = '<div class="empty">Erreur : ' + e.message + '</div>';
+  }
+})();
+</script>
+</body>
+</html>
