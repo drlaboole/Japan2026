@@ -636,6 +636,13 @@ const SECTIONS = [
         deadline: "Quelques jours avant",
         priority: "normal",
         desc: "PNR Qatar : X6KB5D. Réservation : 40-824953652. Retour China Eastern ID 3058857772. Avoir une copie papier + dans le téléphone (pas dépendant de la 4G)."
+      },
+      {
+        id: "ceremonie-the",
+        title: "Cérémonie du thé à Kyoto",
+        deadline: "1 mois avant",
+        priority: "normal",
+        desc: "Vraie cérémonie traditionnelle (matcha battu, wagashi, kimono) durée ~1h. Adresses réputées : Camellia Flower (Higashiyama, 15 min à pied du logement Koju), En Tea House (Gion), Tea Ceremony Ju-An (Kiyomizu). Compter ¥3 000-5 000/pers. Réserver directement sur leur site. À caler sur l'après-midi de dispo à Kyoto."
       }
     ]
   },
@@ -664,6 +671,13 @@ const SECTIONS = [
         priority: "normal",
         desc: "Sur iPhone : Wallet → ajouter une carte → Suica. Sur Android : Google Wallet. Recharge à la volée avec votre CB sans frais étranger. Alternative : acheter ICOCA physique à KIX (¥2 000 dont ¥500 caution).",
         link: "https://support.apple.com/fr-fr/HT207154"
+      },
+      {
+        id: "prevenir-banque",
+        title: "Prévenir la banque du voyage",
+        deadline: "1 semaine avant",
+        priority: "normal",
+        desc: "Éviter un blocage de carte pour usage inhabituel à l'étranger. Un appel ou message via l'appli banque (BoursoBank, LCL, BNP...) suffit. Confirmer : dates 25/07 → 11/08, pays Japon. Bon moment pour vérifier aussi le plafond de retrait international et le porter à 3 000 €/semaine si besoin."
       }
     ]
   },
@@ -719,6 +733,14 @@ const SECTIONS = [
         deadline: "1 semaine avant",
         priority: "high",
         desc: "Doliprane, anti-vomitif (mal des transports — utile pour Hakone Round Course et bateaux), antihistaminique pédiatrique. La plupart des médicaments enfants ne se trouvent pas facilement sur place."
+      },
+      {
+        id: "yakkan-shoumei",
+        title: "Yakkan Shoumei (si traitement médical régulier)",
+        deadline: "2 mois avant",
+        priority: "normal",
+        desc: "Certification d'importation personnelle exigée par la douane japonaise pour certains médicaments sur ordonnance apportés en quantité > 1 mois (ou anxiolytiques/opioïdes en toute quantité). À demander en anglais au Ministry of Health japonais 2 semaines minimum avant le départ, gratuit. Pour la plupart des voyageurs sans traitement de fond, non applicable — mais à vérifier si l'un de vous prend un traitement chronique.",
+        link: "https://www.mhlw.go.jp/english/policy/health-medical/pharmaceuticals/01.html"
       }
     ]
   },
@@ -774,6 +796,96 @@ const SECTIONS = [
         deadline: "Veille du départ",
         priority: "normal",
         desc: "Les Shinkansen ont peu de place pour les grosses valises. Une valise cabine + un sac à dos par personne suffit. Les grosses valises (>25\" / 70 cm) doivent être réservées en compartiment spécial à la réservation."
+      },
+      {
+        id: "maillot-bain",
+        title: "Maillot de bain",
+        deadline: "Veille du départ",
+        priority: "normal",
+        desc: "Utile pour : le Yunessun de Hakone (spa parc, maillot obligatoire), la piscine des Airbnb si prévue, la plage de Miyajima. Les onsen traditionnels (rotenburo à l'onsen privatif de Ninotaira) se font eux nus, pas de maillot."
+      },
+      {
+        id: "impermeable",
+        title: "Veste imperméable compacte",
+        deadline: "Veille du départ",
+        priority: "high",
+        desc: "Été = saison des pluies puis typhons. Une petite Décathlon Quechua ou K-Way qui rentre dans le sac à dos. Les parapluies japonais des konbini (¥500) marchent aussi mais moins pratiques en pluie forte."
+      },
+      {
+        id: "sous-vetements",
+        title: "Sous-vêtements/chaussettes 7-8 jours",
+        deadline: "Veille du départ",
+        priority: "normal",
+        desc: "Chaque logement (Osaka, Kyoto, Hakone, Tokyo) a un lave-linge : 7-8 jeux suffisent pour 17 jours en lavant à mi-parcours. Avec 35°C humide, prévoir plutôt en coton/mérinos qui ne gardent pas la sueur."
+      },
+      {
+        id: "creme-solaire",
+        title: "Crème solaire + répulsif anti-moustiques",
+        deadline: "Veille du départ",
+        priority: "high",
+        desc: "SPF 50+ obligatoire (été japonais très intense). Répulsif DEET (moustique tigre présent, notamment le soir à Hakone et Kyoto). Alternative : achat sur place — les crèmes solaires japonaises (Anessa, Biore UV) sont réputées les meilleures au monde, à ~¥2 000."
+      },
+      {
+        id: "casquette-lunettes",
+        title: "Casquette/chapeau + lunettes de soleil",
+        deadline: "Veille du départ",
+        priority: "high",
+        desc: "Indispensable pour les journées à Nara (deer park exposé), Miyajima (torii), Fushimi Inari (montée 4h au soleil). Prévoir un cordon pour attacher les lunettes en cas de pluie soudaine. Éventail (sensu) achetable sur place à ¥300."
+      },
+      {
+        id: "sac-pliable",
+        title: "Sac pliable vide pour le retour",
+        deadline: "Veille du départ",
+        priority: "normal",
+        desc: "Un sac Décathlon léger 30-40 L qui se plie en poche. Utile pour les achats et souvenirs (le Japon a beaucoup à ramener : céramiques, thés, papeterie, gadgets Don Quijote, snacks). Alternative locale : les sacs Uniqlo/Muji sont beaux et bon marché à ~¥500."
+      },
+      {
+        id: "tenue-cabine",
+        title: "Tenue de rechange légère (bagage cabine)",
+        deadline: "Veille du départ",
+        priority: "normal",
+        desc: "Un t-shirt + sous-vêtement + chaussettes de rechange dans le sac cabine, en cas de retard/perte des valises en soute pendant les 24h premières heures. Un vol Qatar 17h : facile d'arriver après une nuit dans le même vêtement."
+      },
+      {
+        id: "trousse-toilette",
+        title: "Trousse de toilette complète",
+        deadline: "Veille du départ",
+        priority: "normal",
+        desc: "Format < 100 mL pour les indispensables en cabine si l'un des bagages en soute est perdu (brosse à dents, mini-dentifrice, déo). Le reste en soute. Les logements fournissent souvent shampoing/gel douche, mais qualité variable — un mini-format perso est confortable."
+      }
+    ]
+  },
+  {
+    title: "Le jour J (départ)",
+    icon: "✈️",
+    items: [
+      {
+        id: "jourj-charger",
+        title: "Charger tous les appareils électroniques",
+        deadline: "Veille du départ",
+        priority: "high",
+        desc: "iPhone, iPad, appareil photo, batteries externes. Le vol Nice → Doha (7h) + escale (2h) + Doha → Osaka (9h) = ~18h porte à porte. Prévoir les câbles USB-C/Lightning dans le bagage cabine."
+      },
+      {
+        id: "jourj-immigration",
+        title: "Vérifier les QR codes Visit Japan Web validés",
+        deadline: "Le jour J",
+        priority: "high",
+        desc: "Se connecter à visitjapan.digital.go.jp le matin du départ. Vérifier que les 8 QR codes (immigration + douane) sont bien générés et téléchargés hors ligne dans le téléphone. Screenshot également au cas où."
+      },
+      {
+        id: "jourj-premier-trajet",
+        title: "Vérifier billets d'avion + réservations premier trajet",
+        deadline: "Le jour J",
+        priority: "high",
+        desc: "Vol Qatar QR56 Nice → Doha 15h55 (25/7). Enregistrement 3h avant. Puis QR802 Doha → KIX. À l'arrivée à Kansai le 26/7 : billets Nankai Airport Express Namba (¥1 020/pers, à acheter au guichet KIX). Vérifier aussi la SIM eSIM japonaise est prête à activer."
+      },
+      {
+        id: "jourj-passeports",
+        title: "Passeports + QR codes accessibles rapidement",
+        deadline: "Le jour J",
+        priority: "high",
+        desc: "Passeports dans une pochette dédiée en cabine, jamais en soute. QR codes Visit Japan téléchargés hors ligne. Un adulte responsable des documents de chaque famille pour ne pas se perdre entre les 8 passeports."
       }
     ]
   },

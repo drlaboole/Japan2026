@@ -1,7 +1,8 @@
 /**
  * api-client.js — Client API pour Japan2026
  * Auth basée sur cookie de session (géré côté Worker).
- * Pas de mot de passe à entrer côté frontend — l'auth se fait via login.html?key=...
+ * Login classique : loginWithCredentials(username, password).
+ * Legacy (compat) : loginWithKey(key) — magic link.
  */
 
 (function (global) {
@@ -45,7 +46,23 @@
   }
   function isLoggedIn() { return !!cachedUser; }
   function isAdmin()    { return !!cachedUser && cachedUser.role === "admin"; }
+  async function loginWithCredentials(username, password) {
+    const res = await fetch(API_BASE + "/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ username, password }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Identifiants invalides" }));
+      throw new Error(err.error === "invalid credentials" ? "Identifiant ou mot de passe incorrect" : (err.error || "Connexion échouée"));
+    }
+    const data = await res.json();
+    cachedUser = data.user;
+    return data.user;
+  }
   async function loginWithKey(key) {
+    // Legacy magic link — encore supporté côté Worker pour compat
     const res = await fetch(API_BASE + "/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -109,16 +126,17 @@
   async function createEditor(payload)      { return request("/admin/editors", { method: "POST", body: payload }); }
   async function updateEditor(id, payload)  { return request("/admin/editors/" + encodeURIComponent(id), { method: "PUT", body: payload }); }
   async function deleteEditor(id)           { return request("/admin/editors/" + encodeURIComponent(id), { method: "DELETE" }); }
+  async function setEditorPassword(id, password) { return request("/admin/editors/" + encodeURIComponent(id) + "/password", { method: "POST", body: { password } }); }
   async function regenerateEditorKey(id)    { return request("/admin/editors/" + encodeURIComponent(id) + "/regenerate", { method: "POST" }); }
 
   // ---------- Expose ----------
   global.Japan2026Api = {
     getMe, isLoggedIn, isAdmin,
-    loginWithKey, logout,
+    loginWithCredentials, loginWithKey, logout,
     listPosts, savePost, deletePost,
     listExpenses, saveExpense, deleteExpense,
     getSetting, setSetting,
     uploadPhotoFromBuffer,
-    listEditors, createEditor, updateEditor, deleteEditor, regenerateEditorKey,
+    listEditors, createEditor, updateEditor, deleteEditor, setEditorPassword, regenerateEditorKey,
   };
 })(window);

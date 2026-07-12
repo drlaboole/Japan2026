@@ -34,7 +34,9 @@ h1 em { font-style: italic; color: var(--accent); }
 .section-title { font-family: 'DM Serif Display', serif; font-size: 1.35rem; margin-bottom: 1rem; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.7rem; align-items: end; }
-@media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
+.form-grid.form-grid-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 900px) { .form-grid.form-grid-4 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 700px) { .form-grid, .form-grid.form-grid-4 { grid-template-columns: 1fr; } }
 .field { display: flex; flex-direction: column; gap: 0.3rem; }
 .field label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); }
 .field input { font-family: 'DM Sans', sans-serif; font-size: 0.92rem; padding: 0.6rem 0.8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
@@ -98,23 +100,36 @@ button.btn.danger { background: transparent; color: var(--accent); border: 1px s
 
   <div class="help">
     <strong>Comment ça marche</strong>
-    Ajoute un rédacteur avec son nom (et son email optionnellement). Le système génère une URL personnelle unique. Tu la copies, tu l'envoies via WhatsApp/SMS/email à la personne. Elle clique → connectée pour 30 jours, et peut écrire dans le journal / ajouter des dépenses.
+    Ajoute un rédacteur avec son nom, son identifiant (username) et un mot de passe initial. Tu communiques les identifiants à la personne (WhatsApp/SMS/email), qui pourra ensuite se connecter sur le site et rester logguée 30 jours. Tu peux réinitialiser son mot de passe à tout moment.
   </div>
 
   <!-- ADD EDITOR -->
   <section class="card">
     <div class="section-title">Ajouter un rédacteur</div>
     <form id="newEditorForm">
-      <div class="form-grid">
+      <div class="form-grid form-grid-4">
         <div class="field">
           <label for="f-name">Prénom et nom</label>
           <input type="text" id="f-name" required placeholder="Ex : Aline Rol">
         </div>
         <div class="field">
+          <label for="f-username">Identifiant</label>
+          <input type="text" id="f-username" required placeholder="Ex : aline" autocapitalize="off" autocorrect="off" spellcheck="false" pattern="[a-zA-Z0-9._-]{2,30}">
+        </div>
+        <div class="field">
+          <label for="f-password">Mot de passe initial (min 6)</label>
+          <div style="display:flex; gap:0.4rem;">
+            <input type="text" id="f-password" required minlength="6" placeholder="mot de passe" autocapitalize="off" autocorrect="off" spellcheck="false" style="flex:1;">
+            <button type="button" class="btn secondary tiny" id="genPwdBtn" title="Générer un mot de passe">🎲</button>
+          </div>
+        </div>
+        <div class="field">
           <label for="f-email">Email (optionnel)</label>
           <input type="email" id="f-email" placeholder="aline.rol@gmail.com">
         </div>
-        <button class="btn" type="submit" id="addBtn">+ Créer</button>
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-top:0.8rem;">
+        <button class="btn" type="submit" id="addBtn">+ Créer le compte</button>
       </div>
     </form>
     <div id="addAlert"></div>
@@ -128,7 +143,7 @@ button.btn.danger { background: transparent; color: var(--accent); border: 1px s
 
 </div>
 
-<script src="api-client.js?v=1"></script>
+<script src="api-client.js?v=2"></script>
 <script>
 const $ = id => document.getElementById(id);
 let editors = [];
@@ -173,26 +188,23 @@ function renderEditors() {
     return;
   }
   root.innerHTML = editors.map(ed => {
-    const url = buildLoginUrl(ed.login_key);
     return `
       <div class="editor-row ${ed.active ? '' : 'inactive'}" data-id="${escapeHtml(ed.id)}">
         <div>
           <div class="editor-name">${escapeHtml(ed.name)}${ed.active ? '' : '<span class="tag">DÉSACTIVÉ</span>'}</div>
           <div class="editor-email">${escapeHtml(ed.email || '— sans email —')}</div>
-        </div>
-        <div class="url-block">
-          <div class="url" title="${escapeHtml(url)}">${escapeHtml(url)}</div>
-          <div class="copy-row">
-            <button class="btn tiny secondary" data-action="copy">📋 Copier le lien</button>
-            <button class="btn tiny secondary" data-action="copy-msg">📝 Copier message prêt</button>
+          <div class="editor-meta" style="margin-top:0.4rem;">
+            👤 <strong>${escapeHtml(ed.username || '(pas d\'identifiant)')}</strong>
           </div>
         </div>
         <div class="editor-meta">
           Créé&nbsp;: ${formatDate(ed.created_at)}<br>
-          Dernière&nbsp;connexion&nbsp;: ${formatDate(ed.last_login_at)}
+          Dernière connexion&nbsp;: ${formatDate(ed.last_login_at)}
         </div>
+        <div></div>
         <div class="editor-actions">
-          <button class="btn tiny secondary" data-action="regen" title="Génère une nouvelle URL. L'ancienne ne fonctionnera plus.">🔄 Nouvelle URL</button>
+          <button class="btn tiny secondary" data-action="reset-pwd" title="Définir un nouveau mot de passe pour cet éditeur. Sa session en cours sera coupée.">🔑 Nouveau mdp</button>
+          <button class="btn tiny secondary" data-action="copy-creds" title="Copier un message prêt à envoyer par SMS/WhatsApp avec l'identifiant.">📋 Copier ident.</button>
           <button class="btn tiny secondary" data-action="toggle">${ed.active ? '⏸ Désactiver' : '▶️ Réactiver'}</button>
           <button class="btn tiny danger" data-action="delete">🗑 Supprimer</button>
         </div>
@@ -200,6 +212,19 @@ function renderEditors() {
     `;
   }).join('');
 }
+
+function generatePassword() {
+  // Mot de passe mémorisable : 2 mots + 3 chiffres
+  const words = ['tokyo','kyoto','sakura','ramen','shibuya','onsen','matcha','sushi','fuji','samurai','tempura','kawaii','miyako','yamato','kabuki','sensu','wasabi','anime','ninja','washi','kirin','anko','katana'];
+  const w1 = words[Math.floor(Math.random()*words.length)];
+  const w2 = words[Math.floor(Math.random()*words.length)];
+  const n = Math.floor(100 + Math.random()*900);
+  return `${w1}-${w2}-${n}`;
+}
+
+$('genPwdBtn').addEventListener('click', () => {
+  $('f-password').value = generatePassword();
+});
 
 $('editorsList').addEventListener('click', async (ev) => {
   const btn = ev.target.closest('button[data-action]');
@@ -210,21 +235,22 @@ $('editorsList').addEventListener('click', async (ev) => {
   if (!editor) return;
 
   const action = btn.dataset.action;
-  if (action === 'copy') {
-    const ok = await copyToClipboard(buildLoginUrl(editor.login_key));
-    btn.textContent = ok ? '✓ Copié !' : 'Erreur copie';
-    setTimeout(() => { btn.textContent = '📋 Copier le lien'; }, 1500);
-  } else if (action === 'copy-msg') {
-    const msg = `Salut ${editor.name.split(' ')[0]} ! Voici ton accès au site du voyage au Japon — tu peux écrire dans le journal et suivre le budget : ${buildLoginUrl(editor.login_key)}\n\nGarde ce lien précieusement, il vaut "mot de passe".`;
+  if (action === 'copy-creds') {
+    const msg = `Salut ${editor.name.split(' ')[0]} ! Voici tes accès au site du voyage au Japon.\n\n🔗 ${location.origin}/login.html\n👤 Identifiant : ${editor.username}\n🔑 Mot de passe : (celui que David t'a communiqué à part)\n\nTu peux ensuite écrire dans le journal, suivre le budget, cocher la checklist. Connexion valide 30 jours.`;
     const ok = await copyToClipboard(msg);
     btn.textContent = ok ? '✓ Copié !' : 'Erreur copie';
-    setTimeout(() => { btn.textContent = '📝 Copier message prêt'; }, 1500);
-  } else if (action === 'regen') {
-    if (!confirm(`Générer une nouvelle URL pour ${editor.name} ? L'ancienne ne fonctionnera plus et sa session active sera coupée.`)) return;
+    setTimeout(() => { btn.textContent = '📋 Copier ident.'; }, 1500);
+  } else if (action === 'reset-pwd') {
+    const suggested = generatePassword();
+    const newPwd = prompt(`Nouveau mot de passe pour ${editor.name} (6 caractères minimum) :\n\n(Tu peux taper le tien ou utiliser la suggestion ci-dessous)`, suggested);
+    if (!newPwd) return;
+    if (newPwd.length < 6) { alert('Trop court — minimum 6 caractères.'); return; }
     try {
-      const r = await Japan2026Api.regenerateEditorKey(id);
-      editor.login_key = r.login_key;
-      renderEditors();
+      await Japan2026Api.setEditorPassword(id, newPwd);
+      const msg = `Mot de passe défini pour ${editor.name} :\n\n👤 Identifiant : ${editor.username}\n🔑 Mot de passe : ${newPwd}\n\n(Sa session en cours a été coupée, il/elle devra se reconnecter.)`;
+      // Copier automatiquement dans le presse-papier pour éviter de perdre le mdp
+      await copyToClipboard(`Identifiant : ${editor.username}\nMot de passe : ${newPwd}`);
+      alert(msg + '\n\n✓ Identifiants copiés dans le presse-papier.');
     } catch (e) { alert('Erreur : ' + e.message); }
   } else if (action === 'toggle') {
     try {
@@ -246,21 +272,34 @@ $('editorsList').addEventListener('click', async (ev) => {
 $('newEditorForm').addEventListener('submit', async (ev) => {
   ev.preventDefault();
   const name = $('f-name').value.trim();
+  const username = $('f-username').value.trim().toLowerCase();
+  const password = $('f-password').value;
   const email = $('f-email').value.trim() || null;
-  if (!name) return;
+  if (!name || !username || !password) return;
+  if (!/^[a-z0-9._-]{2,30}$/.test(username)) {
+    showAddAlert("Identifiant invalide : lettres minuscules, chiffres, tirets et points seulement (2 à 30 caractères).", 'error');
+    return;
+  }
+  if (password.length < 6) {
+    showAddAlert('Mot de passe trop court (6 caractères minimum).', 'error');
+    return;
+  }
   $('addBtn').disabled = true;
   $('addBtn').textContent = 'Création…';
   try {
-    const r = await Japan2026Api.createEditor({ name, email });
+    const r = await Japan2026Api.createEditor({ name, username, password, email });
     editors.unshift(r.editor);
     renderEditors();
+    // Copier les identifiants au presse-papier
+    const clip = `Identifiant : ${username}\nMot de passe : ${password}\nLogin : ${location.origin}/login.html`;
+    await copyToClipboard(clip);
     $('newEditorForm').reset();
-    showAddAlert(`✓ ${name} ajouté ! Lien personnel généré — copie-le et envoie-lui via WhatsApp/email.`);
+    showAddAlert(`✓ ${name} ajouté (identifiant : <strong>${escapeHtml(username)}</strong>). Les identifiants sont dans le presse-papier — colle-les dans WhatsApp/SMS pour la personne.`);
   } catch (e) {
     showAddAlert('Erreur : ' + e.message, 'error');
   } finally {
     $('addBtn').disabled = false;
-    $('addBtn').textContent = '+ Créer';
+    $('addBtn').textContent = '+ Créer le compte';
   }
 });
 

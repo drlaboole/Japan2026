@@ -20,17 +20,17 @@ body { font-family: 'DM Sans', -apple-system, sans-serif; background: var(--bg);
 .jp { font-family: 'DM Serif Display', serif; font-size: 2.6rem; color: var(--accent); font-style: italic; margin-bottom: 0.4rem; }
 h1 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 0.6rem; }
 p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; margin-bottom: 1.2rem; }
-.field { text-align: left; margin: 1.4rem 0; }
+.field { text-align: left; margin: 1rem 0; }
 .field label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); display: block; margin-bottom: 0.35rem; }
-.field input { width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); }
+.field input { width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; padding: 0.7rem 0.85rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); }
 .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(230,57,70,0.12); }
-button.btn { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; padding: 0.85rem 1.4rem; border: none; border-radius: 8px; cursor: pointer; background: var(--accent); color: white; width: 100%; transition: transform 0.15s, box-shadow 0.15s; }
+button.btn { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; padding: 0.85rem 1.4rem; border: none; border-radius: 8px; cursor: pointer; background: var(--accent); color: white; width: 100%; transition: transform 0.15s, box-shadow 0.15s; margin-top: 0.6rem; }
 button.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(230,57,70,0.3); }
 button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 .alert { padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.88rem; margin-top: 1rem; text-align: left; }
 .alert.error { background: rgba(230,57,70,0.1); color: var(--accent); border-left: 3px solid var(--accent); }
 .alert.success { background: rgba(42,128,115,0.1); color: var(--green); border-left: 3px solid var(--green); }
-.muted { font-size: 0.82rem; color: var(--ink-mute); margin-top: 1.6rem; }
+.muted { font-size: 0.82rem; color: var(--ink-mute); margin-top: 1.6rem; line-height: 1.5; }
 .muted a { color: var(--accent); text-decoration: none; }
 .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 0.4rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -39,13 +39,17 @@ button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 <body>
 <div class="box">
   <div class="jp">日本</div>
-  <h1>Connexion rédacteur</h1>
-  <p id="intro">Entre ta clé personnelle d'accès (envoyée par David). Ta connexion sera valide 30 jours.</p>
+  <h1>Voyage Japon 2026</h1>
+  <p id="intro">Site privé de la famille. Connexion avec ton identifiant et ton mot de passe.<br>Session valide 30 jours.</p>
 
   <form id="loginForm">
     <div class="field">
-      <label for="keyInput">Clé d'accès</label>
-      <input type="text" id="keyInput" placeholder="jp_..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+      <label for="usernameInput">Identifiant</label>
+      <input type="text" id="usernameInput" name="username" placeholder="ex. david" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+    </div>
+    <div class="field">
+      <label for="passwordInput">Mot de passe</label>
+      <input type="password" id="passwordInput" name="password" autocomplete="current-password" required>
     </div>
     <button class="btn" type="submit" id="submitBtn">Me connecter</button>
   </form>
@@ -53,48 +57,48 @@ button.btn:disabled { opacity: 0.5; cursor: not-allowed; }
   <div id="alertBox"></div>
 
   <p class="muted">
-    Pas de clé ? Demande à David. <br>
-    <a href="/">← Retour au site (lecture libre)</a>
+    Pas encore d'accès ? Demande à David de te créer un compte.
   </p>
 </div>
 
-<script src="api-client.js?v=1"></script>
+<script src="api-client.js?v=2"></script>
 <script>
 const $ = id => document.getElementById(id);
 const params = new URLSearchParams(location.search);
 const nextUrl = params.get('next') || '/';
-const keyFromUrl = params.get('key');
+const keyFromUrl = params.get('key');   // fallback magic link (legacy)
 
 function showAlert(msg, type = 'error') {
   $('alertBox').innerHTML = `<div class="alert ${type}">${msg}</div>`;
 }
 
-async function attemptLogin(key) {
+async function attempt(fnPromise) {
   $('submitBtn').disabled = true;
-  $('submitBtn').innerHTML = '<span class="spinner"></span> Vérification…';
+  $('submitBtn').innerHTML = '<span class="spinner"></span> Connexion…';
   try {
-    const user = await Japan2026Api.loginWithKey(key);
+    const user = await fnPromise;
     showAlert(`Bienvenue ${user.name} ! Redirection…`, 'success');
-    setTimeout(() => { location.href = nextUrl; }, 600);
+    // Petite pause pour laisser voir le message
+    setTimeout(() => { location.href = nextUrl; }, 500);
   } catch (e) {
-    showAlert("Clé invalide ou compte désactivé. Vérifie le lien que t'a envoyé David.");
+    showAlert(e.message || 'Identifiants invalides. Réessaie ou contacte David.');
     $('submitBtn').disabled = false;
     $('submitBtn').textContent = 'Me connecter';
   }
 }
 
-$('loginForm').addEventListener('submit', async (ev) => {
+$('loginForm').addEventListener('submit', (ev) => {
   ev.preventDefault();
-  const key = $('keyInput').value.trim();
-  if (!key) return;
-  await attemptLogin(key);
+  const username = $('usernameInput').value.trim();
+  const password = $('passwordInput').value;
+  if (!username || !password) return;
+  attempt(Japan2026Api.loginWithCredentials(username, password));
 });
 
-// Auto-login if ?key= is in URL
+// Fallback : magic link via ?key=... (legacy, encore supporté côté Worker)
 if (keyFromUrl) {
-  $('keyInput').value = keyFromUrl;
-  $('intro').textContent = "Connexion automatique en cours…";
-  attemptLogin(keyFromUrl);
+  $('intro').textContent = "Connexion automatique par lien magique…";
+  attempt(Japan2026Api.loginWithKey(keyFromUrl));
 }
 </script>
 </body>
