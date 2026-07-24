@@ -224,13 +224,17 @@ function renderEditors() {
     return;
   }
   root.innerHTML = editors.map(ed => {
+    const isLegacy = !ed.username;
+    const usernameDisplay = ed.username
+      ? `👤 <strong>${escapeHtml(ed.username)}</strong>`
+      : `<span style="color:var(--accent); font-style:italic;">⚠️ compte ancien — identifiant à définir</span>`;
     return `
-      <div class="editor-row ${ed.active ? '' : 'inactive'}" data-id="${escapeHtml(ed.id)}">
+      <div class="editor-row ${ed.active ? '' : 'inactive'} ${isLegacy ? 'legacy' : ''}" data-id="${escapeHtml(ed.id)}" style="${isLegacy ? 'border-left-color: var(--accent);' : ''}">
         <div>
           <div class="editor-name">${escapeHtml(ed.name)}${ed.active ? '' : '<span class="tag">DÉSACTIVÉ</span>'}</div>
           <div class="editor-email">${escapeHtml(ed.email || '— sans email —')}</div>
           <div class="editor-meta" style="margin-top:0.4rem;">
-            👤 <strong>${escapeHtml(ed.username || '(pas d\'identifiant)')}</strong>
+            ${usernameDisplay}
           </div>
         </div>
         <div class="editor-meta">
@@ -239,8 +243,11 @@ function renderEditors() {
         </div>
         <div></div>
         <div class="editor-actions">
-          <button class="btn tiny secondary" data-action="reset-pwd" title="Définir un nouveau mot de passe pour cet éditeur. Sa session en cours sera coupée.">🔑 Nouveau mdp</button>
-          <button class="btn tiny secondary" data-action="copy-creds" title="Copier un message prêt à envoyer par SMS/WhatsApp avec l'identifiant.">📋 Copier ident.</button>
+          ${isLegacy
+            ? `<button class="btn tiny" data-action="setup-legacy" style="background: var(--accent); color: white;">🆔 Définir identifiant + mdp</button>`
+            : `<button class="btn tiny secondary" data-action="reset-pwd" title="Définir un nouveau mot de passe pour cet éditeur. Sa session en cours sera coupée.">🔑 Nouveau mdp</button>
+               <button class="btn tiny secondary" data-action="copy-creds" title="Copier un message prêt à envoyer par SMS/WhatsApp avec l'identifiant.">📋 Copier ident.</button>`
+          }
           <button class="btn tiny secondary" data-action="toggle">${ed.active ? '⏸ Désactiver' : '▶️ Réactiver'}</button>
           <button class="btn tiny danger" data-action="delete">🗑 Supprimer</button>
         </div>
@@ -276,6 +283,33 @@ $('editorsList').addEventListener('click', async (ev) => {
     const ok = await copyToClipboard(msg);
     btn.textContent = ok ? '✓ Copié !' : 'Erreur copie';
     setTimeout(() => { btn.textContent = '📋 Copier ident.'; }, 1500);
+  } else if (action === 'setup-legacy') {
+    // Compte ancien créé avant la migration : définir username + password
+    const suggestedUsername = editor.name.split(' ')[0].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
+    const username = prompt(`Choisis un identifiant pour ${editor.name} :\n\n(lettres minuscules, chiffres, tirets/points, 2-30 caractères)`, suggestedUsername);
+    if (!username) return;
+    const cleanUsername = username.trim().toLowerCase();
+    if (!/^[a-z0-9._-]{2,30}$/.test(cleanUsername)) {
+      alert("Identifiant invalide : lettres minuscules, chiffres, tirets et points seulement.");
+      return;
+    }
+    const suggestedPwd = generatePassword();
+    const password = prompt(`Mot de passe initial pour ${editor.name} (6 caractères minimum) :\n\n(Tu peux taper le tien ou utiliser la suggestion)`, suggestedPwd);
+    if (!password) return;
+    if (password.length < 6) { alert('Trop court — minimum 6 caractères.'); return; }
+    try {
+      // 1. Mettre à jour le username (nom + email inchangés)
+      await Japan2026Api.updateEditor(id, { username: cleanUsername });
+      // 2. Définir le password
+      await Japan2026Api.setEditorPassword(id, password);
+      // 3. Rafraîchir la liste
+      editors = await Japan2026Api.listEditors();
+      renderEditors();
+      // 4. Copier les identifiants
+      const clip = `Identifiant : ${cleanUsername}\nMot de passe : ${password}\nLogin : ${location.origin}/login.html`;
+      await copyToClipboard(clip);
+      alert(`✓ Compte activé pour ${editor.name} :\n\n👤 Identifiant : ${cleanUsername}\n🔑 Mot de passe : ${password}\n\n(Identifiants copiés dans le presse-papier — colle-les dans WhatsApp/SMS)`);
+    } catch (e) { alert('Erreur : ' + e.message); }
   } else if (action === 'reset-pwd') {
     const suggested = generatePassword();
     const newPwd = prompt(`Nouveau mot de passe pour ${editor.name} (6 caractères minimum) :\n\n(Tu peux taper le tien ou utiliser la suggestion ci-dessous)`, suggested);
