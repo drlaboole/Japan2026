@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "japan2026",
   "main": "src/worker.js",
+  "account_id": "e62c3423844cf31f36a031d24af12e86",
   "compatibility_date": "2026-05-15",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
