@@ -1631,6 +1631,7 @@ footer {
       <button class="nav-tab" data-tab="calendar">Calendrier</button>
       <button class="nav-tab" data-tab="planning">Planning</button>
       <button class="nav-tab" data-tab="budget">Prévisionnel</button>
+      <button class="nav-tab" data-tab="yen">Yen 円</button>
       <button class="nav-tab" data-tab="flights">Vols</button>
       <button class="nav-tab" data-tab="osaka">Osaka</button>
       <button class="nav-tab" data-tab="kyoto">Kyoto</button>
@@ -1643,6 +1644,11 @@ footer {
       <a class="nav-tab external" href="journal.html">Journal</a>
       <a class="nav-tab external" href="carte-photos.html">Carte photos</a>
       <a class="nav-tab external" href="voitures.html">Voitures</a>
+      <a class="nav-tab external admin-only" href="admin.html" style="display:none; background:rgba(26,26,46,0.08); color:var(--ink);">⚙ Admin</a>
+    </div>
+    <div style="margin-left:auto; display:flex; align-items:center; gap:0.5rem; padding-right:0.5rem;">
+      <span id="userChip" style="display:none; font-family:'JetBrains Mono', monospace; font-size:0.7rem; color:var(--ink-mute); padding:0.3rem 0.7rem; background:var(--bg-warm); border-radius:100px;"></span>
+      <a id="logoutBtn" href="#" style="display:none; font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:var(--ink-mute); text-decoration:none; border:1px solid var(--line); padding:0.3rem 0.7rem; border-radius:100px;">Déconnexion</a>
     </div>
   </div>
 </nav>
@@ -2609,6 +2615,117 @@ footer {
 <!-- ============================
      06 FLIGHTS
      ============================ -->
+<!-- ============================
+     06b YEN 円
+     ============================ -->
+<section class="tab-panel" id="yen">
+  <div class="section-header">
+    <div class="section-kicker"><span class="num">06</span> <span>Cours du yen · en direct</span></div>
+    <h2>Yen japonais <span style="font-family:'DM Serif Display', serif; font-style: italic; color: var(--accent);">円</span></h2>
+    <div class="jp">為替レート — Suivre la parité EUR/JPY</div>
+  </div>
+
+  <p class="section-lead">Le budget prévisionnel du voyage a été construit sur la base d'un taux de <strong>1 € = 170 ¥</strong>. Ci-dessous, le taux réel du jour (source Banque centrale européenne, mis à jour chaque jour ouvré vers 16h heure de Paris).</p>
+
+  <!-- HERO : taux du jour -->
+  <div class="card" style="background: linear-gradient(135deg, #fef7ec 0%, #fbe9c9 100%); border: 1px solid var(--line-soft); border-radius: 20px; padding: 2.5rem 2rem; margin-bottom: 1.4rem; text-align: center;">
+    <div style="font-family:'JetBrains Mono', monospace; font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:0.6rem;">
+      Taux du <span id="yen-date">…</span>
+    </div>
+    <div style="font-family:'DM Serif Display', serif; font-size:3.6rem; letter-spacing:-0.02em; line-height:1.05; margin-bottom:0.4rem;">
+      1 € = <span id="yen-rate" style="color:var(--accent);">…</span> ¥
+    </div>
+    <div style="font-family:'DM Sans', sans-serif; font-size:1rem; color:var(--ink-soft); margin-bottom:1.2rem;">
+      100 ¥ = <span id="yen-reverse">…</span> €
+    </div>
+    <div id="yen-vs-budget" style="font-family:'JetBrains Mono', monospace; font-size:0.75rem; padding:0.6rem 1rem; border-radius:100px; display:inline-block; background:var(--paper); color:var(--ink-mute);">
+      Comparaison avec le prévisionnel…
+    </div>
+    <div style="margin-top:1rem;">
+      <button onclick="loadYenRate()" style="font-family:'JetBrains Mono', monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; background:transparent; border:1px solid var(--line); padding:0.5rem 0.9rem; border-radius:100px; cursor:pointer; color:var(--ink-mute);">🔄 Actualiser</button>
+    </div>
+  </div>
+
+  <!-- CONVERTISSEUR -->
+  <h3>Convertisseur rapide</h3>
+  <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:16px; padding:1.6rem 1.7rem; margin-bottom:1.4rem;">
+    <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:1rem; align-items:end;">
+      <div style="text-align:left;">
+        <label style="font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-mute); display:block; margin-bottom:0.35rem;">Euros €</label>
+        <input type="number" id="yen-input-eur" value="100" step="1" min="0" style="width:100%; font-family:'DM Sans', sans-serif; font-size:1.4rem; padding:0.7rem 0.9rem; border:1px solid var(--line); border-radius:10px; background:var(--bg); color:var(--ink);">
+      </div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.6rem; color:var(--accent); padding-bottom:0.8rem;">↔</div>
+      <div style="text-align:left;">
+        <label style="font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-mute); display:block; margin-bottom:0.35rem;">Yens ¥</label>
+        <input type="number" id="yen-input-jpy" value="17000" step="1" min="0" style="width:100%; font-family:'DM Sans', sans-serif; font-size:1.4rem; padding:0.7rem 0.9rem; border:1px solid var(--line); border-radius:10px; background:var(--bg); color:var(--ink);">
+      </div>
+    </div>
+    <div style="margin-top:0.8rem; font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--ink-mute); text-align:right;">
+      Tape dans un champ, l'autre se met à jour automatiquement.
+    </div>
+  </div>
+
+  <!-- MONTANTS TYPES -->
+  <h3>Repères utiles</h3>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:0.8rem; margin-bottom:1.4rem;">
+    <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:12px; padding:1rem 1.2rem;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Onigiri konbini</div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.3rem; margin-top:0.2rem;">150 ¥ · <span class="yen-eur" data-jpy="150">…</span> €</div>
+    </div>
+    <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:12px; padding:1rem 1.2rem;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Bol de ramen</div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.3rem; margin-top:0.2rem;">1 000 ¥ · <span class="yen-eur" data-jpy="1000">…</span> €</div>
+    </div>
+    <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:12px; padding:1rem 1.2rem;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Trajet métro</div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.3rem; margin-top:0.2rem;">240 ¥ · <span class="yen-eur" data-jpy="240">…</span> €</div>
+    </div>
+    <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:12px; padding:1rem 1.2rem;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Shinkansen Kyoto→Hakone</div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.3rem; margin-top:0.2rem;">12 320 ¥ · <span class="yen-eur" data-jpy="12320">…</span> €</div>
+    </div>
+    <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:12px; padding:1rem 1.2rem;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Retrait ATM (max/opé.)</div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.3rem; margin-top:0.2rem;">30 000 ¥ · <span class="yen-eur" data-jpy="30000">…</span> €</div>
+    </div>
+    <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:12px; padding:1rem 1.2rem;">
+      <div style="font-family:'JetBrains Mono', monospace; font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Hakone Free Pass 2j</div>
+      <div style="font-family:'DM Serif Display', serif; font-size:1.3rem; margin-top:0.2rem;">6 100 ¥ · <span class="yen-eur" data-jpy="6100">…</span> €</div>
+    </div>
+  </div>
+
+  <!-- HISTORIQUE 30 JOURS -->
+  <h3>Sur les 30 derniers jours</h3>
+  <div class="card" style="background:var(--paper); border:1px solid var(--line-soft); border-radius:16px; padding:1.4rem 1.7rem; margin-bottom:1.4rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:1rem; text-align:center;">
+      <div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Minimum</div>
+        <div style="font-family:'DM Serif Display', serif; font-size:1.8rem; color:var(--ink);"><span id="yen-min">…</span> ¥</div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Moyenne</div>
+        <div style="font-family:'DM Serif Display', serif; font-size:1.8rem; color:var(--accent);"><span id="yen-avg">…</span> ¥</div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono', monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-mute);">Maximum</div>
+        <div style="font-family:'DM Serif Display', serif; font-size:1.8rem; color:var(--ink);"><span id="yen-max">…</span> ¥</div>
+      </div>
+    </div>
+    <canvas id="yen-chart" height="120" style="width:100%; margin-top:1.2rem; display:block;"></canvas>
+  </div>
+
+  <div class="tip">
+    <strong>Où changer / retirer</strong>
+    Les distributeurs des <strong>7-Eleven</strong> (24/7, dans toutes les villes, en anglais) offrent le meilleur taux — pratiquement au taux interbancaire, +0,5% max. Éviter les bureaux de change des aéroports français et japonais (marge 3-8%). Une CB sans frais à l'étranger (Revolut, Wise, N26, Boursorama Ultim) + retrait cash au 7-Eleven = combo gagnant.
+  </div>
+
+  <div class="tip warning">
+    <strong>Ordre de grandeur pour ne pas se tromper</strong>
+    <strong>Divise mentalement par ~170</strong> pour convertir yens → euros. Un plat à 1 700 ¥ = ~10 €. Un billet à 10 000 ¥ = ~59 €. Le piège classique : confondre les zéros. 1 000 ¥ n'est PAS 1 000 €, c'est ~6 €.
+  </div>
+</section>
+
+
 <section class="tab-panel" id="flights">
   <div class="section-header">
     <div class="section-kicker"><span class="num">06</span> <span>Vols</span></div>
@@ -2843,14 +2960,9 @@ footer {
     <strong>Shinkansen Hiroshima : pas d'urgence à réserver</strong>
     Les Shinkansen Sakura/Hikari Shin-Osaka → Hiroshima partent <strong>toutes les 15-30 minutes</strong>. Pas besoin de réserver à l'avance : à l'arrivée à Shin-Osaka le matin du 28 juillet, achetez vos 8 billets au guichet vert ou aux distributeurs (acceptés en anglais), prochain départ dans la demi-heure. Si vous voulez sécuriser les sièges côte à côte (avec enfants), l'app <a href="https://smart-ex.jp/en/" target="_blank">SmartEX</a> permet une réservation gratuite dès J-30, mais ce n'est pas indispensable.
   </div>
-  <div class="tip warning">
-    <strong>⚠️ USJ 29/7 — Action urgente : ouverture des ventes le 30 mai 2026 à 17h (heure de Paris)</strong>
-    Universal Studios Japan ouvre la vente des billets <strong>exactement 60 jours avant</strong> chaque date, à 00h00 heure japonaise. Pour le 29 juillet, ventes ouvertes le <strong>30 mai 2026 à 00h00 JST = 29 mai à 17h00 Paris</strong> (heure d'été). Fin juillet = pleine saison, les Express Pass et même les Studio Pass standard partent en quelques heures pendant l'été. Soyez prêt à 16h55 sur :
-    <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem;">
-      <li><a href="https://www.usj.co.jp/web/fr/jp" target="_blank">Site officiel USJ</a> (compte créé à l'avance, paiement par carte)</li>
-      <li>OU <a href="https://www.klook.com" target="_blank">Klook</a> / <a href="https://www.kkday.com/" target="_blank">KKday</a> (souvent plus rapides + en français/anglais)</li>
-    </ul>
-    Achetez en priorité un <strong>Express Pass 4 ou 7</strong> par personne — sans, prévoir 90-120 min d'attente par attraction phare un jour d'été. Coût indicatif : ¥9 800 Studio Pass + ¥7 800 à ¥21 000 Express Pass selon l'option.
+  <div class="tip">
+    <strong>ℹ️ USJ (29/7) abandonné</strong>
+    Après discussion, la journée USJ initialement prévue le 29 juillet a été remplacée par un day trip depuis Osaka (canicule + jet lag + coût). Les billets USJ n'ont pas été achetés. Pour le programme réel du 29/7, voir le planning détaillé.
   </div>
 
   <h3>Notre logement</h3>
@@ -4164,6 +4276,7 @@ footer {
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=calendar]').click(); return false;">Calendrier</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=planning]').click(); return false;">Planning</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=budget]').click(); return false;">Prévisionnel</a>
+    <a href="#" onclick="document.querySelector('.nav-tab[data-tab=yen]').click(); return false;">Yen 円</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=flights]').click(); return false;">Vols</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=osaka]').click(); return false;">Osaka</a>
     <a href="#" onclick="document.querySelector('.nav-tab[data-tab=kyoto]').click(); return false;">Kyoto</a>
@@ -4176,6 +4289,7 @@ footer {
     <a href="journal.html" class="external">Journal</a>
     <a href="carte-photos.html" class="external">Carte photos</a>
     <a href="voitures.html" class="external">Voitures</a>
+    <a href="admin.html" class="external admin-only" style="display:none;">⚙ Admin</a>
   </nav>
   <div class="footer-bottom">
     <span>日本 Voyage 2026</span>
@@ -4185,6 +4299,187 @@ footer {
 </footer>
 
 <script>
+// ============================
+// YEN — cours en direct via Frankfurter (BCE, gratuit, sans clé API)
+// ============================
+const BUDGET_RATE_JPY = 170;   // Taux utilisé dans le prévisionnel du site
+let currentYenRate = BUDGET_RATE_JPY;  // Fallback avant chargement
+
+function fmtDate(iso) {
+  try { return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }); }
+  catch { return iso; }
+}
+function fmt(n, decimals = 2) {
+  return Number(n).toLocaleString('fr-FR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+function updateReferences() {
+  document.querySelectorAll('.yen-eur').forEach(el => {
+    const jpy = parseFloat(el.dataset.jpy);
+    if (!isNaN(jpy)) el.textContent = fmt(jpy / currentYenRate, 2);
+  });
+}
+async function loadYenRate() {
+  const dateEl = document.getElementById('yen-date');
+  const rateEl = document.getElementById('yen-rate');
+  const reverseEl = document.getElementById('yen-reverse');
+  const vsEl = document.getElementById('yen-vs-budget');
+  if (!rateEl) return;
+
+  rateEl.textContent = '…';
+  try {
+    const res = await fetch('https://api.frankfurter.dev/v1/latest?base=EUR&symbols=JPY');
+    if (!res.ok) throw new Error('API error ' + res.status);
+    const data = await res.json();
+    const rate = data.rates.JPY;
+    currentYenRate = rate;
+    dateEl.textContent = fmtDate(data.date);
+    rateEl.textContent = fmt(rate, 2);
+    reverseEl.textContent = fmt(100 / rate, 3);
+
+    const delta = ((rate - BUDGET_RATE_JPY) / BUDGET_RATE_JPY) * 100;
+    let msg, bg, color;
+    if (delta > 1) {
+      msg = `▲ ${fmt(Math.abs(delta), 1)}% plus favorable que le prévisionnel (170 ¥/€)`;
+      bg = 'rgba(42,128,115,0.12)'; color = '#2a8073';
+    } else if (delta < -1) {
+      msg = `▼ ${fmt(Math.abs(delta), 1)}% moins favorable que le prévisionnel (170 ¥/€)`;
+      bg = 'rgba(230,57,70,0.12)'; color = '#e63946';
+    } else {
+      msg = `≈ Écart <1% avec le prévisionnel (170 ¥/€)`;
+      bg = 'rgba(107,107,133,0.12)'; color = '#6b6b85';
+    }
+    vsEl.textContent = msg;
+    vsEl.style.background = bg;
+    vsEl.style.color = color;
+
+    updateReferences();
+    updateConverterFromEur();
+    loadYenHistory();
+  } catch (e) {
+    rateEl.textContent = BUDGET_RATE_JPY;
+    dateEl.textContent = 'taux du prévisionnel (API indisponible)';
+    reverseEl.textContent = fmt(100 / BUDGET_RATE_JPY, 3);
+    vsEl.textContent = 'Impossible de joindre l\'API (mode offline)';
+    updateReferences();
+  }
+}
+
+async function loadYenHistory() {
+  const minEl = document.getElementById('yen-min');
+  const avgEl = document.getElementById('yen-avg');
+  const maxEl = document.getElementById('yen-max');
+  const canvas = document.getElementById('yen-chart');
+  if (!minEl || !canvas) return;
+
+  const now = new Date();
+  const past = new Date(now.getTime() - 30 * 86400 * 1000);
+  const iso = d => d.toISOString().slice(0, 10);
+  try {
+    const res = await fetch(`https://api.frankfurter.dev/v1/${iso(past)}..${iso(now)}?base=EUR&symbols=JPY`);
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    const entries = Object.entries(data.rates).sort();  // [[date, {JPY: x}], ...]
+    const values = entries.map(([, obj]) => obj.JPY);
+    if (!values.length) throw new Error('no data');
+
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const avg = values.reduce((s, v) => s + v, 0) / values.length;
+    minEl.textContent = fmt(min, 2);
+    avgEl.textContent = fmt(avg, 2);
+    maxEl.textContent = fmt(max, 2);
+
+    // Petit graphe canvas maison, sans dépendance externe
+    drawYenChart(canvas, entries, min, max);
+  } catch (e) {
+    minEl.textContent = avgEl.textContent = maxEl.textContent = '—';
+  }
+}
+
+function drawYenChart(canvas, entries, min, max) {
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const width = canvas.clientWidth;
+  const height = 120;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, width, height);
+
+  const padX = 8;
+  const padY = 20;
+  const usableW = width - 2 * padX;
+  const usableH = height - 2 * padY;
+  const range = Math.max(max - min, 0.01);
+
+  // Grille min/max
+  ctx.strokeStyle = '#e8d9b8';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([2, 3]);
+  ctx.beginPath();
+  ctx.moveTo(padX, padY);
+  ctx.lineTo(width - padX, padY);
+  ctx.moveTo(padX, height - padY);
+  ctx.lineTo(width - padX, height - padY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Ligne du budget si dans la fenêtre
+  if (BUDGET_RATE_JPY >= min && BUDGET_RATE_JPY <= max) {
+    const y = padY + usableH - ((BUDGET_RATE_JPY - min) / range) * usableH;
+    ctx.strokeStyle = '#6b6b85';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(padX, y);
+    ctx.lineTo(width - padX, y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#6b6b85';
+    ctx.font = '10px "JetBrains Mono", monospace';
+    ctx.fillText('budget 170', width - padX - 70, y - 4);
+  }
+
+  // Courbe
+  ctx.strokeStyle = '#e63946';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  entries.forEach(([, obj], i) => {
+    const x = padX + (i / (entries.length - 1)) * usableW;
+    const y = padY + usableH - ((obj.JPY - min) / range) * usableH;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+  ctx.stroke();
+
+  // Zone remplie
+  ctx.lineTo(width - padX, height - padY);
+  ctx.lineTo(padX, height - padY);
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(230,57,70,0.08)';
+  ctx.fill();
+}
+
+// Converter bidirectionnel
+function updateConverterFromEur() {
+  const eur = parseFloat(document.getElementById('yen-input-eur').value);
+  if (!isNaN(eur)) document.getElementById('yen-input-jpy').value = Math.round(eur * currentYenRate);
+}
+function updateConverterFromJpy() {
+  const jpy = parseFloat(document.getElementById('yen-input-jpy').value);
+  if (!isNaN(jpy)) document.getElementById('yen-input-eur').value = (jpy / currentYenRate).toFixed(2);
+}
+document.getElementById('yen-input-eur')?.addEventListener('input', updateConverterFromEur);
+document.getElementById('yen-input-jpy')?.addEventListener('input', updateConverterFromJpy);
+
+// Charge le taux au premier affichage de l'onglet Yen
+let yenLoaded = false;
+function ensureYenLoaded() {
+  if (yenLoaded) return;
+  yenLoaded = true;
+  loadYenRate();
+}
+
 // ============================
 // TABS
 // ============================
@@ -4346,6 +4641,9 @@ tabs.forEach(tab => {
         if (!mapsInitialized.hakone) { initHakoneMap(); mapsInitialized.hakone = true; }
         if (!mapsInitialized.tokyo) { initTokyoMap(); mapsInitialized.tokyo = true; }
       }, 100);
+    }
+    if (target === 'yen') {
+      ensureYenLoaded();
     }
     if (target === 'osaka') {
       setTimeout(() => { if (!mapsInitialized.osakaStage) { initOsakaStageMap(); mapsInitialized.osakaStage = true; } }, 100);
@@ -4698,6 +4996,37 @@ if (document.readyState === 'loading') {
 
 <!-- Fiches activités (modale + données + handlers) -->
 <script src="activities.js?v=4"></script>
+
+<!-- Client API pour connaître le rôle de l'utilisateur et afficher le lien Admin -->
+<script src="api-client.js?v=2"></script>
+<script>
+(async () => {
+  try {
+    const user = await Japan2026Api.getMe(true);
+    if (!user) return;
+    // Chip utilisateur + bouton déconnexion
+    const chip = document.getElementById('userChip');
+    const btn = document.getElementById('logoutBtn');
+    if (chip) {
+      chip.textContent = user.name + (user.role === 'admin' ? ' · admin' : '');
+      chip.style.display = 'inline-block';
+    }
+    if (btn) {
+      btn.style.display = 'inline-block';
+      btn.addEventListener('click', async (ev) => {
+        ev.preventDefault();
+        if (!confirm('Se déconnecter du site ?')) return;
+        await Japan2026Api.logout();
+        location.href = '/login.html';
+      });
+    }
+    // Lien Admin visible uniquement pour les admins
+    if (user.role === 'admin') {
+      document.querySelectorAll('.admin-only').forEach(el => { el.style.display = ''; });
+    }
+  } catch (e) { /* silence : la nav reste comme avant */ }
+})();
+</script>
 
 </body>
 </html>
