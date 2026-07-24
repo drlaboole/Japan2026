@@ -1615,6 +1615,101 @@ footer {
   .step-card h3 { font-size: 1.4rem; }
   main { padding: 1.5rem 0.9rem 2.5rem; }
 }
+
+/* ==================================================
+   MOBILE-FIRST IMPROVEMENTS (v2 — 24/07/2026)
+   ================================================== */
+
+/* Tables scrollables horizontalement (wrap via JS + fallback CSS) */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0.6rem 0 1.2rem; border-radius: 10px; border: 1px solid var(--line-soft); }
+.table-scroll .info-table { margin: 0; border: none; border-radius: 0; }
+.table-scroll::-webkit-scrollbar { height: 8px; }
+.table-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); border-radius: 8px; }
+.table-scroll::-webkit-scrollbar-thumb { background: rgba(230,57,70,0.3); border-radius: 8px; }
+.table-scroll::-webkit-scrollbar-thumb:hover { background: rgba(230,57,70,0.5); }
+
+@media (max-width: 768px) {
+  /* --- Nav : scroll horizontal au lieu de wrap sur plusieurs lignes --- */
+  .main-nav .nav-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-right: 3rem; /* espace pour le dégradé indiquant scroll */
+    margin-right: -0.5rem;
+    -webkit-mask-image: linear-gradient(to right, black 88%, transparent 100%);
+            mask-image: linear-gradient(to right, black 88%, transparent 100%);
+  }
+  .main-nav .nav-tabs::-webkit-scrollbar { display: none; }
+  .main-nav .nav-tab { flex-shrink: 0; }
+  .main-nav .nav-tab.external:first-of-type { margin-left: 0.4rem; padding-left: 0.7rem; }
+
+  /* --- User chip : cacher le "· admin" et raccourcir --- */
+  #userChip { display: none !important; }
+
+  /* --- Convertisseur Yen : stack vertical --- */
+  #yen .card > div[style*="grid-template-columns:1fr auto 1fr"],
+  #yen [style*="grid-template-columns:1fr auto 1fr"] {
+    grid-template-columns: 1fr !important;
+    text-align: left !important;
+  }
+  #yen [style*="grid-template-columns:1fr auto 1fr"] > div:nth-child(2) {
+    display: none !important;
+  }
+
+  /* --- Inputs : min 16px pour éviter zoom iOS + tap targets 44px --- */
+  input[type="text"], input[type="email"], input[type="tel"],
+  input[type="password"], input[type="number"], input[type="search"],
+  select, textarea {
+    font-size: 16px !important;
+    min-height: 44px;
+  }
+  button, .btn, .nav-tab {
+    min-height: 40px;
+  }
+
+  /* --- Cartes : padding réduit pour gagner de la largeur --- */
+  .card { padding: 1.1rem 1rem !important; }
+
+  /* --- Grid des "Repères utiles" du Yen : compact 2 colonnes minimum --- */
+  #yen div[style*="grid-template-columns:repeat(auto-fit"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+  #yen div[style*="grid-template-columns:repeat(auto-fit"] .card {
+    padding: 0.7rem 0.8rem !important;
+  }
+  #yen div[style*="grid-template-columns:repeat(auto-fit"] .card > div:last-child {
+    font-size: 1rem !important;
+  }
+
+  /* --- Hero du Yen : moins gros pour éviter que le rate déborde --- */
+  #yen .card div[style*="font-size:3.6rem"] {
+    font-size: 2.4rem !important;
+  }
+
+  /* --- Section header : suppression des marges excessives --- */
+  main { padding: 1.4rem 0.85rem 2.5rem !important; }
+}
+
+@media (max-width: 480px) {
+  /* --- Nav ultra-serrée sur très petits écrans --- */
+  .main-nav .nav-tab { padding: 0.4rem 0.6rem; font-size: 0.72rem; }
+  .main-nav .nav-tab.external { padding: 0.35rem 0.6rem; }
+  #logoutBtn { padding: 0.25rem 0.5rem !important; font-size: 0.62rem !important; }
+
+  /* --- Timeline slots : forcer 2 colonnes serrées --- */
+  .slot { grid-template-columns: 60px 1fr; gap: 0.5rem; }
+  .slot-time { font-size: 0.56rem; }
+
+  /* --- Overview grid : full stack --- */
+  .overview-grid { grid-template-columns: 1fr !important; }
+  .families { grid-template-columns: 1fr !important; }
+
+  /* --- Calendar : encore plus compact --- */
+  .cal-day { min-height: 36px; font-size: 0.7rem; }
+  .cal-day .num { font-size: 0.8rem; }
+}
 </style>
 </head>
 <body>
@@ -5000,6 +5095,15 @@ if (document.readyState === 'loading') {
 <!-- Client API pour connaître le rôle de l'utilisateur et afficher le lien Admin -->
 <script src="api-client.js?v=2"></script>
 <script>
+// Rendre tous les tableaux scrollables horizontalement sur mobile
+document.querySelectorAll('.info-table').forEach(table => {
+  if (table.parentElement.classList.contains('table-scroll')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'table-scroll';
+  table.parentNode.insertBefore(wrap, table);
+  wrap.appendChild(table);
+});
+
 (async () => {
   try {
     const user = await Japan2026Api.getMe(true);
